@@ -8,44 +8,49 @@
 
 ## Cel sprintu
 
-Przygotować repozytorium i działający **szkielet aplikacji React** z nawigacją między 4 zakładkami (Niestandardowy, Ćwiczenia, Raport, Moje) oraz przykładowymi danymi. Po sprincie każdy z zespołu ma projekt działający lokalnie i zna zasady pracy z gitem.
+Przygotować repozytorium i działający **szkielet aplikacji React** z nawigacją między 4 zakładkami (Niestandardowy, Ćwiczenia, Raport, Moje) oraz przykładowymi danymi. Równolegle powstają projekt wizualny, projekt bazy danych i środowisko backendowe.
 
 **Efekt końcowy:** po `npm run dev` otwiera się aplikacja z paskiem nawigacji, a kliknięcie zakładki pokazuje odpowiednią (na razie prawie pustą) stronę.
 
-## Spis zadań
+## Zadania
 
-Podział zadań na osoby zostanie ustalony później (przypisanie na kartach w Trello).
+### Szkielet aplikacji React
 
-| Nr | Zadanie (karta na Trello) | Zależy od |
+| Nr | Zadanie | Osoba |
 |---|---|---|
-| 1 | github repo | - |
-| 2 | inicjalizacja projektu react | 1 |
-| 3 | instalacja react-router-dom | 2 |
-| 4 | struktura folderów | 2 |
-| 5 | Rozbudowa README | 2 |
-| 6 | Dodanie komponentu Navbar | 3, 4 |
-| 7 | utworzenie strony Niestandardowy/Custom | 3, 4 |
-| 8 | utworzenie strony Exercises | 3, 4 |
-| 9 | utworzenie strony Raport | 3, 4 |
-| 10 | utworzenie strony Profile | 3, 4 |
-| 11 | Dodanie Mock Data | 4 |
-| 12 | Konfiguracja routingu w App.jsx | 6-10 |
+| 1 | Utworzenie repozytorium GitHub | Jakub |
+| 2 | Inicjalizacja projektu React | Jakub |
+| 3 | Dodanie React Router | Jakub |
+| 4 | Setup repo: develop, foldery, czyszczenie szablonu Vite | Wigur |
+| 5 | README z opisem projektu i zespołu oraz celem sprintu | Jakub |
+| 6 | Navbar | do przypisania |
+| 7 | Strony Niestandardowy i Ćwiczenia | do przypisania |
+| 8 | Strona Raport | do przypisania (szósta osoba) |
+| 9 | Strona Moje (Profile) | Szymon |
+| 10 | Mock Data (przykładowe dane) | Alex |
+| 11 | Routing w App.jsx (robimy jako ostatni) | Szymon |
 
-**Co oznacza kolumna "Zależy od"?** Numery to numery zadań z tej tabeli. Zapis oznacza, że **zadanie można zacząć dopiero wtedy, gdy wskazane zadania są już zrobione i zmergowane do `develop`**. Przykłady:
+### Zadania równoległe
 
-- Zadanie 6 (Navbar) ma "3, 4": można je zacząć po zainstalowaniu `react-router-dom` (3) i utworzeniu struktury folderów (4).
-- Zadanie 12 (routing) ma "6-10": może być zrobione dopiero po Navbarze i wszystkich czterech stronach, bo `App.jsx` importuje te pliki.
-- "-" oznacza brak zależności, zadanie można zacząć od razu.
+| Obszar | Osoba | Zakres |
+|---|---|---|
+| Projekt wizualny | Bartosz | projekt w Figmie, kolorystyka i typografia, widok strony głównej, przekazanie linku do Figmy |
+| Baza danych | Alex | analiza wymagań, projekt i diagram bazy, integracja z backendem |
+| Backend | Szymon | środowisko backendowe, zapoznanie z projektem React, struktura komponentów |
+| Testy i dokumentacja | Wigur | testy frontendu i backendu, dokumentowanie błędów, dokumentacja projektu |
+| Style | do przypisania | style CSS |
 
-## Jak pracujemy: workflow krok po kroku
+**Backlog (na później):** własne pliki README, zasady commitów, skrypt SQL i PostgreSQL, API, endpointy ćwiczeń i treningów, połączenie z bazą danych.
 
-Każde zadanie z kodem (nowa strona, komponent, plik z danymi) robimy **według tych kroków**.
+## Workflow
 
-### Branche w projekcie
+### Branche
 
-- **`main`** - stabilna wersja projektu. Trafia tam tylko gotowy, sprawdzony kod (na koniec sprintu).
-- **`develop`** - branch roboczy zespołu. **Wszystkie Pull Requesty z zadań kierujemy do `develop`**, nie do `main`.
-- **`feature/...`** - branch pojedynczego zadania. Tworzymy go z `develop` i po skończeniu łączymy z powrotem z `develop`.
+- **`main`** - stabilna wersja, trafia tu tylko `develop` na koniec sprintu.
+- **`develop`** - branch roboczy zespołu, tu kierujemy wszystkie PR.
+- **`feature/...`** - branch jednego zadania, tworzony z `develop`.
+
+`main` i `develop` mają ochronę na GitHubie: wymagany PR i 1 approve.
 
 ```
 feature/navbar  ──PR──►  develop  ──PR (koniec sprintu)──►  main
@@ -53,141 +58,78 @@ feature/navbar  ──PR──►  develop  ──PR (koniec sprintu)──►  
 
 ### Kroki
 
-**1. Weź kartę na Trello.** Przypisz się do niej i przenieś z `Sprint` do `In progress`.
-
-**2. Zaktualizuj `develop` u siebie.**
-```bash
-git checkout develop
-git pull
-```
-
-**3. Utwórz nowy branch dla tego zadania (z `develop`).**
-```bash
-git checkout -b feature/strona-custom
-```
-
-**4. Zrób zadanie** (np. utwórz plik `src/pages/Custom.jsx`). Sprawdź w przeglądarce (`npm run dev`), czy działa.
-
-**5. Zapisz zmiany (commit).**
-```bash
-git add .
-git commit -m "Dodaj strone Niestandardowy"
-```
-
-**6. Wyślij branch na GitHuba.**
-```bash
-git push -u origin feature/strona-custom
-```
-
-**7. Otwórz Pull Request do `develop`.** Na GitHubie kliknij **Compare & pull request** i **sprawdź, że w polu `base` jest wybrane `develop`** (domyślnie GitHub proponuje `main`). Wpisz krótki opis i kliknij **Create pull request**. Przenieś kartę na `Code Review` i napisz na czacie grupy, że PR czeka na przegląd.
-
-**8. Code Review.** Inna osoba z zespołu (nie autor) przegląda zmiany w zakładce **Files changed**, ewentualnie zostawia komentarze. Jeśli jest OK, klika **Approve**.
-
-**9. Merge do `develop`.** Po akceptacji kliknij **Merge pull request**, a potem **Delete branch**.
-
-**10. Testing i Done.** Karta przechodzi na `Testing`: ktoś robi `git checkout develop`, `git pull`, `npm run dev` i sprawdza, czy po mergu wszystko działa. Jeśli tak, karta trafia do `Done`.
+1. **Karta na Trello:** przypisz się i przenieś z `Sprint 1` do `In progress`.
+2. **Aktualizacja:** `git checkout develop` i `git pull`.
+3. **Branch:** `git checkout -b feature/navbar`.
+4. **Zrób zadanie**, sprawdź `npm run dev` i `npm run lint`.
+5. **Commit:** `git add .` i `git commit -m "Dodaj Navbar"`.
+6. **Push:** `git push -u origin feature/navbar`.
+7. **Pull Request do `develop`:** sprawdź, że pole `base` to `develop` (GitHub domyślnie proponuje `main`). Karta na `Code Review`, informacja na czacie.
+8. **Code Review:** inna osoba przegląda zmiany i klika **Approve**.
+9. **Merge:** **Merge pull request**, potem **Delete branch**.
+10. **Testing i Done:** ktoś robi `git pull` na `develop`, uruchamia `npm run dev` i sprawdza, czy działa. Wtedy karta trafia do `Done`.
 
 ### Zasady
 
-- **Nigdy nie commitujemy bezpośrednio na `main` ani `develop`.** Zmiany wchodzą tylko przez Pull Request.
-- **Pull Request zawsze kierujemy do `develop`** (pole `base`). Do `main` trafia tylko `develop` na koniec sprintu.
-- **Jedno zadanie = jeden branch = jeden PR.**
-- **Zawsze zaczynaj od `git pull` na `develop`** przed utworzeniem nowego brancha.
-- **Nazwy branchy:** `feature/krotki-opis-z-myslnikami`, np. `feature/navbar`, `feature/strona-raport`.
-- **Commity:** krótkie i konkretne. Dobrze: `Dodaj Navbar`. Źle: `zmiany`, `poprawki`.
-- **Nie edytujemy cudzych plików** bez uzgodnienia (to najczęstsza przyczyna konfliktów).
-- **PR przegląda ktoś inny niż autor.**
+- Nie commitujemy bezpośrednio na `main` ani `develop` (jedyny wyjątek: zadanie 4, Setup repo).
+- Jedno zadanie = jeden branch = jeden PR.
+- Zawsze zaczynaj od `git pull` na `develop`.
+- Nazwy branchy: `feature/krotki-opis`, np. `feature/navbar`.
+- Commity krótkie i konkretne: `Dodaj Navbar`, a nie `zmiany`.
+- Nie edytujemy cudzych plików bez uzgodnienia.
+- PR przegląda ktoś inny niż autor.
 
 ### Listy na Trello
 
 | Lista | Znaczenie |
 |---|---|
-| **Backlog** | Pomysły i zadania na później |
-| **Sprint** | Zadania do zrobienia w tym sprincie |
-| **In progress** | Ktoś właśnie nad tym pracuje (jest branch) |
-| **Code Review** | PR otwarty, czeka na przegląd |
-| **Testing** | PR zmergowany, sprawdzamy, czy działa na `develop` |
-| **Done** | Zrobione i sprawdzone |
-
-## Kolejność wykonywania zadań
-
-```
-FAZA 1 (reszta czeka):
-  github repo -> inicjalizacja react -> react-router-dom + struktura folderów
-
-FAZA 2 (równolegle, po wypchnięciu szkieletu):
-  Navbar, strony (Custom, Exercises, Raport, Profile), Mock Data, README
-
-FAZA 3 (na końcu):
-  Konfiguracja routingu - po zmergowaniu Navbara i 4 stron
-
-KONIEC SPRINTU:
-  Pull Request develop -> main (po sprawdzeniu, że wszystko działa)
-```
-
-Routing w `App.jsx` importuje Navbar i 4 strony, więc jego PR mergujemy **jako ostatni**.
+| **Backlog** | zadania na później |
+| **Sprint 1** | zadania w tym sprincie |
+| **In progress** | ktoś pracuje (jest branch) |
+| **Code Review** | PR czeka na przegląd |
+| **Testing** | PR zmergowany, sprawdzamy `develop` |
+| **Done** | zrobione i sprawdzone |
 
 ## Opisy zadań
 
-**1. github repo**
-Tworzymy repozytorium `gym-app` na GitHubie z plikiem README i szablonem `.gitignore` (Node), a następnie dodajemy pozostałe 5 osób jako collaboratorów (Settings -> Collaborators).
-*Gotowe, gdy:* wszyscy mają dostęp do repo.
+**1-3. Repo, projekt React, React Router**
+Repozytorium z collaboratorami, projekt Vite i `react-router-dom`.
 
-**2. inicjalizacja projektu react**
-Klonujemy repo i tworzymy projekt Reacta przez Vite (`npm create vite@latest . -- --template react`, potem `npm install` i `npm run dev`). Wysyłamy go na `main`, a następnie tworzymy i wysyłamy branch `develop` (`git checkout -b develop`, `git push -u origin develop`). Od `develop` wszyscy będą tworzyć swoje branche.
-*Gotowe, gdy:* projekt uruchamia się na `localhost:5173`, a na GitHubie istnieją branche `main` i `develop`.
+**4. Setup repo** (Wigur, robi sam, reszta czeka)
+Idzie bezpośrednio na `develop`: utworzenie `develop` z `main`; foldery `src/components/`, `src/pages/`, `src/data/` z `.gitkeep`; usunięcie szablonu Vite (`App.css`, `react.svg`, `vite.svg`, `hero.png`, `icons.svg`, style `#root`, `h1`, `.counter`); w `index.html` `lang="pl"` i tytuł "Gym App"; ochrona `main` i `develop` (PR + 1 approve).
+*Gotowe, gdy:* `main` i `develop` mają ochronę, foldery są widoczne, `npm run dev` pokazuje czystą stronę.
 
-**3. instalacja react-router-dom**
-Na `develop` instalujemy bibliotekę do obsługi podstron (`npm install react-router-dom`) i wysyłamy zmiany w `package.json`. Zadania 3 i 4 (setup) można wysłać prosto na `develop`.
-*Gotowe, gdy:* `react-router-dom` jest w `package.json`.
+**5. README** (`feature/readme`)
+Opis projektu, zespołu i celu sprintu; w `git clone` podmień `<LOGIN>`.
 
-**4. struktura folderów**
-W `src/` tworzymy foldery `components/` (małe, wielokrotnego użytku elementy), `pages/` (całe ekrany, czyli zakładki) i `data/` (przykładowe dane). Puste foldery wymagają pustego pliku `.gitkeep`, inaczej git ich nie zapisze.
-*Gotowe, gdy:* trzy foldery są widoczne na GitHubie.
+**6. Navbar** (`feature/navbar`)
+`src/components/Navbar.jsx` z 4 `NavLink`ami: `/niestandardowy`, `/cwiczenia`, `/raport`, `/moje`. Aktywny link ma klasę `active` i jest wyraźnie podświetlony.
 
-**5. Rozbudowa README**
-Dodajemy do repo gotowy plik `README.md` i podmieniamy `<LOGIN>` w komendzie `git clone` na prawdziwy login. Branch: `feature/readme`.
-*Gotowe, gdy:* README jest zmergowane do `develop`.
+**7. Strony Niestandardowy i Ćwiczenia** (`feature/strony-custom-exercises`)
+`src/pages/Custom.jsx` (`<h1>Niestandardowy</h1>`) i `src/pages/Exercises.jsx` (`<h1>Ćwiczenia</h1>`). Uwaga na pisownię: Exercises.
 
-**6. Dodanie komponentu Navbar**
-Branch: `feature/navbar`. Komponent `src/components/Navbar.jsx` z 4 linkami (`NavLink` z `react-router-dom`) do `/niestandardowy`, `/cwiczenia`, `/raport`, `/moje`. Aktywny link ma być wyróżniony (klasa `active` w CSS).
-*Gotowe, gdy:* komponent istnieje i jest zmergowany.
+**8. Strona Raport** (`feature/strona-raport`)
+`src/pages/Report.jsx` z `<h1>Raport</h1>`.
 
-**7. utworzenie strony Niestandardowy/Custom**
-Branch: `feature/strona-custom`. Plik `src/pages/Custom.jsx` z samym nagłówkiem `<h1>Niestandardowy</h1>`. Docelowo będą tu karty planów treningowych (Day 1, Day 2...).
-*Gotowe, gdy:* plik istnieje i jest zmergowany.
+**9. Strona Moje** (`feature/strona-profile`)
+`src/pages/Profile.jsx` z `<h1>Moje</h1>`.
 
-**8. utworzenie strony Exercises**
-Branch: `feature/strona-exercises`. Plik `src/pages/Exercises.jsx` z nagłówkiem. Docelowo katalog ćwiczeń. Uwaga na pisownię: **Exercises**, nie "Excersises".
-*Gotowe, gdy:* plik istnieje i jest zmergowany.
+**10. Mock Data** (`feature/mock-data`)
+W `src/data/`: `exercises.json` (min. 10 ćwiczeń: nazwa, sprzęt, grupa mięśniowa) i `plans.json` (min. 3 plany: Day 1, Day 2, Day 4, z odwołaniem do ćwiczeń przez `exerciseId`). Każdy element ma unikalne `id`.
 
-**9. utworzenie strony Raport**
-Branch: `feature/strona-raport`. Plik `src/pages/Report.jsx` z nagłówkiem. Docelowo statystyki i wykresy.
-*Gotowe, gdy:* plik istnieje i jest zmergowany.
-
-**10. utworzenie strony Profile**
-Branch: `feature/strona-profile`. Plik `src/pages/Profile.jsx` z nagłówkiem "Moje". Docelowo profil i ustawienia.
-*Gotowe, gdy:* plik istnieje i jest zmergowany.
-
-**11. Dodanie Mock Data**
-Branch: `feature/mock-data`. Tworzymy w `src/data/` pliki `exercises.json` (min. 10 ćwiczeń: nazwa, sprzęt, grupa mięśniowa) i `plans.json` (min. 3 plany: Day 1, Day 2, Day 4, odwołujące się do ćwiczeń przez `exerciseId`). Każdy element ma unikalne `id`. Wzorujemy się na zdjęciu aplikacji wzorcowej.
-*Gotowe, gdy:* oba pliki są poprawnym JSON-em i są zmergowane.
-
-**12. Konfiguracja routingu w App.jsx**
-Branch: `feature/routing`. W `src/App.jsx` ustawiamy `BrowserRouter`, `Navbar` i `Routes` z 4 ścieżkami; wejście na `/` przekierowuje na `/niestandardowy`. Zaczynamy dopiero, gdy Navbar i strony są na `develop`.
-*Gotowe, gdy:* kliknięcie każdej z 4 zakładek pokazuje właściwą stronę.
+**11. Routing** (`feature/routing`)
+Zaczynamy po zmergowaniu Navbara i stron. W `src/App.jsx`: `BrowserRouter`, `Navbar`, `Routes` z 4 ścieżkami; `/` przekierowuje na `/niestandardowy`. Na końcu PR `develop` -> `main`.
+*Gotowe, gdy:* każda zakładka pokazuje właściwą stronę, `npm run lint` i `npm run build` przechodzą.
 
 ## Definition of Done
 
-Zadanie jest ukończone (karta może trafić do `Done`), gdy:
+- [ ] kod zmergowany do `develop` przez PR,
+- [ ] PR zaakceptowany przez inną osobę,
+- [ ] `npm run lint` bez błędów,
+- [ ] po `git pull` na `develop` aplikacja uruchamia się bez błędów,
+- [ ] branch usunięty, karta w `Done`.
 
-- [ ] kod jest zmergowany do `develop` przez Pull Request,
-- [ ] PR został przejrzany przez inną osobę,
-- [ ] po `git pull` na `develop` i `npm run dev` aplikacja uruchamia się bez błędów,
-- [ ] branch został usunięty,
-- [ ] karta na Trello jest w `Done`.
-
-**Koniec sprintu:** `develop` został zmergowany do `main` przez Pull Request, a wszyscy 6 członkowie zespołu sklonowali repo, wykonali `npm install` i `npm run dev` i potwierdzili, że aplikacja działa u nich lokalnie.
+**Koniec sprintu:** `develop` zmergowany do `main`, a wszyscy 6 członkowie zespołu mają działającą aplikację lokalnie (`npm install`, `npm run dev`).
 
 ---
 
@@ -197,44 +139,49 @@ Zadanie jest ukończone (karta może trafić do `Done`), gdy:
 
 ## Sprint goal
 
-Set up the repository and a working **React app skeleton** with navigation between 4 tabs (Custom, Exercises, Report, Profile) and sample data. After the sprint, every team member has the project running locally and knows the git workflow rules.
+Set up the repository and a working **React app skeleton** with navigation between 4 tabs (Custom, Exercises, Report, Profile) and sample data. In parallel we prepare the visual design, the database design and the backend environment.
 
 **End result:** after `npm run dev`, the app opens with a navigation bar, and clicking a tab shows the matching (for now almost empty) page.
 
-## Task list
+## Tasks
 
-Assigning tasks to people will be decided later (assignment on Trello cards).
+### React app skeleton
 
-| No. | Task (Trello card) | Depends on |
+| No. | Task | Owner |
 |---|---|---|
-| 1 | GitHub repo | - |
-| 2 | React project initialization | 1 |
-| 3 | Install react-router-dom | 2 |
-| 4 | Folder structure | 2 |
-| 5 | Extend README | 2 |
-| 6 | Add Navbar component | 3, 4 |
-| 7 | Create Custom page (Niestandardowy) | 3, 4 |
-| 8 | Create Exercises page | 3, 4 |
-| 9 | Create Report page (Raport) | 3, 4 |
-| 10 | Create Profile page (Moje) | 3, 4 |
-| 11 | Add Mock Data | 4 |
-| 12 | Configure routing in App.jsx | 6-10 |
+| 1 | Create the GitHub repository | Jakub |
+| 2 | React project initialization | Jakub |
+| 3 | Add React Router | Jakub |
+| 4 | Setup repo: develop, folders, clean up the Vite template | Wigur |
+| 5 | README with project and team description and sprint goal | Jakub |
+| 6 | Navbar | unassigned |
+| 7 | Custom (Niestandardowy) and Exercises pages | unassigned |
+| 8 | Report (Raport) page | unassigned (sixth person) |
+| 9 | Profile (Moje) page | Szymon |
+| 10 | Mock Data (sample data) | Alex |
+| 11 | Routing in App.jsx (done last) | Szymon |
 
-**What does the "Depends on" column mean?** The numbers are task numbers from this table. It means that **a task can only be started once the listed tasks are done and merged into `develop`**. Examples:
+### Parallel tasks
 
-- Task 6 (Navbar) has "3, 4": it can be started after `react-router-dom` is installed (3) and the folder structure exists (4).
-- Task 12 (routing) has "6-10": it can only be done after the Navbar and all four pages, because `App.jsx` imports those files.
-- "-" means no dependencies; the task can be started right away.
+| Area | Owner | Scope |
+|---|---|---|
+| Visual design | Bartosz | Figma design, colors and typography, home page view, handing over the Figma link |
+| Database | Alex | requirements analysis, database design and diagram, backend integration |
+| Backend | Szymon | backend environment, getting to know the React project, component structure |
+| Testing and docs | Wigur | frontend and backend testing, documenting bugs, project documentation |
+| Styles | unassigned | CSS styles |
 
-## How we work: step-by-step workflow
+**Backlog (for later):** own README files, commit conventions, SQL script and PostgreSQL, API, exercise and workout endpoints, database connection.
 
-Every coding task (new page, component, data file) follows **these steps**.
+## Workflow
 
-### Branches in the project
+### Branches
 
-- **`main`** - the stable version of the project. Only finished, verified code goes here (at the end of the sprint).
-- **`develop`** - the team's working branch. **All Pull Requests for tasks are targeted at `develop`**, not `main`.
-- **`feature/...`** - a branch for a single task. Created from `develop` and merged back into `develop` when done.
+- **`main`** - stable version; only `develop` goes in, at the end of the sprint.
+- **`develop`** - the team's working branch; all PRs target it.
+- **`feature/...`** - a single task's branch, created from `develop`.
+
+`main` and `develop` are protected on GitHub: a PR and 1 approval are required.
 
 ```
 feature/navbar  ──PR──►  develop  ──PR (end of sprint)──►  main
@@ -242,138 +189,75 @@ feature/navbar  ──PR──►  develop  ──PR (end of sprint)──►  m
 
 ### Steps
 
-**1. Pick a card on Trello.** Assign yourself and move it from `Sprint` to `In progress`.
-
-**2. Update `develop` locally.**
-```bash
-git checkout develop
-git pull
-```
-
-**3. Create a new branch for this task (from `develop`).**
-```bash
-git checkout -b feature/strona-custom
-```
-
-**4. Do the task** (e.g. create `src/pages/Custom.jsx`). Check in the browser (`npm run dev`) that it works.
-
-**5. Save your changes (commit).**
-```bash
-git add .
-git commit -m "Add Custom page"
-```
-
-**6. Push the branch to GitHub.**
-```bash
-git push -u origin feature/strona-custom
-```
-
-**7. Open a Pull Request into `develop`.** On GitHub click **Compare & pull request** and **make sure the `base` field is set to `develop`** (GitHub suggests `main` by default). Write a short description and click **Create pull request**. Move the card to `Code Review` and tell the team chat that the PR is waiting for review.
-
-**8. Code Review.** Another team member (not the author) reviews the changes in the **Files changed** tab and may leave comments. If it looks good, they click **Approve**.
-
-**9. Merge into `develop`.** After approval click **Merge pull request**, then **Delete branch**.
-
-**10. Testing and Done.** The card moves to `Testing`: someone runs `git checkout develop`, `git pull`, `npm run dev` and checks that everything works after the merge. If so, the card goes to `Done`.
+1. **Trello card:** assign yourself and move it from `Sprint 1` to `In progress`.
+2. **Update:** `git checkout develop` and `git pull`.
+3. **Branch:** `git checkout -b feature/navbar`.
+4. **Do the task**, check `npm run dev` and `npm run lint`.
+5. **Commit:** `git add .` and `git commit -m "Add Navbar"`.
+6. **Push:** `git push -u origin feature/navbar`.
+7. **Pull Request into `develop`:** make sure the `base` field is `develop` (GitHub suggests `main` by default). Move the card to `Code Review` and tell the team chat.
+8. **Code Review:** another person reviews the changes and clicks **Approve**.
+9. **Merge:** **Merge pull request**, then **Delete branch**.
+10. **Testing and Done:** someone runs `git pull` on `develop`, starts `npm run dev` and checks that it works. Then the card goes to `Done`.
 
 ### Rules
 
-- **Never commit directly to `main` or `develop`.** Changes only go in through a Pull Request.
-- **Always target Pull Requests at `develop`** (the `base` field). Only `develop` goes into `main`, at the end of the sprint.
-- **One task = one branch = one PR.**
-- **Always start with `git pull` on `develop`** before creating a new branch.
-- **Branch names:** `feature/short-description-with-dashes`, e.g. `feature/navbar`, `feature/strona-raport`.
-- **Commits:** short and specific. Good: `Add Navbar`. Bad: `changes`, `fixes`.
-- **Do not edit other people's files** without agreeing first (the most common cause of conflicts).
-- **A PR is reviewed by someone other than the author.**
+- No direct commits to `main` or `develop` (the only exception: task 4, Setup repo).
+- One task = one branch = one PR.
+- Always start with `git pull` on `develop`.
+- Branch names: `feature/short-description`, e.g. `feature/navbar`.
+- Short, specific commits: `Add Navbar`, not `changes`.
+- Do not edit other people's files without agreeing first.
+- A PR is reviewed by someone other than the author.
 
 ### Trello lists
 
 | List | Meaning |
 |---|---|
-| **Backlog** | Ideas and tasks for later |
-| **Sprint** | Tasks to be done in this sprint |
-| **In progress** | Someone is working on it (a branch exists) |
-| **Code Review** | PR is open, waiting for review |
-| **Testing** | PR is merged, we check that it works on `develop` |
-| **Done** | Finished and verified |
-
-## Order of tasks
-
-```
-PHASE 1 (the rest of the team waits):
-  GitHub repo -> React init -> react-router-dom + folder structure
-
-PHASE 2 (in parallel, after the skeleton is pushed):
-  Navbar, pages (Custom, Exercises, Report, Profile), Mock Data, README
-
-PHASE 3 (at the end):
-  Routing configuration - after the Navbar and 4 pages are merged
-
-END OF SPRINT:
-  Pull Request develop -> main (after checking that everything works)
-```
-
-Routing in `App.jsx` imports the Navbar and the 4 pages, so its PR is merged **last**.
+| **Backlog** | tasks for later |
+| **Sprint 1** | tasks in this sprint |
+| **In progress** | someone is working on it (a branch exists) |
+| **Code Review** | PR waiting for review |
+| **Testing** | PR merged, checking `develop` |
+| **Done** | finished and verified |
 
 ## Task descriptions
 
-**1. GitHub repo**
-Create the `gym-app` repository on GitHub with a README and a `.gitignore` template (Node), then add the other 5 people as collaborators (Settings -> Collaborators).
-*Done when:* everyone has access to the repo.
+**1-3. Repo, React project, React Router**
+Repository with collaborators, Vite project and `react-router-dom`.
 
-**2. React project initialization**
-Clone the repo and create a React project with Vite (`npm create vite@latest . -- --template react`, then `npm install` and `npm run dev`). Push it to `main`, then create and push the `develop` branch (`git checkout -b develop`, `git push -u origin develop`). Everyone will create their branches from `develop`.
-*Done when:* the project runs at `localhost:5173` and both `main` and `develop` exist on GitHub.
+**4. Setup repo** (Wigur, works alone, the rest waits)
+Goes straight to `develop`: create `develop` from `main`; folders `src/components/`, `src/pages/`, `src/data/` with `.gitkeep`; remove the Vite template (`App.css`, `react.svg`, `vite.svg`, `hero.png`, `icons.svg`, styles `#root`, `h1`, `.counter`); in `index.html` `lang="pl"` and title "Gym App"; protect `main` and `develop` (PR + 1 approval).
+*Done when:* `main` and `develop` are protected, folders are visible, `npm run dev` shows a clean page.
 
-**3. Install react-router-dom**
-On `develop`, install the library for handling subpages (`npm install react-router-dom`) and push the `package.json` changes. Tasks 3 and 4 (setup) can be pushed straight to `develop`.
-*Done when:* `react-router-dom` is in `package.json`.
+**5. README** (`feature/readme`)
+Project, team and sprint goal description; replace `<LOGIN>` in `git clone`.
 
-**4. Folder structure**
-In `src/` create `components/` (small reusable elements), `pages/` (whole screens, i.e. the tabs) and `data/` (sample data). Empty folders need an empty `.gitkeep` file, otherwise git will not store them.
-*Done when:* the three folders are visible on GitHub.
+**6. Navbar** (`feature/navbar`)
+`src/components/Navbar.jsx` with 4 `NavLink`s: `/niestandardowy`, `/cwiczenia`, `/raport`, `/moje`. The active link gets the `active` class and is clearly highlighted.
 
-**5. Extend README**
-Add the ready-made `README.md` to the repo and replace `<LOGIN>` in the `git clone` command with the real username. Branch: `feature/readme`.
-*Done when:* the README is merged into `develop`.
+**7. Custom and Exercises pages** (`feature/strony-custom-exercises`)
+`src/pages/Custom.jsx` (`<h1>Niestandardowy</h1>`) and `src/pages/Exercises.jsx` (`<h1>Ćwiczenia</h1>`). Mind the spelling: Exercises.
 
-**6. Add Navbar component**
-Branch: `feature/navbar`. The `src/components/Navbar.jsx` component with 4 links (`NavLink` from `react-router-dom`) to `/niestandardowy`, `/cwiczenia`, `/raport`, `/moje`. The active link should be highlighted (`active` class in CSS).
-*Done when:* the component exists and is merged.
+**8. Report page** (`feature/strona-raport`)
+`src/pages/Report.jsx` with `<h1>Raport</h1>`.
 
-**7. Create Custom page (Niestandardowy)**
-Branch: `feature/strona-custom`. File `src/pages/Custom.jsx` with just a heading `<h1>Niestandardowy</h1>`. Eventually it will hold workout plan cards (Day 1, Day 2...).
-*Done when:* the file exists and is merged.
+**9. Profile page** (`feature/strona-profile`)
+`src/pages/Profile.jsx` with `<h1>Moje</h1>`.
 
-**8. Create Exercises page**
-Branch: `feature/strona-exercises`. File `src/pages/Exercises.jsx` with a heading. Eventually the exercise catalog. Mind the spelling: **Exercises**, not "Excersises".
-*Done when:* the file exists and is merged.
+**10. Mock Data** (`feature/mock-data`)
+In `src/data/`: `exercises.json` (at least 10 exercises: name, equipment, muscle group) and `plans.json` (at least 3 plans: Day 1, Day 2, Day 4, referencing exercises by `exerciseId`). Every item has a unique `id`.
 
-**9. Create Report page (Raport)**
-Branch: `feature/strona-raport`. File `src/pages/Report.jsx` with a heading. Eventually statistics and charts.
-*Done when:* the file exists and is merged.
-
-**10. Create Profile page (Moje)**
-Branch: `feature/strona-profile`. File `src/pages/Profile.jsx` with the heading "Moje". Eventually the profile and settings.
-*Done when:* the file exists and is merged.
-
-**11. Add Mock Data**
-Branch: `feature/mock-data`. Create in `src/data/` the files `exercises.json` (at least 10 exercises: name, equipment, muscle group) and `plans.json` (at least 3 plans: Day 1, Day 2, Day 4, referencing exercises by `exerciseId`). Every item has a unique `id`. Base it on the reference app screenshot.
-*Done when:* both files are valid JSON and merged.
-
-**12. Configure routing in App.jsx**
-Branch: `feature/routing`. In `src/App.jsx` set up `BrowserRouter`, `Navbar` and `Routes` with 4 paths; visiting `/` redirects to `/niestandardowy`. Start only when the Navbar and pages are on `develop`.
-*Done when:* clicking each of the 4 tabs shows the right page.
+**11. Routing** (`feature/routing`)
+Start after the Navbar and pages are merged. In `src/App.jsx`: `BrowserRouter`, `Navbar`, `Routes` with 4 paths; `/` redirects to `/niestandardowy`. At the end, the `develop` -> `main` PR.
+*Done when:* each tab shows the right page, `npm run lint` and `npm run build` pass.
 
 ## Definition of Done
 
-A task is complete (the card may move to `Done`) when:
+- [ ] code merged into `develop` via PR,
+- [ ] PR approved by another person,
+- [ ] `npm run lint` passes,
+- [ ] after `git pull` on `develop` the app starts without errors,
+- [ ] branch deleted, card in `Done`.
 
-- [ ] the code is merged into `develop` via a Pull Request,
-- [ ] the PR was reviewed by another person,
-- [ ] after `git pull` on `develop` and `npm run dev` the app starts without errors,
-- [ ] the branch was deleted,
-- [ ] the Trello card is in `Done`.
-
-**End of sprint:** `develop` has been merged into `main` via a Pull Request, and all 6 team members have cloned the repo, run `npm install` and `npm run dev`, and confirmed that the app works locally.
+**End of sprint:** `develop` merged into `main`, and all 6 team members have the app running locally (`npm install`, `npm run dev`).
