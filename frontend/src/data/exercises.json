@@ -29,7 +29,7 @@
   { "id": 28, "name": "Plank", "muscleGroup": "Core", "image": "plank.jpg", "equipment": "Bodyweight", "difficulty": "Beginner" },
   { "id": 29, "name": "Hanging Leg Raise", "muscleGroup": "Core", "image": "plank.jpg", "equipment": "Pull-up Bar", "difficulty": "Intermediate" },
   { "id": 30, "name": "Push-Up", "muscleGroup": "Chest", "image": "barbell-bench-press.jpg", "equipment": "Bodyweight", "difficulty": "Beginner" },
-    { "id": 31, "name": "Goblet Squat", "muscleGroup": "Legs", "image": "barbell-back-squat.jpg", "equipment": "Dumbbell", "difficulty": "Beginner" },
+  { "id": 31, "name": "Goblet Squat", "muscleGroup": "Legs", "image": "barbell-back-squat.jpg", "equipment": "Dumbbell", "difficulty": "Beginner" },
   { "id": 32, "name": "Bulgarian Split Squat", "muscleGroup": "Legs", "image": "barbell-back-squat.jpg", "equipment": "Dumbbells", "difficulty": "Intermediate" },
   { "id": 33, "name": "Front Squat", "muscleGroup": "Legs", "image": "barbell-back-squat.jpg", "equipment": "Barbell", "difficulty": "Intermediate" },
   { "id": 34, "name": "Sumo Deadlift", "muscleGroup": "Legs", "image": "barbell-deadlift.jpg", "equipment": "Barbell", "difficulty": "Intermediate" },
