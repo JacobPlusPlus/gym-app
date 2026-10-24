@@ -2,99 +2,97 @@ const Workout = () => {
   return (
     <div className="workout-content">
       <section className="section">
-        <p className="muted">PLANOWANIE I TRENING</p>
-        <h1 className="page-title">Twoje treningi</h1>
+        <p className="muted">WORKOUT PLANNING AND TRAINING</p>
+        <h1 className="page-title">Your Workouts</h1>
         <p className="muted">
-          Planuj sesje treningowe i kontroluj swoje postępy.
+          Plan your workout sessions and track your progress.
         </p>
       </section>
 
       <section className="section">
-        <h2>Podsumowanie</h2>
+        <h2>Summary</h2>
 
         <div className="card-list">
           <div className="card">
-            <p className="muted">Aktywny plan</p>
-            <h3>Nie wybrano</h3>
-            <p>Wybierz plan dopasowany do swojego celu.</p>
+            <p className="muted">Active Plan</p>
+            <h3>None selected</h3>
+            <p>Choose a plan that matches your goal.</p>
           </div>
 
           <div className="card">
-            <p className="muted">Ćwiczenia w planie</p>
+            <p className="muted">Exercises in Plan</p>
             <h2>—</h2>
-            <p>Liczba ćwiczeń do wykonania.</p>
+            <p>Number of exercises to complete.</p>
           </div>
 
           <div className="card">
-            <p className="muted">Ostatni trening</p>
-            <h3>Brak danych</h3>
-            <p>Twoja historia pojawi się tutaj.</p>
+            <p className="muted">Last Workout</p>
+            <h3>No data</h3>
+            <p>Your history will appear here.</p>
           </div>
         </div>
       </section>
 
       <section className="section">
-        <h2>Przykładowe plany treningowe</h2>
+        <h2>Sample Workout Plans</h2>
 
         <div className="card-list">
           <div className="card">
             <h3>Push</h3>
-            <p className="muted">Klatka piersiowa, barki, triceps</p>
+            <p className="muted">Chest, shoulders, triceps</p>
             <ul>
-              <li>Wyciskanie sztangi leżąc</li>
-              <li>Wyciskanie hantli nad głowę</li>
-              <li>Prostowanie ramion na wyciągu</li>
+              <li>Barbell Bench Press</li>
+              <li>Dumbbell Overhead Press</li>
+              <li>Cable Triceps Extension</li>
             </ul>
-            <p className="muted">Przykładowy plan</p>
+            <p className="muted">Sample plan</p>
           </div>
 
           <div className="card">
             <h3>Pull</h3>
-            <p className="muted">Plecy, tył barków, biceps</p>
+            <p className="muted">Back, rear shoulders, biceps</p>
             <ul>
-              <li>Wiosłowanie</li>
-              <li>Ściąganie drążka wyciągu</li>
-              <li>Uginanie ramion z hantlami</li>
+              <li>Row</li>
+              <li>Lat Pulldown</li>
+              <li>Dumbbell Curl</li>
             </ul>
-            <p className="muted">Przykładowy plan</p>
+            <p className="muted">Sample plan</p>
           </div>
 
           <div className="card">
             <h3>Legs</h3>
-            <p className="muted">Uda, pośladki, łydki</p>
+            <p className="muted">Thighs, glutes, calves</p>
             <ul>
-              <li>Przysiady ze sztangą</li>
-              <li>Uginanie nóg na maszynie</li>
-              <li>Wspięcia na palce</li>
+              <li>Barbell Squat</li>
+              <li>Machine Leg Curl</li>
+              <li>Calf Raise</li>
             </ul>
-            <p className="muted">Przykładowy plan</p>
+            <p className="muted">Sample plan</p>
           </div>
         </div>
       </section>
 
       <section className="section">
-        <h2>Ostatnie treningi</h2>
+        <h2>Recent Workouts</h2>
 
         <div className="card">
-          <p>Nie masz jeszcze zapisanych treningów.</p>
+          <p>You have no saved workouts yet.</p>
           <p className="muted">
-            Po dodaniu zapisywania treningów pojawią się tutaj
-            daty, czas trwania i wykonane ćwiczenia.
+            Once workout logging is available, your workout dates, durations, and exercises will appear here.
           </p>
         </div>
       </section>
 
       <section className="section">
-        <h2>Rejestracja treningu</h2>
+        <h2>Workout Logging</h2>
 
         <div className="card">
-          <h3>Śledź każdą serię</h3>
+          <h3>Track Every Set</h3>
           <p>
-            W przyszłości będzie można wybrać ćwiczenie,
-            podać ciężar, liczbę powtórzeń i zapisać serię.
+            In the future, you will be able to choose an exercise, enter the weight and reps, and save each set.
           </p>
           <p className="muted">
-            Funkcja zostanie dodana w kolejnym etapie projektu.
+            This feature will be added in a later stage of the project.
           </p>
         </div>
       </section>

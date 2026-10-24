@@ -2,69 +2,65 @@ const Home = () => {
   return (
     <div className="home-content">
       <section className="section">
-        <p className="muted">TWÓJ TRENING, TWOJE POSTĘPY</p>
-        <h1 className="page-title">Witaj w GymApp!</h1>
+        <p className="muted">YOUR TRAINING, YOUR PROGRESS</p>
+        <h1 className="page-title">Welcome to GymApp!</h1>
         <p className="muted">
-          Planuj treningi, poznawaj ćwiczenia i śledź swoje postępy.
+          Plan workouts, explore exercises, and track your progress.
         </p>
       </section>
 
       <section className="section">
-        <h2>Twój panel</h2>
+        <h2>Your Dashboard</h2>
 
         <div className="card-list">
           <div className="card">
-            <h3>Trening</h3>
-            <p>Rozpocznij trening i zapisuj wykonane serie,
-              powtórzenia oraz ciężary.</p>
+            <h3>Workout</h3>
+            <p>Start a workout and log your sets, reps, and weights.</p>
           </div>
 
           <div className="card">
-            <h3>Ćwiczenia</h3>
-            <p>Przeglądaj ćwiczenia i poznawaj grupy mięśniowe,
-              które angażują.</p>
+            <h3>Exercises</h3>
+            <p>Browse exercises and learn which muscle groups they target.</p>
           </div>
 
           <div className="card">
-            <h3>Raporty</h3>
-            <p>W przyszłości sprawdzisz tutaj historię treningów
-              i swoje postępy.</p>
+            <h3>Reports</h3>
+            <p>Your workout history and progress will be available here in the future.</p>
           </div>
         </div>
       </section>
 
       <section className="section">
-        <h2>Od czego zacząć?</h2>
+        <h2>Where to Start</h2>
 
         <div className="card">
-          <h3>Zaplanuj swój trening</h3>
+          <h3>Plan Your Workout</h3>
           <p>
-            Przejdź do sekcji Workout, aby rozpocząć pracę
-            nad swoją formą.
+            Go to the Workout section to start working toward your fitness goals.
           </p>
         </div>
       </section>
 
       <section className="section">
-        <h2>Twoje statystyki</h2>
+        <h2>Your Stats</h2>
 
         <div className="card-list">
           <div className="card">
-            <p className="muted">Treningi</p>
+            <p className="muted">Workouts</p>
             <h3>—</h3>
-            <p>Dane pojawią się w przyszłości.</p>
+            <p>Data will be available in the future.</p>
           </div>
 
           <div className="card">
-            <p className="muted">Wykonane serie</p>
+            <p className="muted">Completed Sets</p>
             <h3>—</h3>
-            <p>Dane pojawią się w przyszłości.</p>
+            <p>Data will be available in the future.</p>
           </div>
 
           <div className="card">
-            <p className="muted">Postępy</p>
+            <p className="muted">Progress</p>
             <h3>—</h3>
-            <p>Dane pojawią się w przyszłości.</p>
+            <p>Data will be available in the future.</p>
           </div>
         </div>
       </section>

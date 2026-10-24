@@ -2,59 +2,59 @@ const Raport = () => {
   return (
     <div className="raport-content">
       <section className="section">
-        <p className="muted">ANALIZA TWOJEJ AKTYWNOŚCI</p>
-        <h1 className="page-title">Raporty treningowe</h1>
+        <p className="muted">YOUR ACTIVITY AT A GLANCE</p>
+        <h1 className="page-title">Workout Reports</h1>
         <p className="muted">
-          Sprawdzaj historię treningów i monitoruj swoje postępy.
+          Review your workout history and track your progress.
         </p>
       </section>
 
       <section className="section">
-        <h2>Podsumowanie</h2>
+        <h2>Summary</h2>
 
         <div className="card-list">
           <div className="card">
-            <p className="muted">Liczba treningów</p>
+            <p className="muted">Number of Workouts</p>
             <h2>—</h2>
-            <p>Wszystkie wykonane treningi</p>
+            <p>Total completed workouts</p>
           </div>
 
           <div className="card">
-            <p className="muted">Wykonane serie</p>
+            <p className="muted">Completed Sets</p>
             <h2>—</h2>
-            <p>Łączna liczba serii</p>
+            <p>Total number of sets</p>
           </div>
 
           <div className="card">
-            <p className="muted">Powtórzenia</p>
+            <p className="muted">Reps</p>
             <h2>—</h2>
-            <p>Łączna liczba powtórzeń</p>
+            <p>Total number of repetitions</p>
           </div>
         </div>
       </section>
 
       <section className="section">
-        <h2>Historia treningów</h2>
+        <h2>Workout History</h2>
 
         <div className="card">
           <p className="muted">
-            Tutaj pojawią się zapisane treningi.
+            Your saved workouts will appear here.
           </p>
 
           <table>
             <thead>
               <tr>
-                <th>Data</th>
-                <th>Trening</th>
-                <th>Czas</th>
-                <th>Serie</th>
+                <th>Date</th>
+                <th>Workout</th>
+                <th>Duration</th>
+                <th>Sets</th>
               </tr>
             </thead>
 
             <tbody>
               <tr>
                 <td colSpan="4">
-                  Brak zapisanych treningów.
+                  No saved workouts.
                 </td>
               </tr>
             </tbody>
@@ -63,37 +63,35 @@ const Raport = () => {
       </section>
 
       <section className="section">
-        <h2>Postępy siłowe</h2>
+        <h2>Strength Progress</h2>
 
         <div className="card">
-          <h3>Twoje wyniki</h3>
+          <h3>Your Results</h3>
           <p>
-            Wyciskanie na ławce: —
+            Bench Press: —
           </p>
           <p>
-            Przysiad ze sztangą: —
+            Barbell Squat: —
           </p>
           <p>
-            Martwy ciąg: —
+            Deadlift: —
           </p>
           <p className="muted">
-            Historia ciężarów i wykresy zmian będą dostępne
-            po zapisaniu wyników treningowych.
+            Weight history and progress charts will be available once workout results are saved.
           </p>
         </div>
       </section>
 
       <section className="section">
-        <h2>Aktywność tygodniowa</h2>
+        <h2>Weekly Activity</h2>
 
         <div className="card">
-          <h3>Regularność treningów</h3>
+          <h3>Workout Consistency</h3>
           <p>
-            Tutaj będzie można sprawdzić liczbę treningów
-            w poszczególnych dniach i tygodniach.
+            See how many workouts you complete on different days and weeks.
           </p>
           <p className="muted">
-            Wykres zostanie dodany w przyszłości.
+            A chart will be added in the future.
           </p>
         </div>
       </section>

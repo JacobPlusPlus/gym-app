@@ -2,104 +2,103 @@ const Profile = () => {
   return (
     <div className="profile-content">
       <section className="section">
-        <p className="muted">TWOJE KONTO</p>
-        <h1 className="page-title">Profil użytkownika</h1>
+        <p className="muted">YOUR ACCOUNT</p>
+        <h1 className="page-title">User Profile</h1>
         <p className="muted">
-          Zarządzaj swoimi danymi, celami i postępami treningowymi.
+          Manage your details, goals, and workout progress.
         </p>
       </section>
 
       <section className="section">
-        <h2>Informacje o użytkowniku</h2>
+        <h2>User Information</h2>
 
         <div className="card">
-          <h3>Twój profil</h3>
-          <p>Nazwa użytkownika: Nie ustawiono</p>
-          <p>Wiek: —</p>
-          <p>Wzrost: —</p>
-          <p>Masa ciała: —</p>
+          <h3>Your Profile</h3>
+          <p>Username: Not set</p>
+          <p>Age: —</p>
+          <p>Height: —</p>
+          <p>Body weight: —</p>
           <p className="muted">
-            Dane będzie można uzupełnić w przyszłości.
+            You will be able to add your details in the future.
           </p>
         </div>
       </section>
 
       <section className="section">
-        <h2>Cele treningowe</h2>
+        <h2>Workout Goals</h2>
 
         <div className="card-list">
           <div className="card">
-            <h3>Główny cel</h3>
-            <p>Nie wybrano celu.</p>
+            <h3>Primary Goal</h3>
+            <p>No goal selected.</p>
             <p className="muted">
-              Np. budowanie masy mięśniowej.
+              For example, building muscle.
             </p>
           </div>
 
           <div className="card">
-            <h3>Cel wagowy</h3>
-            <p>Aktualna waga: —</p>
-            <p>Waga docelowa: —</p>
+            <h3>Weight Goal</h3>
+            <p>Current weight: —</p>
+            <p>Target weight: —</p>
           </div>
 
           <div className="card">
-            <h3>Priorytet treningowy</h3>
-            <p>Nie ustawiono priorytetu.</p>
+            <h3>Workout Priority</h3>
+            <p>No priority set.</p>
             <p className="muted">
-              Np. siła, masa mięśniowa lub kondycja.
+              For example, strength, muscle building, or fitness.
             </p>
           </div>
         </div>
       </section>
 
       <section className="section">
-        <h2>Pomiary ciała</h2>
+        <h2>Body Measurements</h2>
 
         <div className="card">
-          <p>Masa ciała: —</p>
-          <p>Obwód klatki piersiowej: —</p>
-          <p>Obwód talii: —</p>
-          <p>Obwód ramienia: —</p>
+          <p>Body weight: —</p>
+          <p>Chest circumference: —</p>
+          <p>Waist circumference: —</p>
+          <p>Arm circumference: —</p>
           <p className="muted">
-            Historia pomiarów i wykres postępów będą dostępne
-            po dodaniu zapisywania danych.
+            Measurement history and a progress chart will be available once data logging is added.
           </p>
         </div>
       </section>
 
       <section className="section">
-        <h2>Aktywność treningowa</h2>
+        <h2>Workout Activity</h2>
 
         <div className="card-list">
           <div className="card">
-            <h3>Treningi</h3>
-            <p className="muted">Łączna liczba</p>
+            <h3>Workouts</h3>
+            <p className="muted">Total</p>
             <h2>—</h2>
           </div>
 
           <div className="card">
-            <h3>Serie</h3>
-            <p className="muted">Łączna liczba</p>
+            <h3>Sets</h3>
+            <p className="muted">Total</p>
             <h2>—</h2>
           </div>
 
           <div className="card">
-            <h3>Regularność</h3>
-            <p className="muted">Historia aktywności</p>
+            <h3>Consistency</h3>
+            <p className="muted">Activity history</p>
             <h2>—</h2>
           </div>
         </div>
       </section>
 
       <section className="section">
-        <h2>Ustawienia</h2>
+        <h2>Settings</h2>
 
         <div className="card">
-          <p>Jednostki wagi: kg</p>
-          <p>Jednostki wzrostu: cm</p>
-          <p>Preferencje treningowe: nie ustawiono</p>
+          <p>Weight units: kg</p>
+          <p>Height units: cm</p>
+          <p>Workout preferences: not set</p>
           <p className="muted">
-            Edycja danych i preferencji zostanie dodana w przyszłości.
+            Editing your details and preferences will be added in the future.
           </p>
         </div>
       </section>
