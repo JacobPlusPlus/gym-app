@@ -92,20 +92,6 @@
   margin: 0 auto;
 }
 
-.app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.main {
-  flex: 1;
-  width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 24px 16px 110px;
-}
-
 /* ---------- Nagłówki ---------- */
 
 .page-title {
@@ -120,55 +106,6 @@
 
 .muted {
   color: #777;
-  font-size: 14px;
-}
-
-/* ---------- Dolne menu ---------- */
-
-.bottom-nav {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 100;
-  display: flex;
-  height: 90px;
-  background: #fff;
-  border-top: 1px solid #ddd;
-}
-
-.nav-btn {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  border: none;
-  background: transparent;
-  color: #444;
-  text-decoration: none;
-  font-weight: 700;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.nav-btn:hover {
-  background: #f0f4ff;
-}
-
-.nav-btn.active {
-  border-top: 3px solid #2b6cdf;
-  color: #2b6cdf;
-}
-
-.nav-icon {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-}
-
-.nav-label {
   font-size: 14px;
 }
 
@@ -195,71 +132,6 @@
 .card ul {
   padding-left: 20px;
   margin-top: 8px;
-}
-
-/* ---------- Przyciski ---------- */
-
-.btn {
-  display: inline-block;
-  padding: 8px 16px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background: #fff;
-  color: #222;
-  font-size: 15px;
-  cursor: pointer;
-}
-
-.btn:hover {
-  background: #f0f0f0;
-}
-
-.btn-primary {
-  border-color: #2b6cdf;
-  background: #2b6cdf;
-  color: #fff;
-}
-
-.btn-primary:hover {
-  background: #1f58bd;
-}
-
-.btn-danger {
-  border-color: #d9534f;
-  background: #d9534f;
-  color: #fff;
-}
-
-.btn-danger:hover {
-  background: #c9302c;
-}
-
-/* ---------- Formularze ---------- */
-
-.form-row {
-  margin-bottom: 12px;
-}
-
-.label {
-  display: block;
-  margin-bottom: 4px;
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.input {
-  width: 100%;
-  padding: 8px 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background: #fff;
-  color: #222;
-  font-size: 15px;
-}
-
-.input:focus {
-  outline: 2px solid #d5e2fc;
-  border-color: #2b6cdf;
 }
 
 /* ---------- Tabele ---------- */
@@ -334,33 +206,12 @@ th {
     padding: 24px 16px 90px;
   }
 
-  .main {
-    padding: 20px 12px 90px;
-  }
-
   .page-title {
     font-size: 24px;
   }
 
   .card-list {
     grid-template-columns: 1fr;
-  }
-
-  .bottom-nav {
-    height: 70px;
-  }
-
-  .nav-icon {
-    width: 28px;
-    height: 28px;
-  }
-
-  .nav-label {
-    font-size: 11px;
-  }
-
-  .nav-btn {
-    gap: 4px;
   }
 
   table {

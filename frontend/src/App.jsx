@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, NavLink, Outlet } from 'react-router-dom'
 import Home from './pages/Home'
 import Workout from './pages/Workout'
 import Exercises from './pages/Exercises'
-import Raport from './pages/Raport'
+import Reports from './pages/Reports'
 import Profile from './pages/Profile'
 import './App.css'
 
@@ -33,7 +33,7 @@ function Layout() {
             Exercises
           </NavLink>
 
-          <NavLink to="/raport" className="nav-item">
+          <NavLink to="/reports" className="nav-item">
             <span className="nav-icon">▤</span>
             Reports
           </NavLink>
@@ -66,7 +66,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="workout" element={<Workout />} />
           <Route path="exercises" element={<Exercises />} />
-          <Route path="raport" element={<Raport />} />
+          <Route path="reports" element={<Reports />} />
           <Route path="profile" element={<Profile />} />
         </Route>
       </Routes>
