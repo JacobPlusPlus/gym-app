@@ -8,6 +8,11 @@ Rozbudować aplikację Gym App poprzez połączenie frontendu React z bazą dany
 
 ## Co się udało zrobić
 
+- **Katalog ćwiczeń:** dodano katalog z 50 ćwiczeniami, zdjęciami, wyszukiwaniem i filtrowaniem po grupie mięśniowej. Dane są obecnie w pliku JSON — katalog nie jest jeszcze połączony z bazą danych.
+- **Podstrony aplikacji:** rozbudowano interfejs Dashboard, Workout, Reports i Profile o sekcje z podsumowaniami, przykładowymi planami i miejscami na przyszłe dane.
+- **Wygląd aplikacji:** uporządkowano style CSS, wydzielając style katalogu ćwiczeń do osobnego pliku, oraz dostosowano układ do mniejszych ekranów.
+- **Struktura frontendu:** umieszczono aplikację React/Vite w katalogu `frontend/`.
+
 ## Jak teraz wygląda produkt
 
 ## Co dalej
