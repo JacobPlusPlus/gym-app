@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import exercises from '../data/excersises.json'
+import exercises from '../data/exercises.json'
 import './Exercises.css'
 
 const exerciseImages = import.meta.glob('../assets/exercises/*.jpg', {

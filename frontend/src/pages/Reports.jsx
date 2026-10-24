@@ -1,4 +1,4 @@
-const Raport = () => {
+const Reports = () => {
   return (
     <div className="raport-content">
       <section className="section">
@@ -99,4 +99,4 @@ const Raport = () => {
   )
 }
 
-export default Raport
+export default Reports
