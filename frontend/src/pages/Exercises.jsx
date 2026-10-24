@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import exercises from '../data/excersises.json'
+import './Exercises.css'
 
 const exerciseImages = import.meta.glob('../assets/exercises/*.jpg', {
   eager: true,

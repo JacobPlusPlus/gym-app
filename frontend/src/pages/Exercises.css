@@ -1,0 +1,175 @@
+.page {
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.page-heading {
+  margin-bottom: 30px;
+}
+
+.eyebrow {
+  margin-bottom: 9px;
+  color: #2b6cdf;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.page-heading h1 {
+  margin-bottom: 10px;
+  color: #172033;
+  font-size: clamp(30px, 4vw, 42px);
+  letter-spacing: -1.6px;
+  line-height: 1.1;
+}
+
+.page-heading > p:last-child {
+  max-width: 650px;
+  color: #667085;
+  line-height: 1.6;
+}
+
+.catalog-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.search-input,
+.form-select {
+  min-height: 43px;
+  padding: 0 13px;
+  border: 1px solid #d6deeb;
+  border-radius: 8px;
+  background: #fff;
+  color: #172033;
+  font: inherit;
+}
+
+.search-input {
+  flex: 1 1 260px;
+  max-width: 440px;
+}
+
+.search-input:focus,
+.form-select:focus {
+  outline: 3px solid #2b6cdf30;
+  border-color: #2b6cdf;
+}
+
+.muscle-filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.result-count {
+  color: #667085;
+  font-size: 13px;
+}
+
+.exercise-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+  gap: 15px;
+}
+
+.exercise-card,
+.empty-state {
+  border: 1px solid #dce3ee;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 5px 20px #24332608;
+}
+
+.exercise-card {
+  min-height: 156px;
+  padding: 18px;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.exercise-card:hover {
+  border-color: #b5c9ed;
+  box-shadow: 0 8px 24px #2b6cdf14;
+}
+
+.exercise-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.exercise-mark {
+  display: flex;
+  width: 96px;
+  height: 64px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid #e3e9f2;
+  border-radius: 8px;
+  background: #f8faff;
+}
+
+.exercise-mark img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.difficulty {
+  padding: 5px 8px;
+  border-radius: 20px;
+  background: #edf3ff;
+  color: #2459ad;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.exercise-card h2 {
+  margin-bottom: 8px;
+  color: #172033;
+  font-size: 16px;
+  letter-spacing: -0.2px;
+}
+
+.exercise-meta {
+  color: #667085;
+  font-size: 12px;
+}
+
+.exercise-meta span + span::before {
+  margin: 0 7px;
+  color: #aab5c5;
+  content: '·';
+}
+
+.empty-state {
+  padding: 22px;
+  color: #667085;
+  line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+  .catalog-toolbar {
+    align-items: stretch;
+  }
+
+  .search-input {
+    max-width: none;
+  }
+
+  .muscle-filter {
+    justify-content: space-between;
+  }
+
+  .exercise-grid {
+    grid-template-columns: 1fr;
+  }
+}
