@@ -13,11 +13,14 @@ CREATE TABLE users (
 );
 
 -- shared catalog of exercises, same for every user
+-- the data comes from frontend/src/data/exercises.json
 CREATE TABLE exercises (
     id           SERIAL PRIMARY KEY,
     name         VARCHAR(100) NOT NULL,
-    equipment    VARCHAR(50) NOT NULL,   -- sztanga, hantle, maszyna, wyciag, masa ciala
-    muscle_group VARCHAR(50) NOT NULL    -- nogi, plecy, klatka, barki, biceps, triceps, brzuch
+    equipment    VARCHAR(50) NOT NULL,    -- Barbell, Dumbbells, Cable, Bodyweight, Machine...
+    muscle_group VARCHAR(50) NOT NULL,    -- Legs, Back, Chest, Shoulders, Arms, Glutes, Core
+    image        VARCHAR(100),            -- file name in frontend/src/assets/exercises
+    difficulty   VARCHAR(20)              -- Beginner, Intermediate, Advanced
 );
 
 -- a plan is one of the cards in the Workout tab (Day 1, Day 2, Day 4...)

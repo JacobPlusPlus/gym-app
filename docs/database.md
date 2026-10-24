@@ -24,12 +24,17 @@ People using the app. For now there is no login so there is just one test user.
 Catalog of exercises (Exercises tab). It is shared, every user sees the same list.
 Equipment and muscle group are just text, no extra tables for that.
 
+The seed loads all 50 exercises from `frontend/src/data/exercises.json` and keeps the
+same ids, so the frontend and the database point at the same exercise.
+
 | column | type | notes |
 |---|---|---|
-| id | serial | PK |
-| name | varchar(100) | e.g. "Przysiad ze sztangą" |
-| equipment | varchar(50) | sztanga / hantle / maszyna / wyciag / masa ciala |
-| muscle_group | varchar(50) | nogi / plecy / klatka / barki / biceps / triceps / brzuch |
+| id | serial | PK, same id as in exercises.json |
+| name | varchar(100) | e.g. "Barbell Bench Press" |
+| equipment | varchar(50) | Barbell / Dumbbells / Cable / Bodyweight / Machine ... |
+| muscle_group | varchar(50) | Legs / Back / Chest / Shoulders / Arms / Glutes / Core |
+| image | varchar(100) | file name in frontend/src/assets/exercises |
+| difficulty | varchar(20) | Beginner / Intermediate / Advanced |
 
 ### plans
 One row = one card in the Workout tab (Day 1, Day 2, Day 4...). Belongs to a user.
@@ -114,6 +119,8 @@ erDiagram
         varchar name
         varchar equipment
         varchar muscle_group
+        varchar image
+        varchar difficulty
     }
     plans {
         int id PK
