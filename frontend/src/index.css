@@ -1,3 +1,59 @@
+/* ============================================================
+   KOLORY APLIKACJI (jedyne miejsce, gdzie wpisujemy kolory hex)
+   Nazwy opisują rolę, nie kolor. W innych plikach CSS używamy
+   tylko var(--nazwa), np. background: var(--surface);
+
+   Teraz jest tylko ciemny motyw. Jasny motyw w przyszłości:
+   dopisać blok :root[data-theme='light'] { ...te same nazwy... }
+   i przycisk przełączający atrybut data-theme na <html>.
+   ============================================================ */
+   
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark; /* ciemne paski przewijania i pola formularzy */
+
+  --bg: #0e131c;          /* tło całej strony */
+  --surface: #131b25;     /* karty, topbar, tabele */
+  --surface-2: #212c3f;   /* nagłówki tabel, drugorzędne tła */
+  --text: #e6ebf2;        /* główny tekst */
+  --text-muted: #8b9bb4;  /* tekst pomocniczy (.muted) */
+  --border: #23334d;      /* obramowania kart, tabel, topbaru */
+  --accent: #60a5fa;      /* linki i wyróżnienia */
+  /* ----- NAWIGACJA (sidebar) ----- */
+  --sidebar-bg: #0f141c;             /* tło menu */
+  --sidebar-border: #1a2332;         /* linia przy krawędzi menu */
+  --sidebar-text: #8b9bb4;           /* zwykła pozycja menu */
+  --sidebar-heading: #58687e;        /* napis MENU */
+  --sidebar-hover-bg: rgba(255, 255, 255, 0.04);
+  --sidebar-hover-text: var(--text); /* tekst po najechaniu */
+  --sidebar-active-bg: #172030;      /* aktywna zakładka: tło */
+  --sidebar-active-border: #23334d;  /* aktywna zakładka: ramka */
+  --sidebar-active-text: var(--accent); /* aktywna zakładka: kolor i pasek */
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --bg: #f4f6f8;
+  --surface: #ffffff;
+  --surface-2: #eef1f6;
+  --text: #172033;
+  --text-muted: #667085;
+  --border: #dce3ee;
+  --accent: #2b6cdf;
+
+  /* ----- NAWIGACJA (sidebar) ----- */
+  --sidebar-bg: #ffffff;
+  --sidebar-border: #e1e5ea;
+  --sidebar-text: #5b6b82;
+  --sidebar-heading: #8794a8;
+  --sidebar-hover-bg: rgba(0, 0, 0, 0.04);
+  --sidebar-hover-text: var(--text);
+  --sidebar-active-bg: #eaf2ff;
+  --sidebar-active-border: #c7dcff;
+  --sidebar-active-text: var(--accent);
+}
+
 /* ---------- Globalne ustawienia ---------- */
 
 * {
@@ -9,8 +65,6 @@
 :root {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
-  color: #222;
-  background: #f4f6f8;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -19,8 +73,8 @@
 body {
   min-width: 320px;
   min-height: 100vh;
-  background: #f4f6f8;
-  color: #222;
+  background: var(--bg);
+  color: var(--text);
 }
 
 button,
@@ -31,5 +85,5 @@ textarea {
 }
 
 a {
-  color: #2b6cdf;
+  color: var(--accent);
 }

@@ -156,20 +156,4 @@
   line-height: 1.6;
 }
 
-@media (max-width: 600px) {
-  .catalog-toolbar {
-    align-items: stretch;
-  }
-
-  .search-input {
-    max-width: none;
-  }
-
-  .muscle-filter {
-    justify-content: space-between;
-  }
-
-  .exercise-grid {
-    grid-template-columns: 1fr;
-  }
-}
+ 
