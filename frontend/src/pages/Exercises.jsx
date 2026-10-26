@@ -1,5 +1,4 @@
-import { useMemo, useState } from 'react'
-import exercises from '../data/exercises.json'
+import { useEffect, useMemo, useState } from 'react'
 import './Exercises.css'
 
 const exerciseImages = import.meta.glob('../assets/exercises/*.jpg', {
@@ -9,13 +8,28 @@ const exerciseImages = import.meta.glob('../assets/exercises/*.jpg', {
 })
 
 const Exercises = () => {
+  const [exercises, setExercises] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
   const [search, setSearch] = useState('')
   const [muscleGroup, setMuscleGroup] = useState('All muscle groups')
 
+  useEffect(() => {
+    fetch('/api/exercises')
+      .then((res) => {
+        if (!res.ok) throw new Error('Request failed')
+        return res.json()
+      })
+      .then((data) => setExercises(data))
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false))
+  }, [])
+
   const muscleGroups = useMemo(
     () => ['All muscle groups', ...new Set(exercises.map((exercise) => exercise.muscleGroup))],
-    [],
+    [exercises],
   )
+
   const filteredExercises = exercises.filter((exercise) => {
     const matchesSearch = `${exercise.name} ${exercise.muscleGroup} ${exercise.equipment}`
       .toLowerCase()
@@ -25,6 +39,16 @@ const Exercises = () => {
     return matchesSearch && matchesMuscleGroup
   })
 
+  if (loading) return <p className="empty-state">Loading exercises...</p>
+
+if (error) {
+  return (
+    <div className="empty-state">
+      <p>Could not load exercises.</p>
+      <button onClick={() => window.location.reload()}>Try again</button>
+    </div>
+  )
+}
   return (
     <section className="page">
       <header className="page-heading">
