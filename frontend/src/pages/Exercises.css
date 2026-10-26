@@ -156,4 +156,16 @@
   line-height: 1.6;
 }
 
- 
+ .empty-state button {
+  margin-top: 12px;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 8px;
+  background: #2b6cdf;
+  color: #fff;
+  cursor: pointer;
+}
+
+.empty-state button:hover {
+  background: #2459ad;
+}
