@@ -77,7 +77,7 @@ function Layout() {
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
           >
             <span>{theme === 'dark' ? '☀' : '☾'}</span>
-            {theme === 'dark' ? 'Jasny motyw' : 'Ciemny motyw'}
+            {theme === 'dark' ? 'Light mode' : 'Dark mode'}
           </button>
         </header>
         <main className="main-content">

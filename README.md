@@ -8,8 +8,6 @@
 
 Aplikacja do śledzenia treningów: przeglądanie ćwiczeń, planowanie treningów, zapisywanie sesji i raporty postępów. Projekt zespołowy na zajęcia z tworzenia oprogramowania. Najpierw aplikacja webowa, później wersja mobilna.
 
-Cel i wyniki poszczególnych sprintów: [docs/sprint1.md](docs/sprint1.md).
-
 ### Zespół
 
 |      Osoba     |    Rola      |
@@ -46,6 +44,24 @@ Polecenie uruchamia Postgresa i wykonuje `db/01_schema.sql` oraz `db/02_seed.sql
 
 Pliki SQL wykonują się tylko przy pierwszym utworzeniu bazy. Po ich zmianie: `docker compose down -v`, a potem `docker compose up -d`.
 
+Wyłączenie bazy (z głównego folderu projektu):
+ 
+    docker compose down       # wyłącza bazę, dane zostają
+
+Backend (wymaga działającej bazy z kroku wyżej):
+ 
+    cd backend
+    npm install
+    cp .env.example .env    # ustaw DATABASE_URL i PORT
+    npm run dev
+ 
+Przykładowy `.env` dla lokalnej bazy z Dockera:
+ 
+    DATABASE_URL=postgres://gym:gym@localhost:5432/gym_app
+    PORT=3000
+ 
+Kolejność uruchamiania: baza (`docker compose up -d`) → backend → frontend. Plik `.env` nie trafia do repozytorium, wspólny jest tylko `.env.example`.
+
 ### Struktura projektu
 
     frontend/            aplikacja React (Vite)
@@ -69,14 +85,12 @@ Pliki SQL wykonują się tylko przy pierwszym utworzeniu bazy. Po ich zmianie: `
 - Figma: https://www.figma.com/make/b2s33645iwv3cAqqjDGphV/Gym-Tracker-UI-Design
 - Opis bazy danych: [docs/database.md](docs/database.md)
 - Sprint 1: [docs/sprint1.md](docs/sprint1.md)
-
+- Sprint 2: [docs/sprint2.md](docs/sprint2.md)
 ---
 
 ## English
 
 A workout tracking app: browse exercises, plan workouts, log training sessions and see progress reports. A team project for a software engineering course. A web app first, a mobile version later.
-
-Goals and results of each sprint: [docs/sprint1.md](docs/sprint1.md).
 
 ### Team
 
@@ -114,6 +128,25 @@ This starts Postgres and runs `db/01_schema.sql` and `db/02_seed.sql` (tables an
 
 The SQL files only run when the database is created for the first time. If you change them: `docker compose down -v`, then `docker compose up -d`.
 
+Stopping the database (from the project root):
+ 
+    docker compose down       # stops the database, data is kept
+
+    
+Backend (needs the database from the step above to be running):
+ 
+    cd backend
+    npm install
+    cp .env.example .env    # set DATABASE_URL and PORT
+    npm run dev
+ 
+Example `.env` for the local Docker database:
+ 
+    DATABASE_URL=postgres://gym:gym@localhost:5432/gym_app
+    PORT=3000
+ 
+Start order: database (`docker compose up -d`) → backend → frontend. The `.env` file is not committed, only `.env.example` is shared.
+  
 ### Project structure
 
     frontend/            React app (Vite)
@@ -137,3 +170,4 @@ The SQL files only run when the database is created for the first time. If you c
 - Figma: https://www.figma.com/make/b2s33645iwv3cAqqjDGphV/Gym-Tracker-UI-Design
 - Database description: [docs/database.md](docs/database.md)
 - Sprint 1: [docs/sprint1.md](docs/sprint1.md)
+- Sprint 2: [docs/sprint2.md](docs/sprint2.md)
