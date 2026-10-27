@@ -1,0 +1,10 @@
+{
+  "name": "gym-app",
+  "private": true,
+  "scripts": {
+    "dev": "docker compose up -d && concurrently -k -n backend,frontend \"npm --prefix backend run dev\" \"npm --prefix frontend run dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.6"
+  }
+}
