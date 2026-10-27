@@ -6,7 +6,7 @@
   "type": "commonjs",
   "scripts": {
     "dev": "concurrently --kill-others-on-fail --names \"DB,BACKEND,FRONTEND\" --prefix-colors \"blue,green,magenta\" \"npm run dev:db\" \"npm run dev:backend\" \"npm run dev:frontend\"",
-    "dev:db": "docker compose up",
+    "dev:db": "docker compose up -d",
     "dev:backend": "npm run dev --prefix backend",
     "dev:frontend": "npm run dev --prefix frontend",
     "stop:db": "docker compose down"
