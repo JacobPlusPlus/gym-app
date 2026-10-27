@@ -1,28 +1,10 @@
 {
   "name": "gym-app",
-  "version": "1.0.0",
-  "description": "Gym App - monorepo root",
   "private": true,
-  "type": "commonjs",
   "scripts": {
-    "dev": "concurrently --kill-others-on-fail --names \"DB,BACKEND,FRONTEND\" --prefix-colors \"blue,green,magenta\" \"npm run dev:db\" \"npm run dev:backend\" \"npm run dev:frontend\"",
-    "dev:db": "docker compose up -d",
-    "dev:backend": "npm run dev --prefix backend",
-    "dev:frontend": "npm run dev --prefix frontend",
-    "stop:db": "docker compose down"
+    "dev": "docker compose up -d && concurrently -k -n backend,frontend \"npm --prefix backend run dev\" \"npm --prefix frontend run dev\""
   },
-  "dependencies": {
+  "devDependencies": {
     "concurrently": "^10.0.6"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JacobPlusPlus/gym-app.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/JacobPlusPlus/gym-app/issues"
-  },
-  "homepage": "https://github.com/JacobPlusPlus/gym-app#readme"
+  }
 }

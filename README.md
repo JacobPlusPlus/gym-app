@@ -27,15 +27,19 @@ Aplikacja do śledzenia treningów: przeglądanie ćwiczeń, planowanie trening�
 
 ### Uruchomienie
 
-Frontend:
+Przy pierwszym uruchomieniu zainstaluj zależności:
 
-    cd frontend
     npm install
+    npm --prefix backend install
+    npm --prefix frontend install
+
+Utwórz `backend/.env` na podstawie `backend/.env.example` i ustaw `DATABASE_URL` oraz `PORT`.
+
+Uruchom bazę danych, backend i frontend jedną komendą z głównego folderu projektu (wymaga Dockera):
+
     npm run dev
 
-Baza danych (wymaga Dockera), z głównego folderu projektu:
-
-    docker compose up -d
+Skrypt uruchamia PostgreSQL w tle, a następnie backend i frontend równolegle. Nie czeka na gotowość bazy. Naciśnięcie `Ctrl+C` zatrzymuje backend i frontend; baza pozostaje uruchomiona.
 
 Polecenie uruchamia Postgresa i wykonuje `db/01_schema.sql` oraz `db/02_seed.sql` (tabele i przykładowe dane).
 
@@ -111,15 +115,19 @@ A workout tracking app: browse exercises, plan workouts, log training sessions a
 
 ### Running the project
 
-Frontend:
+On first run, install the dependencies:
 
-    cd frontend
     npm install
+    npm --prefix backend install
+    npm --prefix frontend install
+
+Create `backend/.env` from `backend/.env.example` and set `DATABASE_URL` and `PORT`.
+
+Start the database, backend, and frontend with one command from the project root (Docker required):
+
     npm run dev
 
-Database (needs Docker), from the project root:
-
-    docker compose up -d
+The script starts PostgreSQL in the background, then runs the backend and frontend concurrently. It does not wait for the database to become ready. Pressing `Ctrl+C` stops the backend and frontend; the database remains running.
 
 This starts Postgres and runs `db/01_schema.sql` and `db/02_seed.sql` (tables and sample data).
 
