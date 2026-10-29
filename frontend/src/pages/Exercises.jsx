@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react'
-import './Exercises.css'
 
 const exerciseImages = import.meta.glob('../assets/exercises/*.jpg', {
   eager: true,
@@ -7,12 +6,14 @@ const exerciseImages = import.meta.glob('../assets/exercises/*.jpg', {
   query: '?url',
 })
 
+const ALL_GROUPS = 'All muscle groups'
+
 const Exercises = () => {
   const [exercises, setExercises] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [search, setSearch] = useState('')
-  const [muscleGroup, setMuscleGroup] = useState('All muscle groups')
+  const [muscleGroup, setMuscleGroup] = useState(ALL_GROUPS)
 
   useEffect(() => {
     fetch('/api/exercises')
@@ -26,7 +27,7 @@ const Exercises = () => {
   }, [])
 
   const muscleGroups = useMemo(
-    () => ['All muscle groups', ...new Set(exercises.map((exercise) => exercise.muscleGroup))],
+    () => [ALL_GROUPS, ...new Set(exercises.map((exercise) => exercise.muscleGroup))],
     [exercises],
   )
 
@@ -34,56 +35,69 @@ const Exercises = () => {
     const matchesSearch = `${exercise.name} ${exercise.muscleGroup} ${exercise.equipment}`
       .toLowerCase()
       .includes(search.trim().toLowerCase())
-    const matchesMuscleGroup = muscleGroup === 'All muscle groups' || exercise.muscleGroup === muscleGroup
+    const matchesMuscleGroup =
+      muscleGroup === ALL_GROUPS || exercise.muscleGroup === muscleGroup
 
     return matchesSearch && matchesMuscleGroup
   })
 
-  if (loading) return <p className="empty-state">Loading exercises...</p>
+  if (loading) {
+    return <div className="empty-state">Loading exercises...</div>
+  }
 
-if (error) {
+  if (error) {
+    return (
+      <div className="empty-state">
+        <p>Could not load exercises.</p>
+        <button className="btn btn-primary" onClick={() => window.location.reload()}>
+          Try again
+        </button>
+      </div>
+    )
+  }
+
   return (
-    <div className="empty-state">
-      <p>Could not load exercises.</p>
-      <button onClick={() => window.location.reload()}>Try again</button>
-    </div>
-  )
-}
-  return (
-    <section className="page">
-      <header className="page-heading">
-        <p className="eyebrow">Exercise library</p>
-        <h1>Find your next move.</h1>
-        <p>Explore popular strength exercises by muscle group and equipment.</p>
+    <div className="page">
+      <header className="page-header">
+        <div>
+          <p className="eyebrow">Exercise library</p>
+          <h1 className="page-title">Find your next move.</h1>
+          <p className="muted">
+            Explore popular strength exercises by muscle group and equipment.
+          </p>
+        </div>
       </header>
 
-      <div className="catalog-toolbar">
+      <div className="toolbar">
         <input
-          className="search-input"
+          className="input"
           type="search"
           aria-label="Search exercises"
           placeholder="Search exercises or equipment..."
           value={search}
           onChange={(event) => setSearch(event.target.value)}
         />
-        <label className="muscle-filter">
-          <span className="result-count">Filter: </span>
-          <select
-            className="form-select"
-            aria-label="Filter by muscle group"
-            value={muscleGroup}
-            onChange={(event) => setMuscleGroup(event.target.value)}
-          >
-            {muscleGroups.map((group) => <option key={group}>{group}</option>)}
-          </select>
-        </label>
-        <span className="result-count" aria-live="polite">{filteredExercises.length} exercises</span>
+
+        <select
+          className="input input-auto"
+          aria-label="Filter by muscle group"
+          value={muscleGroup}
+          onChange={(event) => setMuscleGroup(event.target.value)}
+        >
+          {muscleGroups.map((group) => (
+            <option key={group}>{group}</option>
+          ))}
+        </select>
+
+        <span className="muted" aria-live="polite">
+          {filteredExercises.length} exercises
+        </span>
       </div>
 
       {filteredExercises.length > 0 ? (
         <div className="exercise-grid">
           {filteredExercises.map((exercise) => (
-            <article className="exercise-card" key={exercise.id}>
+            <article className="card" key={exercise.id}>
               <div className="exercise-card-top">
                 <span className="exercise-mark">
                   <img
@@ -91,8 +105,9 @@ if (error) {
                     alt={`${exercise.name} exercise`}
                   />
                 </span>
-                <span className="difficulty">{exercise.difficulty}</span>
+                <span className="badge">{exercise.difficulty}</span>
               </div>
+
               <h2>{exercise.name}</h2>
               <p className="exercise-meta">
                 <span>{exercise.muscleGroup}</span>
@@ -102,9 +117,11 @@ if (error) {
           ))}
         </div>
       ) : (
-        <p className="empty-state">No exercises match your search. Try another name or muscle group.</p>
+        <div className="empty-state">
+          No exercises match your search. Try another name or muscle group.
+        </div>
       )}
-    </section>
+    </div>
   )
 }
 
