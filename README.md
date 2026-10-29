@@ -6,176 +6,232 @@
 
 ## Polski
 
-Aplikacja do śledzenia treningów: przeglądanie ćwiczeń, planowanie treningów, zapisywanie sesji i raporty postępów. Projekt zespołowy na zajęcia z tworzenia oprogramowania. Najpierw aplikacja webowa, później wersja mobilna.
+Aplikacja webowa do śledzenia treningów. Docelowo umożliwi przeglądanie ćwiczeń, planowanie treningów, zapisywanie sesji i analizowanie postępów. Projekt zespołowy realizowany w ramach zajęć z tworzenia oprogramowania. W pierwszej kolejności rozwijana jest wersja webowa, a w przyszłości planowana jest wersja mobilna.
 
 ### Zespół
 
-|      Osoba     |    Rola      |
-| -------------- | ------------ |
-| Jakub Kukla    | Scrum Master |
-| Alex Turcu     | Baza danych  |
-| Szymon Gniadek | Backend      |
-| Bartosz Flis   | Design       | 
-| Kamil Woda     | Frontend     |
-| Igor Góral     | Frontend     |
+| Osoba | Rola |
+|---|---|
+| Jakub Kukla | Scrum Master |
+| Alex Turcu | Baza danych |
+| Szymon Gniadek | Backend |
+| Bartosz Flis | Design |
+| Kamil Woda | Frontend |
+| Igor Góral | Frontend |
 
 ### Technologie
 
-- Frontend: React, Vite, React Router
-- Baza danych: PostgreSQL 17 (Docker)
-- Backend: Node.js, Express
+- **Frontend:** React, Vite, React Router
+- **Backend:** Node.js, Express
+- **Baza danych:** PostgreSQL 17, Docker
 
-### Uruchomienie
+### Uruchomienie projektu
 
-Przy pierwszym uruchomieniu zainstaluj zależności:
+Wymagania: Node.js, npm i Docker Desktop z działającym Docker Compose.
 
-    npm install
-    npm --prefix backend install
-    npm --prefix frontend install
+Przy pierwszym uruchomieniu, w głównym katalogu projektu, zainstaluj zależności:
 
-Utwórz `backend/.env` na podstawie `backend/.env.example` i ustaw `DATABASE_URL` oraz `PORT`.
+```bash
+npm install
+npm --prefix backend install
+npm --prefix frontend install
+```
 
-Uruchom bazę danych, backend i frontend jedną komendą z głównego folderu projektu (wymaga Dockera):
+Utwórz plik `backend/.env` na podstawie `backend/.env.example`. Ustaw w nim `DATABASE_URL` oraz `PORT`.
 
-    npm run dev
+Przykładowa konfiguracja lokalnej bazy:
 
-Skrypt uruchamia PostgreSQL w tle, a następnie backend i frontend równolegle. Nie czeka na gotowość bazy. Naciśnięcie `Ctrl+C` zatrzymuje backend i frontend; baza pozostaje uruchomiona.
+```env
+DATABASE_URL=postgres://gym:gym@localhost:5432/gym_app
+PORT=3000
+```
 
-Polecenie uruchamia Postgresa i wykonuje `db/01_schema.sql` oraz `db/02_seed.sql` (tabele i przykładowe dane).
+Uruchom bazę danych, backend i frontend jedną komendą:
 
-- połączenie: `postgres://gym:gym@localhost:5432/gym_app`
-- z terminala: `docker compose exec db psql -U gym -d gym_app`
+```bash
+npm run dev
+```
 
-Pliki SQL wykonują się tylko przy pierwszym utworzeniu bazy. Po ich zmianie: `docker compose down -v`, a potem `docker compose up -d`.
+Polecenie uruchamia PostgreSQL w Dockerze oraz backend i frontend. Skrypt nie czeka na pełną gotowość bazy danych, więc przy pierwszym uruchomieniu usługi mogą potrzebować chwili, zanim zaczną poprawnie współpracować.
 
-Wyłączenie bazy (z głównego folderu projektu):
- 
-    docker compose down       # wyłącza bazę, dane zostają
+Aby zatrzymać backend i frontend, naciśnij `Ctrl+C`. Baza danych pozostanie uruchomiona.
 
-Backend (wymaga działającej bazy z kroku wyżej):
- 
-    cd backend
-    npm install
-    cp .env.example .env    # ustaw DATABASE_URL i PORT
-    npm run dev
- 
-Przykładowy `.env` dla lokalnej bazy z Dockera:
- 
-    DATABASE_URL=postgres://gym:gym@localhost:5432/gym_app
-    PORT=3000
- 
-Kolejność uruchamiania: baza (`docker compose up -d`) → backend → frontend. Plik `.env` nie trafia do repozytorium, wspólny jest tylko `.env.example`.
+### Baza danych
+
+Podczas pierwszego tworzenia bazy wykonywane są skrypty:
+
+- `db/01_schema.sql` — tworzy strukturę tabel.
+- `db/02_seed.sql` — dodaje przykładowe dane.
+
+Skrypty inicjalizacyjne wykonują się automatycznie tylko przy pierwszym utworzeniu bazy z pustym wolumenem.
+
+Po zmianie skryptów SQL, jeśli chcesz utworzyć bazę od nowa, możesz wykonać:
+
+```bash
+docker compose down -v
+docker compose up -d
+```
+
+**Uwaga:** `docker compose down -v` usuwa wolumeny, a tym samym dane zapisane w lokalnej bazie. Używaj tej komendy tylko wtedy, gdy chcesz zresetować bazę.
+
+Wyłączenie bazy bez usuwania danych:
+
+```bash
+docker compose down
+```
+
+Połączenie z bazą z terminala:
+
+```bash
+docker compose exec db psql -U gym -d gym_app
+```
+
+Dane dostępowe podane w tym pliku są przeznaczone wyłącznie do lokalnego środowiska deweloperskiego.
 
 ### Struktura projektu
 
-    frontend/            aplikacja React (Vite)
-    backend/             serwer API (w przygotowaniu)
-    db/                  schemat SQL i dane przykładowe
-    docs/                dokumentacja (opis bazy, sprinty)
-    docker-compose.yml   lokalna baza PostgreSQL
-    README.md
+```text
+frontend/           aplikacja React (Vite)
+backend/            serwer API (Node.js, Express)
+db/                 schemat SQL i dane przykładowe
+docs/               dokumentacja projektu i sprintów
+docker-compose.yml  konfiguracja PostgreSQL
+package.json        skrypty projektu
+README.md           dokumentacja główna
+```
 
 ### Zasady pracy
 
-1. Sprawdź w Trello, do czego jesteś przypisany.
-2. Praca: branch z `main` → Pull Request → review kogoś z zespołu → merge.
-3. Nazwy branchy: `feature/krotka-nazwa` dla nowych funkcji, `fix/krotka-nazwa` dla poprawek.
-4. Commity: krótkie i opisowe, z prefiksem `feat:`, `fix:`, `docs:` lub `chore:`, np. `feat: dodaj strone cwiczen`.
-5. Zakaz commitów prosto na `main`.
+1. Sprawdź w Trello, do jakiego zadania jesteś przypisany.
+2. Twórz branch na podstawie `main`, a następnie otwieraj Pull Request.
+3. Przed scaleniem zmian wymagany jest review innego członka zespołu.
+4. Nazwy branchy:
+   - `feature/krotka-nazwa` — nowe funkcjonalności,
+   - `fix/krotka-nazwa` — poprawki błędów.
+5. Commity powinny być krótkie i opisowe, z prefiksami `feat:`, `fix:`, `docs:` lub `chore:`, np. `feat: dodaj strone cwiczen`.
+6. Nie wykonuj bezpośrednich commitów na `main`.
 
 ### Linki
 
-- Trello: https://trello.com/b/8s6KedpA/gym-app
-- Figma: https://www.figma.com/make/b2s33645iwv3cAqqjDGphV/Gym-Tracker-UI-Design
-- Opis bazy danych: [docs/database.md](docs/database.md)
-- Sprint 1: [docs/sprint1.md](docs/sprint1.md)
-- Sprint 2: [docs/sprint2.md](docs/sprint2.md)
+- **Trello:** https://trello.com/b/8s6KedpA/gym-app
+- **Figma:** https://www.figma.com/make/b2s33645iwv3cAqqjDGphV/Gym-Tracker-UI-Design
+- **Baza danych:** [docs/database.md](docs/database.md)
+- **Sprint 1:** [docs/sprint1.md](docs/sprint1.md)
+- **Sprint 2:** [docs/sprint2.md](docs/sprint2.md)
+
 ---
 
 ## English
 
-A workout tracking app: browse exercises, plan workouts, log training sessions and see progress reports. A team project for a software engineering course. A web app first, a mobile version later.
+A web application for workout tracking. Its intended features include browsing exercises, planning workouts, logging training sessions and analyzing progress. This is a team project developed as part of a software engineering course. The web version is being developed first, with a mobile version planned for the future.
 
 ### Team
 
-|      Person    |     Role     |
-| -------------- | ------------ |
-| Jakub Kukla    | Scrum Master |
-| Alex Turcu     | Baza danych  |
-| Szymon Gniadek | Backend      |
-| Bartosz Flis   | Design       | 
-| Kamil Woda     | Frontend     |
-| Igor Góral     | Frontend     |
+| Person | Role |
+|---|---|
+| Jakub Kukla | Scrum Master |
+| Alex Turcu | Database |
+| Szymon Gniadek | Backend |
+| Bartosz Flis | Design |
+| Kamil Woda | Frontend |
+| Igor Góral | Frontend |
 
-### Tech stack
+### Technologies
 
-- Frontend: React, Vite, React Router
-- Database: PostgreSQL 17 (Docker)
-- Backend: to be decided
+- **Frontend:** React, Vite, React Router
+- **Backend:** Node.js, Express
+- **Database:** PostgreSQL 17, Docker
 
 ### Running the project
 
-On first run, install the dependencies:
+Requirements: Node.js, npm and Docker Desktop with Docker Compose running.
 
-    npm install
-    npm --prefix backend install
-    npm --prefix frontend install
+On the first run, install the dependencies from the project root:
 
-Create `backend/.env` from `backend/.env.example` and set `DATABASE_URL` and `PORT`.
+```bash
+npm install
+npm --prefix backend install
+npm --prefix frontend install
+```
 
-Start the database, backend, and frontend with one command from the project root (Docker required):
+Create `backend/.env` based on `backend/.env.example`. Set `DATABASE_URL` and `PORT`.
 
-    npm run dev
+Example configuration for the local database:
 
-The script starts PostgreSQL in the background, then runs the backend and frontend concurrently. It does not wait for the database to become ready. Pressing `Ctrl+C` stops the backend and frontend; the database remains running.
+```env
+DATABASE_URL=postgres://gym:gym@localhost:5432/gym_app
+PORT=3000
+```
 
-This starts Postgres and runs `db/01_schema.sql` and `db/02_seed.sql` (tables and sample data).
+Start the database, backend and frontend with one command:
 
-- connect: `postgres://gym:gym@localhost:5432/gym_app`
-- terminal: `docker compose exec db psql -U gym -d gym_app`
+```bash
+npm run dev
+```
 
-The SQL files only run when the database is created for the first time. If you change them: `docker compose down -v`, then `docker compose up -d`.
+The command starts PostgreSQL in Docker, as well as the backend and frontend. The script does not wait for the database to become fully ready, so the services may need a moment to start communicating correctly, especially on the first run.
 
-Stopping the database (from the project root):
- 
-    docker compose down       # stops the database, data is kept
+Press `Ctrl+C` to stop the backend and frontend. The database remains running.
 
-    
-Backend (needs the database from the step above to be running):
- 
-    cd backend
-    npm install
-    cp .env.example .env    # set DATABASE_URL and PORT
-    npm run dev
- 
-Example `.env` for the local Docker database:
- 
-    DATABASE_URL=postgres://gym:gym@localhost:5432/gym_app
-    PORT=3000
- 
-Start order: database (`docker compose up -d`) → backend → frontend. The `.env` file is not committed, only `.env.example` is shared.
-  
+### Database
+
+When the database is created for the first time, the following SQL scripts are executed:
+
+- `db/01_schema.sql` — creates the database tables.
+- `db/02_seed.sql` — inserts sample data.
+
+The initialization scripts run automatically only when the database is first created with an empty volume.
+
+If you change the SQL scripts and want to recreate the database, you can run:
+
+```bash
+docker compose down -v
+docker compose up -d
+```
+
+**Warning:** `docker compose down -v` removes volumes and therefore deletes the data stored in the local database. Use this command only when you intend to reset the database.
+
+To stop the database without deleting its data:
+
+```bash
+docker compose down
+```
+
+Connect to the database from the terminal:
+
+```bash
+docker compose exec db psql -U gym -d gym_app
+```
+
+The credentials in this file are intended for the local development environment only.
+
 ### Project structure
 
-    frontend/            React app (Vite)
-    backend/             API server (work in progress)
-    db/                  SQL schema and sample data
-    docs/                documentation (database description, sprints)
-    docker-compose.yml   local PostgreSQL database
-    README.md
+```text
+frontend/           React application (Vite)
+backend/            API server (Node.js, Express)
+db/                 SQL schema and sample data
+docs/               project and sprint documentation
+docker-compose.yml  PostgreSQL configuration
+package.json        project scripts
+README.md           main documentation
+```
 
 ### Working rules
 
-1. Check Trello to see what you are assigned to.
-2. Workflow: branch from `main` → Pull Request → review by someone from the team → merge.
-3. Branch names: `feature/short-name` for new features, `fix/short-name` for fixes.
-4. Commits: short and descriptive, prefixed with `feat:`, `fix:`, `docs:` or `chore:`, e.g. `feat: add exercises page`.
-5. No direct commits to `main`.
+1. Check Trello to see which task you are assigned to.
+2. Create a branch from `main`, then open a Pull Request.
+3. Another team member must review the changes before they are merged.
+4. Branch naming:
+   - `feature/short-name` — new features,
+   - `fix/short-name` — bug fixes.
+5. Commits should be short and descriptive, using prefixes such as `feat:`, `fix:`, `docs:` or `chore:`, e.g. `feat: add exercises page`.
+6. Do not commit directly to `main`.
 
 ### Links
 
-- Trello: https://trello.com/b/8s6KedpA/gym-app
-- Figma: https://www.figma.com/make/b2s33645iwv3cAqqjDGphV/Gym-Tracker-UI-Design
-- Database description: [docs/database.md](docs/database.md)
-- Sprint 1: [docs/sprint1.md](docs/sprint1.md)
-- Sprint 2: [docs/sprint2.md](docs/sprint2.md)
+- **Trello:** https://trello.com/b/8s6KedpA/gym-app
+- **Figma:** https://www.figma.com/make/b2s33645iwv3cAqqjDGphV/Gym-Tracker-UI-Design
+- **Database:** [docs/database.md](docs/database.md)
+- **Sprint 1:** [docs/sprint1.md](docs/sprint1.md)
+- **Sprint 2:** [docs/sprint2.md](docs/sprint2.md)
