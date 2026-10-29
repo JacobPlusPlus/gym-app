@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react";
-import "./Workout.css";
 
 const initialWorkouts = [
   {
@@ -9,9 +8,7 @@ const initialWorkouts = [
     category: "Góra ciała",
     level: "Średniozaawansowany",
     duration: 60,
-    exercises: 6,
-    frequency: "Poniedziałek",
-    color: "blue",
+    icon: "↗",
     items: [
       { name: "Wyciskanie sztangi", sets: "4 × 8", muscle: "Klatka piersiowa" },
       { name: "Wyciskanie hantli na skosie", sets: "3 × 10", muscle: "Klatka piersiowa" },
@@ -28,9 +25,7 @@ const initialWorkouts = [
     category: "Góra ciała",
     level: "Średniozaawansowany",
     duration: 75,
-    exercises: 7,
-    frequency: "Środa",
-    color: "purple",
+    icon: "⌁",
     items: [
       { name: "Martwy ciąg", sets: "4 × 5", muscle: "Plecy" },
       { name: "Podciąganie", sets: "4 × 8–10", muscle: "Plecy" },
@@ -48,9 +43,7 @@ const initialWorkouts = [
     category: "Dół ciała",
     level: "Średniozaawansowany",
     duration: 65,
-    exercises: 6,
-    frequency: "Piątek",
-    color: "orange",
+    icon: "⌘",
     items: [
       { name: "Przysiad ze sztangą", sets: "4 × 8", muscle: "Nogi" },
       { name: "Wypychanie na suwnicy", sets: "3 × 12", muscle: "Nogi" },
@@ -67,9 +60,7 @@ const initialWorkouts = [
     category: "Całe ciało",
     level: "Początkujący",
     duration: 45,
-    exercises: 5,
-    frequency: "Wtorek",
-    color: "green",
+    icon: "▤",
     items: [
       { name: "Przysiad goblet", sets: "3 × 12", muscle: "Nogi" },
       { name: "Wyciskanie hantli", sets: "3 × 10", muscle: "Klatka piersiowa" },
@@ -80,11 +71,13 @@ const initialWorkouts = [
   },
 ];
 
-const categories = [
-  "Wszystkie",
-  "Góra ciała",
-  "Dół ciała",
-  "Całe ciało",
+const categories = ["Wszystkie", "Góra ciała", "Dół ciała", "Całe ciało"];
+
+const overview = [
+  { icon: "▦", value: "4", label: "Treningi w tym tygodniu", note: "+1 w tym tyg." },
+  { icon: "↗", value: "29 240 kg", label: "Łączna objętość", note: "+8,4%" },
+  { icon: "◷", value: "4h 20m", label: "Czas treningów", note: "W tym tygodniu" },
+  { icon: "♨", value: "3 / 4", label: "Realizacja planu", note: "Cel: 4" },
 ];
 
 const Workout = () => {
@@ -95,15 +88,15 @@ const Workout = () => {
   const [activeWorkout, setActiveWorkout] = useState(null);
   const [completedExercises, setCompletedExercises] = useState([]);
 
+  const nextWorkout = workouts[1];
+
   const filteredWorkouts = useMemo(() => {
     return workouts.filter((workout) => {
       const matchesCategory =
         category === "Wszystkie" || workout.category === category;
-
       const matchesSearch = `${workout.name} ${workout.subtitle}`
         .toLowerCase()
         .includes(search.toLowerCase());
-
       return matchesCategory && matchesSearch;
     });
   }, [workouts, category, search]);
@@ -128,116 +121,88 @@ const Workout = () => {
   };
 
   return (
-    <main className="workout-page">
-      <header className="workout-header">
+    <div className="page">
+      {/* Nagłówek strony */}
+      <header className="page-header">
         <div>
-          <h1>Treningi</h1>
-          <p>Planuj treningi, realizuj cele i buduj regularność.</p>
+          <h1 className="page-title">Treningi</h1>
+          <p className="muted">Planuj treningi, realizuj cele i buduj regularność.</p>
         </div>
 
-        <button
-          className="workout-primary-button"
-          onClick={() => startWorkout(workouts[0])}
-        >
-          <span>▷</span>
-          Rozpocznij trening
+        <button className="btn btn-primary" onClick={() => startWorkout(workouts[0])}>
+          ▷ Rozpocznij trening
         </button>
       </header>
 
-      <section className="workout-overview">
-        <article className="workout-overview-card">
-          <div className="workout-overview-top">
-            <span className="workout-icon">▦</span>
-            <span className="workout-positive">+1 w tym tyg.</span>
-          </div>
-          <h2>4</h2>
-          <p>Treningi w tym tygodniu</p>
-        </article>
-
-        <article className="workout-overview-card">
-          <div className="workout-overview-top">
-            <span className="workout-icon">↗</span>
-            <span className="workout-positive">+8,4%</span>
-          </div>
-          <h2>29 240 kg</h2>
-          <p>Łączna objętość</p>
-        </article>
-
-        <article className="workout-overview-card">
-          <div className="workout-overview-top">
-            <span className="workout-icon">◷</span>
-            <span className="workout-muted">W tym tygodniu</span>
-          </div>
-          <h2>4h 20m</h2>
-          <p>Czas treningów</p>
-        </article>
-
-        <article className="workout-overview-card">
-          <div className="workout-overview-top">
-            <span className="workout-icon">♨</span>
-            <span className="workout-positive">Cel: 4</span>
-          </div>
-          <h2>3 / 4</h2>
-          <p>Realizacja planu</p>
-        </article>
+      {/* Statystyki */}
+      <section className="grid-4">
+        {overview.map((stat) => (
+          <article className="card" key={stat.label}>
+            <div className="row row-between">
+              <span className="icon-box">{stat.icon}</span>
+              <span className="text-success">{stat.note}</span>
+            </div>
+            <h2 className="stat-label">{stat.value}</h2>
+            <p className="muted">{stat.label}</p>
+          </article>
+        ))}
       </section>
 
-      <section className="workout-featured">
-        <div className="workout-featured-info">
-          <span className="workout-eyebrow">TWÓJ NASTĘPNY TRENING</span>
-          <h2>Pull — plecy i bicepsy</h2>
-          <p>7 ćwiczeń · około 75 min</p>
-        </div>
+      {/* Następny trening */}
+      <section className="card">
+        <span className="eyebrow">Twój następny trening</span>
+        <h2 className="stat-label">
+          {nextWorkout.name} — {nextWorkout.subtitle.toLowerCase()}
+        </h2>
+        <p className="muted">
+          {nextWorkout.items.length} ćwiczeń · około {nextWorkout.duration} min
+        </p>
 
-        <div className="workout-featured-list">
-          {workouts[1].items.slice(0, 3).map((item, index) => (
-            <div className="workout-featured-item" key={item.name}>
-              <span className="workout-number">{index + 1}</span>
-              <strong>{item.name}</strong>
-              <span>{item.sets}</span>
+        <div className="card-subtitle">
+          {nextWorkout.items.slice(0, 3).map((item, index) => (
+            <div className="list-row" key={item.name}>
+              <span className="icon-box">{index + 1}</span>
+              <strong className="grow">{item.name}</strong>
+              <span className="muted">{item.sets}</span>
             </div>
           ))}
         </div>
 
         <button
-          className="workout-primary-button workout-featured-button"
-          onClick={() => startWorkout(workouts[1])}
+          className="btn btn-primary btn-block"
+          onClick={() => startWorkout(nextWorkout)}
         >
-          <span>▷</span>
-          Rozpocznij plan
+          ▷ Rozpocznij plan
         </button>
       </section>
 
-      <section className="workout-library">
-        <div className="workout-library-heading">
+      {/* Biblioteka planów */}
+      <section className="card">
+        <div className="card-header row row-between">
           <div>
             <h2>Biblioteka planów</h2>
-            <p>Wybierz trening odpowiedni do Twojego planu.</p>
+            <p className="muted">Wybierz trening odpowiedni do Twojego planu.</p>
           </div>
-
-          <span className="workout-result-count">
-            {filteredWorkouts.length} planów
-          </span>
+          <span className="muted">{filteredWorkouts.length} planów</span>
         </div>
 
-        <div className="workout-toolbar">
-          <input
-            type="search"
-            className="workout-search"
-            placeholder="Szukaj treningu..."
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-          />
+        <div className="stack">
+          <div className="toolbar">
+            <input
+              type="search"
+              className="input"
+              placeholder="Szukaj treningu..."
+              aria-label="Szukaj treningu"
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+            />
+          </div>
 
-          <div className="workout-filters">
+          <div className="row row-tight">
             {categories.map((item) => (
               <button
                 key={item}
-                className={
-                  category === item
-                    ? "workout-filter active"
-                    : "workout-filter"
-                }
+                className={category === item ? "chip active" : "chip"}
                 onClick={() => setCategory(item)}
               >
                 {item}
@@ -246,51 +211,34 @@ const Workout = () => {
           </div>
         </div>
 
-        <div className="workout-grid">
+        <div className="grid-2 card-subtitle">
           {filteredWorkouts.map((workout) => (
-            <article
-              className={`workout-card workout-card-${workout.color}`}
-              key={workout.id}
-            >
-              <div className="workout-card-top">
-                <span className="workout-card-icon">
-                  {workout.name === "Push"
-                    ? "↗"
-                    : workout.name === "Pull"
-                      ? "⌁"
-                      : workout.name === "Legs"
-                        ? "⌘"
-                        : "▤"}
-                </span>
-
-                <span className="workout-card-category">
-                  {workout.category}
-                </span>
+            <article className="card" key={workout.id}>
+              <div className="row row-between">
+                <span className="icon-box">{workout.icon}</span>
+                <span className="badge">{workout.category}</span>
               </div>
 
-              <h3>{workout.name}</h3>
-              <p className="workout-card-subtitle">
-                {workout.subtitle}
-              </p>
+              <h3 className="stat-label">{workout.name}</h3>
+              <p className="muted">{workout.subtitle}</p>
 
-              <div className="workout-card-meta">
-                <span>◷ {workout.duration} min</span>
-                <span>▦ {workout.exercises} ćwiczeń</span>
+              <div className="row row-tight stat-label">
+                <span className="muted">◷ {workout.duration} min</span>
+                <span className="muted">▦ {workout.items.length} ćwiczeń</span>
               </div>
 
-              <div className="workout-card-footer">
-                <span>{workout.level}</span>
-
+              <div className="row row-between">
+                <span className="muted">{workout.level}</span>
                 <button
-                  className="workout-details-button"
+                  className="btn-link"
                   onClick={() => setSelectedWorkout(workout)}
                 >
-                  Szczegóły <span>›</span>
+                  Szczegóły ›
                 </button>
               </div>
 
               <button
-                className="workout-card-start"
+                className="btn btn-secondary btn-block stat-label"
                 onClick={() => startWorkout(workout)}
               >
                 ▷ Rozpocznij trening
@@ -300,60 +248,58 @@ const Workout = () => {
         </div>
 
         {filteredWorkouts.length === 0 && (
-          <div className="workout-empty">
+          <div className="empty-state">
             <h3>Nie znaleziono treningów</h3>
             <p>Zmień wyszukiwanie lub wybierz inną kategorię.</p>
           </div>
         )}
       </section>
 
+      {/* Modal: szczegóły planu */}
       {selectedWorkout && (
-        <div
-          className="workout-overlay"
-          onClick={() => setSelectedWorkout(null)}
-        >
+        <div className="modal-overlay" onClick={() => setSelectedWorkout(null)}>
           <section
-            className="workout-dialog"
+            className="modal"
             role="dialog"
             aria-modal="true"
             aria-labelledby="workout-dialog-title"
             onClick={(event) => event.stopPropagation()}
           >
             <button
-              className="workout-dialog-close"
+              className="modal-close"
               onClick={() => setSelectedWorkout(null)}
               aria-label="Zamknij"
             >
               ×
             </button>
 
-            <span className="workout-eyebrow">SZCZEGÓŁY PLANU</span>
-            <h2 id="workout-dialog-title">
+            <span className="eyebrow">Szczegóły planu</span>
+            <h2 id="workout-dialog-title" className="stat-label">
               {selectedWorkout.name} — plan treningowy
             </h2>
-            <p>{selectedWorkout.subtitle}</p>
+            <p className="muted">{selectedWorkout.subtitle}</p>
 
-            <div className="workout-dialog-summary">
-              <span>{selectedWorkout.duration} min</span>
-              <span>{selectedWorkout.items.length} ćwiczeń</span>
-              <span>{selectedWorkout.level}</span>
+            <div className="row row-tight stat-label">
+              <span className="badge">{selectedWorkout.duration} min</span>
+              <span className="badge">{selectedWorkout.items.length} ćwiczeń</span>
+              <span className="badge">{selectedWorkout.level}</span>
             </div>
 
-            <div className="workout-exercise-list">
+            <div>
               {selectedWorkout.items.map((item, index) => (
-                <div className="workout-exercise-row" key={item.name}>
-                  <span className="workout-number">{index + 1}</span>
-                  <div>
+                <div className="list-row" key={item.name}>
+                  <span className="icon-box">{index + 1}</span>
+                  <div className="grow">
                     <strong>{item.name}</strong>
-                    <p>{item.muscle}</p>
+                    <p className="muted">{item.muscle}</p>
                   </div>
-                  <span>{item.sets}</span>
+                  <span className="muted">{item.sets}</span>
                 </div>
               ))}
             </div>
 
             <button
-              className="workout-primary-button workout-dialog-start"
+              className="btn btn-primary btn-block stat-label"
               onClick={() => startWorkout(selectedWorkout)}
             >
               ▷ Rozpocznij trening
@@ -362,54 +308,50 @@ const Workout = () => {
         </div>
       )}
 
+      {/* Modal: aktywny trening */}
       {activeWorkout && (
-        <div
-          className="workout-overlay"
-          onClick={() => setActiveWorkout(null)}
-        >
+        <div className="modal-overlay" onClick={() => setActiveWorkout(null)}>
           <section
-            className="workout-dialog workout-session"
+            className="modal"
             role="dialog"
             aria-modal="true"
             aria-labelledby="workout-session-title"
             onClick={(event) => event.stopPropagation()}
           >
             <button
-              className="workout-dialog-close"
+              className="modal-close"
               onClick={() => setActiveWorkout(null)}
               aria-label="Zamknij trening"
             >
               ×
             </button>
 
-            <span className="workout-eyebrow">AKTYWNY TRENING</span>
-            <h2 id="workout-session-title">{activeWorkout.name}</h2>
-            <p>
+            <span className="eyebrow">Aktywny trening</span>
+            <h2 id="workout-session-title" className="stat-label">
+              {activeWorkout.name}
+            </h2>
+            <p className="muted">
               Wykonane ćwiczenia: {completedExercises.length} z{" "}
               {activeWorkout.items.length}
             </p>
 
-            <div className="workout-progress-track">
+            <div className="progress stat-label">
               <div
                 style={{
                   width: `${
-                    (completedExercises.length /
-                      activeWorkout.items.length) *
-                    100
+                    (completedExercises.length / activeWorkout.items.length) * 100
                   }%`,
                 }}
               />
             </div>
 
-            <div className="workout-exercise-list">
+            <div>
               {activeWorkout.items.map((item, index) => {
                 const completed = completedExercises.includes(index);
 
                 return (
                   <label
-                    className={`workout-session-row ${
-                      completed ? "completed" : ""
-                    }`}
+                    className={`workout-session-row ${completed ? "completed" : ""}`}
                     key={item.name}
                   >
                     <input
@@ -417,20 +359,18 @@ const Workout = () => {
                       checked={completed}
                       onChange={() => toggleExercise(index)}
                     />
-
-                    <span className="workout-session-exercise">
+                    <span className="grow">
                       <strong>{item.name}</strong>
-                      <small>{item.muscle}</small>
+                      <small className="muted block">{item.muscle}</small>
                     </span>
-
-                    <span>{item.sets}</span>
+                    <span className="muted">{item.sets}</span>
                   </label>
                 );
               })}
             </div>
 
             <button
-              className="workout-primary-button workout-dialog-start"
+              className="btn btn-primary btn-block stat-label"
               onClick={finishWorkout}
             >
               Zakończ sesję
@@ -438,7 +378,7 @@ const Workout = () => {
           </section>
         </div>
       )}
-    </main>
+    </div>
   );
 };
 
