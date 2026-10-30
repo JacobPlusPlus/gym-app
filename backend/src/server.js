@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import 'dotenv/config'
 import exercisesRouter from './routes/exercises.js'
+import authRouter from './routes/auth.js'
 
 const app = express()
 
@@ -9,6 +10,7 @@ app.use(cors({ origin: 'http://localhost:5173' }))
 app.use(express.json())
 
 app.use('/api/exercises', exercisesRouter)
+app.use('/api/auth', authRouter)
 
 app.use((err, req, res, next) => {
   console.error(err)

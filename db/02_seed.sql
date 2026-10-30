@@ -1,8 +1,12 @@
 -- sample data so the app has something to show
--- password_hash is just a placeholder, there is no login yet
 
-INSERT INTO users (username, email, password_hash, weight_kg, height_cm) VALUES
-('tester', 'tester@example.com', 'placeholder', 78.5, 181);
+-- test account for the login page: username "tester", password "test123"
+-- scrypt hash made by the backend with the salt below
+INSERT INTO users (username, password_hash, salt, email, weight_kg, height_cm) VALUES
+('tester',
+ 'CyB++gbtV0gKtgCYfIuOgIc93gshjRVlKQHOqKrEvqw=',
+ 'OO5SDU7+HWP86+3OnjjE+g==',
+ 'tester@example.com', 78.5, 181);
 
 -- all 50 exercises, imported from frontend/src/data/exercises.json (ids match the json)
 INSERT INTO exercises (id, name, equipment, muscle_group, image, difficulty) VALUES

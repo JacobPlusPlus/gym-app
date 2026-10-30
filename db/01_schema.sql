@@ -2,11 +2,14 @@
 -- runs automatically when the docker container starts for the first time
 -- (see docker-compose.yml)
 
+-- login only needs id, username, password_hash and salt
+-- the rest is for the profile tab and can stay empty
 CREATE TABLE users (
     id            SERIAL PRIMARY KEY,
     username      VARCHAR(50) UNIQUE NOT NULL,
-    email         VARCHAR(100) UNIQUE NOT NULL,
-    password_hash TEXT NOT NULL,
+    password_hash TEXT NOT NULL,          -- scrypt hash, base64
+    salt          TEXT NOT NULL,          -- random salt for that user, base64
+    email         VARCHAR(100) UNIQUE,
     weight_kg     NUMERIC(5,2),
     height_cm     INTEGER,
     created_at    TIMESTAMP DEFAULT NOW()

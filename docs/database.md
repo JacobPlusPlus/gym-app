@@ -8,14 +8,20 @@ Everything is kept simple, 6 tables.
 ## Tables
 
 ### users
-People using the app. For now there is no login so there is just one test user.
+People using the app. Register and login use only id, username, password_hash and
+salt, the other columns are for the profile tab and can stay empty.
+
+Every user gets their own random salt. The password is hashed with scrypt
+(password + salt) and both are stored as base64 text, so two users with the same
+password still end up with different hashes.
 
 | column | type | notes |
 |---|---|---|
 | id | serial | PK |
-| username | varchar(50) | unique |
-| email | varchar(100) | unique |
-| password_hash | text | we will hash with bcrypt later |
+| username | varchar(50) | unique, this is what you log in with |
+| password_hash | text | scrypt hash, base64 |
+| salt | text | random 16 bytes for that user, base64 |
+| email | varchar(100) | unique, optional (register does not ask for it) |
 | weight_kg | numeric(5,2) | for the profile tab |
 | height_cm | integer | |
 | created_at | timestamp | default now() |
@@ -108,8 +114,9 @@ erDiagram
     users {
         int id PK
         varchar username
-        varchar email
         text password_hash
+        text salt
+        varchar email
         numeric weight_kg
         int height_cm
         timestamp created_at
