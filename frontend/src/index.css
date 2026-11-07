@@ -16,34 +16,34 @@
   color-scheme: dark; /* ciemne paski przewijania i pola formularzy */
 
   /* tła i tekst */
-  --bg: #0e131c;          /* tło całej strony */
-  --surface: #131b25;     /* karty, topbar, tabele, modale */
-  --surface-2: #212c3f;   /* nagłówki tabel, paski postępu, drugorzędne tła */
-  --input-bg: #0b1119;    /* pola formularzy, search, nieaktywne chipy */
-  --text: #e6ebf2;        /* główny tekst */
-  --text-muted: #8b9bb4;  /* tekst pomocniczy (.muted) */
-  --border: #23334d;      /* obramowania kart, tabel, inputów */
+  --bg: #0e131c; /* tło całej strony */
+  --surface: #131b25; /* karty, topbar, tabele, modale */
+  --surface-2: #212c3f; /* nagłówki tabel, paski postępu, drugorzędne tła */
+  --input-bg: #0b1119; /* pola formularzy, search, nieaktywne chipy */
+  --text: #e6ebf2; /* główny tekst */
+  --text-muted: #8b9bb4; /* tekst pomocniczy (.muted) */
+  --border: #23334d; /* obramowania kart, tabel, inputów */
 
   /* kolor wiodący */
-  --accent: #60a5fa;               /* linki, przyciski, wyróżnienia */
-  --accent-contrast: #0e131c;      /* tekst NA tle --accent (np. w przycisku) */
-  --accent-soft: #172030;          /* tło badge, aktywnego chipa, ikon */
-  --accent-soft-border: #2c4268;   /* ramka elementów z --accent-soft */
+  --accent: #60a5fa; /* linki, przyciski, wyróżnienia */
+  --accent-contrast: #0e131c; /* tekst NA tle --accent (np. w przycisku) */
+  --accent-soft: #172030; /* tło badge, aktywnego chipa, ikon */
+  --accent-soft-border: #2c4268; /* ramka elementów z --accent-soft */
 
   /* statusy i efekty */
-  --success: #8dd9ae;              /* wykonane ćwiczenie, "aktywne konto" */
-  --overlay: rgb(0 0 0 / 72%);     /* tło za oknem modalnym */
+  --success: #8dd9ae; /* wykonane ćwiczenie, "aktywne konto" */
+  --overlay: rgb(0 0 0 / 72%); /* tło za oknem modalnym */
   --shadow: 0 8px 24px rgb(0 0 0 / 35%);
 
   /* ----- NAWIGACJA (sidebar) ----- */
-  --sidebar-bg: #0f141c;             /* tło menu */
-  --sidebar-border: #1a2332;         /* linia przy krawędzi menu */
-  --sidebar-text: #8b9bb4;           /* zwykła pozycja menu */
-  --sidebar-heading: #58687e;        /* napis MENU */
+  --sidebar-bg: #0f141c; /* tło menu */
+  --sidebar-border: #1a2332; /* linia przy krawędzi menu */
+  --sidebar-text: #8b9bb4; /* zwykła pozycja menu */
+  --sidebar-heading: #58687e; /* napis MENU */
   --sidebar-hover-bg: rgba(255, 255, 255, 0.04);
   --sidebar-hover-text: var(--text); /* tekst po najechaniu */
-  --sidebar-active-bg: #172030;      /* aktywna zakładka: tło */
-  --sidebar-active-border: #23334d;  /* aktywna zakładka: ramka */
+  --sidebar-active-bg: #172030; /* aktywna zakładka: tło */
+  --sidebar-active-border: #23334d; /* aktywna zakładka: ramka */
   --sidebar-active-text: var(--accent); /* aktywna zakładka: kolor i pasek */
 }
 
