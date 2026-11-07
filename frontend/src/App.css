@@ -98,7 +98,8 @@
 
 .nav-heading {
   padding: 0 12px;
-  margin-bottom: 12px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   color: var(--sidebar-heading);
   font-size: 11px;
   font-weight: 600;
@@ -138,7 +139,6 @@
   color: var(--sidebar-active-text);
   border: 1px solid var(--sidebar-active-border);
   box-shadow: inset 4px 0 0 0 var(--sidebar-active-text);
-  font-weight: 600;
 }
 
 .nav-icon {
@@ -177,7 +177,9 @@
   color: var(--text-muted);
   font-size: 13px;
   font-weight: 600;
-  transition: color 0.2s ease, border-color 0.2s ease;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .theme-toggle:hover {
@@ -228,9 +230,15 @@
   gap: 16px;
 }
 
-.grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.card-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.grid-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.card-list {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
 
 /* ---------- 6. Karty ---------- */
 
@@ -240,7 +248,9 @@
   border: 1px solid var(--border);
   border-radius: 10px;
   background: var(--surface);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .card:hover {
@@ -270,7 +280,9 @@
   border: 1px solid transparent;
   border-radius: 10px;
   font-weight: 700;
-  transition: filter 0.2s ease, border-color 0.2s ease;
+  transition:
+    filter 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .btn-primary {
@@ -615,8 +627,12 @@ th {
   gap: 16px;
 }
 
-.row-between { justify-content: space-between; }
-.row-tight   { gap: 8px; }
+.row-between {
+  justify-content: space-between;
+}
+.row-tight {
+  gap: 8px;
+}
 
 .stack {
   display: flex;
@@ -624,7 +640,9 @@ th {
   gap: 8px;
 }
 
-.stack-end { align-items: flex-end; }
+.stack-end {
+  align-items: flex-end;
+}
 
 .grow {
   flex: 1;
@@ -693,4 +711,153 @@ th {
 .input-auto {
   width: auto;
   min-width: 200px;
+}
+
+/* ---------- 16. Logo w sidebarze ---------- */
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px 24px 12px;
+  user-select: none;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.gym-logo-icon {
+  flex-shrink: 0;
+  transform: rotate(-35deg);
+}
+
+.brand-text {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.brand-gym {
+  font-weight: 800;
+}
+
+.brand-app {
+  font-weight: 800;
+  color: var(--accent);
+}
+
+/* ---------- 17. Profil w sidebarze ---------- */
+
+/* SIDEBAR FOOTER */
+
+.sidebar-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: auto;
+}
+
+/* PROFILE CARD */
+
+.user-profile-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  height: 54px;
+  padding: 0 12px;
+  box-sizing: border-box;
+
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text);
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.user-profile-card:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent-soft-border);
+}
+
+/* AVATAR */
+
+.user-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* USER INFORMATION */
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+}
+
+.user-name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.user-plan {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+/* PROFILE ARROW */
+
+.user-chevron {
+  flex-shrink: 0;
+  color: var(--text-muted);
+  font-size: 20px;
+  line-height: 1;
+}
+
+/* LOGOUT */
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  flex-shrink: 0;
+
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.logout-btn svg {
+  width: 21px;
+  height: 21px;
+}
+
+.logout-btn:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent-soft-border);
+  color: var(--accent);
 }
