@@ -111,7 +111,7 @@ function Layout() {
           </button>
         </header>
         <main className="main-content">
-          <Outlet />
+          <Outlet context={{ theme, setTheme }} />
         </main>
       </div>
     </div>
