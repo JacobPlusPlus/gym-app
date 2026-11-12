@@ -1,0 +1,380 @@
+/* Settings */
+
+.settings-page {
+  gap: 25px;
+}
+
+.settings-hero {
+  position: relative;
+  min-height: 285px;
+  overflow: hidden;
+  padding: 34px 40px 58px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background:
+    radial-gradient(ellipse at 82% 45%, var(--accent-soft) 0, transparent 34%),
+    linear-gradient(120deg, var(--surface), var(--bg));
+}
+
+.settings-hero > div:first-child {
+  position: relative;
+  z-index: 1;
+  max-width: 510px;
+}
+
+.settings-hero h1 {
+  margin: 18px 0 10px;
+  font-size: clamp(38px, 5vw, 56px);
+  line-height: 1.02;
+  letter-spacing: -2px;
+}
+
+.settings-hero h1 span {
+  color: var(--accent);
+}
+
+.settings-hero > div:first-child > p {
+  max-width: 400px;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.settings-hero-art {
+  position: absolute;
+  top: 50%;
+  right: 12%;
+  display: grid;
+  place-items: center;
+  width: 185px;
+  height: 185px;
+  transform: translateY(-55%);
+  border: 1px solid var(--accent-soft-border);
+  border-radius: 50%;
+}
+
+.settings-hero-art::before,
+.settings-hero-art::after {
+  position: absolute;
+  content: '';
+  border: 1px dashed var(--accent-soft-border);
+  border-radius: 50%;
+}
+
+.settings-hero-art::before {
+  inset: 14px -12px;
+  transform: rotate(35deg);
+}
+
+.settings-hero-art::after {
+  inset: -12px 14px;
+  transform: rotate(-35deg);
+}
+
+.settings-gear {
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+  border: 1px solid var(--accent-soft-border);
+  border-radius: 28px;
+  background: var(--surface);
+  color: var(--accent);
+  font-size: 49px;
+  box-shadow: 0 0 50px color-mix(in srgb, var(--accent) 15%, transparent);
+}
+
+.settings-art-dot {
+  position: absolute;
+  z-index: 1;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 14px var(--accent);
+}
+
+.settings-art-dot-one {
+  top: 18px;
+  right: 32px;
+}
+
+.settings-art-dot-two {
+  bottom: 24px;
+  left: 12px;
+  width: 6px;
+  height: 6px;
+  opacity: .65;
+}
+
+.settings-art-label {
+  position: absolute;
+  right: -53px;
+  bottom: 12px;
+  color: var(--text-muted);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+  line-height: 1.7;
+}
+
+.settings-hero-footer {
+  position: absolute;
+  right: 40px;
+  bottom: 19px;
+  left: 40px;
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  padding-top: 13px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+}
+
+.settings-section {
+  display: grid;
+  gap: 12px;
+}
+
+.settings-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2px;
+}
+
+.settings-section-heading h2 {
+  margin-top: 4px;
+  font-size: 20px;
+  letter-spacing: -.4px;
+}
+
+.settings-section-number {
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.settings-card-list {
+  display: grid;
+  gap: 10px;
+}
+
+.settings-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  min-width: 0;
+  padding: 17px 19px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  background: var(--surface);
+  transition: border-color .2s ease, transform .2s ease;
+}
+
+.settings-card:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent-soft-border);
+}
+
+.settings-card-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  border: 1px solid var(--accent-soft-border);
+  border-radius: 11px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 19px;
+}
+
+.settings-card-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.settings-card-copy strong,
+.settings-account-copy > strong {
+  display: block;
+  font-size: 13px;
+}
+
+.settings-card-copy p,
+.settings-account-copy p {
+  margin-top: 4px;
+  color: var(--text-muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.settings-segmented {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+}
+
+.settings-segmented button {
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.settings-segmented button.selected {
+  border-color: var(--accent-soft-border);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.settings-segmented button span {
+  margin-right: 4px;
+}
+
+.settings-select {
+  width: auto;
+  min-width: 155px;
+  min-height: 38px;
+  font-size: 11px;
+}
+
+.settings-switch {
+  position: relative;
+  width: 46px;
+  height: 26px;
+  flex: 0 0 46px;
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  background: var(--surface-2);
+  transition: background .2s ease, border-color .2s ease;
+}
+
+.settings-switch > span {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  transition: transform .2s ease, background .2s ease;
+}
+
+.settings-switch.is-on {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.settings-switch.is-on > span {
+  transform: translateX(20px);
+  background: var(--accent-contrast);
+}
+
+.settings-account {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  border: 1px solid var(--accent-soft-border);
+  border-radius: 14px;
+  background: var(--accent-soft);
+}
+
+.settings-account-mark {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  border: 1px solid var(--accent-soft-border);
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.settings-account-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.settings-account-copy > strong {
+  margin-top: 3px;
+}
+
+.settings-account .btn {
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+  .settings-hero {
+    min-height: 340px;
+    padding: 28px 24px 62px;
+  }
+
+  .settings-hero > div:first-child {
+    max-width: 75%;
+  }
+
+  .settings-hero h1 {
+    font-size: 40px;
+  }
+
+  .settings-hero-art {
+    top: 64%;
+    right: -36px;
+    transform: translateY(-50%) scale(.75);
+  }
+
+  .settings-art-label {
+    display: none;
+  }
+
+  .settings-hero-footer {
+    right: 24px;
+    left: 24px;
+    font-size: 8px;
+  }
+
+  .settings-card {
+    flex-wrap: wrap;
+    gap: 11px;
+    padding: 15px;
+  }
+
+  .settings-card-copy {
+    flex-basis: calc(100% - 55px);
+  }
+
+  .settings-card > .settings-segmented,
+  .settings-card > .settings-select,
+  .settings-card > .settings-switch {
+    margin-left: 51px;
+  }
+
+  .settings-account {
+    flex-wrap: wrap;
+  }
+
+  .settings-account-copy {
+    flex-basis: calc(100% - 65px);
+  }
+
+  .settings-account .btn {
+    width: 100%;
+  }
+}

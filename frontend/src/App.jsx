@@ -8,6 +8,10 @@ import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import Login from './pages/Login';
 import './App.css';
+import './styles/dashboard-reports.css';
+import './styles/settings.css';
+import './styles/login.css';
+import './styles/utilities.css';
 import {
   DashboardIcon,
   WorkoutIcon,
