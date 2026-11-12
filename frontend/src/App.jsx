@@ -86,10 +86,10 @@ function Layout() {
 
         <div className="sidebar-footer">
           <NavLink to="/profile" className="user-profile-card">
-            <div className="user-avatar">EP</div>
+            <div className="user-avatar">AM</div>
 
             <div className="user-info">
-              <span className="user-name">Ernest Pacocha</span>
+              <span className="user-name">Alex Morgan</span>
               <span className="user-plan">Pro plan</span>
             </div>
 

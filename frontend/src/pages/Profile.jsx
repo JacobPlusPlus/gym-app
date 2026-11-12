@@ -4,13 +4,13 @@ const Profile = () => {
   const [editing, setEditing] = useState(false);
 
   const [user, setUser] = useState({
-    firstName: "Michał",
-    lastName: "Kowalski",
-    email: "michal.kowalski@example.com",
+    firstName: "Alex",
+    lastName: "Morgan",
+    email: "alex.morgan@example.com",
     weight: "78",
     height: "180",
-    goal: "Budowanie masy mięśniowej",
-    level: "Średniozaawansowany",
+    goal: "Build muscle",
+    level: "Intermediate",
   });
 
   const handleChange = (event) => {
@@ -23,33 +23,33 @@ const Profile = () => {
   };
 
   const stats = [
-    { icon: "▦", label: "Treningi łącznie", value: "128", detail: "+12 w tym miesiącu" },
-    { icon: "↗", label: "Łączna objętość", value: "84 320 kg", detail: "Wszystkie treningi" },
-    { icon: "◷", label: "Czas treningów", value: "96 h", detail: "Łączny czas" },
-    { icon: "♨", label: "Regularna seria", value: "6 tyg.", detail: "Najlepsza: 9 tyg." },
+    { icon: "▦", label: "Total workouts", value: "128", detail: "+12 this month" },
+    { icon: "↗", label: "Total volume", value: "84,320 kg", detail: "Across all workouts" },
+    { icon: "◷", label: "Training time", value: "96 h", detail: "Time invested" },
+    { icon: "♨", label: "Current streak", value: "6 weeks", detail: "Best: 9 weeks" },
   ];
 
   const achievements = [
-    { icon: "🏆", title: "Pierwsze 100 treningów", desc: "Ukończono 12 września 2026" },
-    { icon: "🔥", title: "Regularność przede wszystkim", desc: "6 tygodni systematycznych treningów" },
-    { icon: "💪", title: "Coraz silniejszy", desc: "Poprawa wyników w wyciskaniu sztangi" },
+    { icon: "🏆", title: "First 100 workouts", desc: "Completed on September 12, 2026" },
+    { icon: "🔥", title: "Consistency is key", desc: "6 weeks of consistent training" },
+    { icon: "💪", title: "Getting stronger", desc: "Improved your bench press" },
   ];
 
   return (
     <div className="page">
-      {/* Nagłówek strony */}
+      {/* Page heading */}
       <header className="page-header">
         <div>
-          <h1 className="page-title">Twój profil</h1>
-          <p className="muted">Zarządzaj swoimi danymi i śledź postępy.</p>
+          <h1 className="page-title">Your profile</h1>
+          <p className="muted">Manage your details and keep track of your progress.</p>
         </div>
 
         <button className="btn btn-primary" onClick={() => setEditing(!editing)}>
-          {editing ? "Anuluj edycję" : "Edytuj profil"}
+          {editing ? "Cancel" : "Edit profile"}
         </button>
       </header>
 
-      {/* Karta użytkownika */}
+      {/* User card */}
       <section className="card row row-between">
         <div className="row">
           <div className="profile-avatar">
@@ -70,13 +70,13 @@ const Profile = () => {
         </div>
 
         <div className="stack stack-end">
-          <span className="eyebrow">Data dołączenia</span>
-          <strong>Styczeń 2026</strong>
-          <span className="text-success">● Aktywne konto</span>
+          <span className="eyebrow">Member since</span>
+          <strong>January 2026</strong>
+          <span className="text-success">● Active account</span>
         </div>
       </section>
 
-      {/* Statystyki */}
+      {/* Statistics */}
       <section className="grid-4">
         {stats.map((stat) => (
           <article className="card" key={stat.label}>
@@ -88,88 +88,88 @@ const Profile = () => {
         ))}
       </section>
 
-      {/* Dane osobowe + cel */}
+      {/* Personal details and goals */}
       <div className="grid-split">
         <section className="card">
           <div className="card-header">
-            <h2>Dane osobowe</h2>
-            <p className="muted">Podstawowe informacje o Tobie.</p>
+            <h2>Personal details</h2>
+            <p className="muted">Your basic information.</p>
           </div>
 
           {editing ? (
             <form className="form-grid" onSubmit={handleSubmit}>
               <label>
-                Imię
+                First name
                 <input className="input" name="firstName" value={user.firstName} onChange={handleChange} required />
               </label>
 
               <label>
-                Nazwisko
+                Last name
                 <input className="input" name="lastName" value={user.lastName} onChange={handleChange} required />
               </label>
 
               <label>
-                Adres e-mail
+                Email address
                 <input className="input" type="email" name="email" value={user.email} onChange={handleChange} required />
               </label>
 
               <label>
-                Waga (kg)
+                Weight (kg)
                 <input className="input" type="number" name="weight" value={user.weight} onChange={handleChange} min="1" required />
               </label>
 
               <label>
-                Wzrost (cm)
+                Height (cm)
                 <input className="input" type="number" name="height" value={user.height} onChange={handleChange} min="1" required />
               </label>
 
               <label>
-                Poziom zaawansowania
+                Experience level
                 <select className="input" name="level" value={user.level} onChange={handleChange}>
-                  <option>Początkujący</option>
-                  <option>Średniozaawansowany</option>
-                  <option>Zaawansowany</option>
+                  <option>Beginner</option>
+                  <option>Intermediate</option>
+                  <option>Advanced</option>
                 </select>
               </label>
 
               <label className="form-full">
-                Cel treningowy
+                Training goal
                 <select className="input" name="goal" value={user.goal} onChange={handleChange}>
-                  <option>Budowanie masy mięśniowej</option>
-                  <option>Poprawa siły</option>
-                  <option>Poprawa kondycji</option>
-                  <option>Utrzymanie formy</option>
+                  <option>Build muscle</option>
+                  <option>Improve strength</option>
+                  <option>Improve fitness</option>
+                  <option>Stay in shape</option>
                 </select>
               </label>
 
               <button className="btn btn-primary form-full" type="submit">
-                Zapisz zmiany
+                Save changes
               </button>
             </form>
           ) : (
             <div className="profile-details-grid">
               <div>
-                <span>Imię i nazwisko</span>
+                <span>Full name</span>
                 <strong>{user.firstName} {user.lastName}</strong>
               </div>
               <div>
-                <span>Adres e-mail</span>
+                <span>Email address</span>
                 <strong>{user.email}</strong>
               </div>
               <div>
-                <span>Waga</span>
+                <span>Weight</span>
                 <strong>{user.weight} kg</strong>
               </div>
               <div>
-                <span>Wzrost</span>
+                <span>Height</span>
                 <strong>{user.height} cm</strong>
               </div>
               <div>
-                <span>Poziom</span>
+                <span>Experience level</span>
                 <strong>{user.level}</strong>
               </div>
               <div>
-                <span>Cel treningowy</span>
+                <span>Training goal</span>
                 <strong>{user.goal}</strong>
               </div>
             </div>
@@ -179,53 +179,53 @@ const Profile = () => {
         <section className="card">
           <div className="card-header row row-between">
             <div>
-              <h2>Twój cel</h2>
-              <p className="muted">Aktualny kierunek treningowy.</p>
+              <h2>Your goal</h2>
+              <p className="muted">Your current training focus.</p>
             </div>
             <span className="icon-box">◎</span>
           </div>
 
           <div className="callout">
-            <span className="eyebrow">Główny cel</span>
+            <span className="eyebrow">Main goal</span>
             <h3>{user.goal}</h3>
             <p className="muted">
-              Regularne treningi i systematyczne zwiększanie obciążeń.
+              Train consistently and gradually increase your weights.
             </p>
           </div>
 
           <div className="stack">
             <div className="row row-between">
-              <span className="muted">Realizacja tygodniowego planu</span>
+              <span className="muted">Weekly plan progress</span>
               <strong>75%</strong>
             </div>
             <div className="progress">
               <div style={{ width: "75%" }} />
             </div>
-            <span className="muted">3 z 4 zaplanowanych treningów</span>
+            <span className="muted">3 of 4 planned workouts</span>
           </div>
 
-          <h3 className="card-subtitle">Preferencje treningowe</h3>
+          <h3 className="card-subtitle">Workout preferences</h3>
 
           <div className="list-row row-between">
-            <span className="muted">Typ treningu</span>
-            <strong>Trening siłowy</strong>
+            <span className="muted">Workout type</span>
+            <strong>Strength training</strong>
           </div>
           <div className="list-row row-between">
-            <span className="muted">Cel tygodniowy</span>
-            <strong>4 treningi</strong>
+            <span className="muted">Weekly target</span>
+            <strong>4 workouts</strong>
           </div>
           <div className="list-row row-between">
-            <span className="muted">Poziom</span>
+            <span className="muted">Experience level</span>
             <strong>{user.level}</strong>
           </div>
         </section>
       </div>
 
-      {/* Osiągnięcia */}
+      {/* Achievements */}
       <section className="card">
         <div className="card-header">
-          <h2>Ostatnie osiągnięcia</h2>
-          <p className="muted">Twoje ostatnie kamienie milowe.</p>
+          <h2>Recent achievements</h2>
+          <p className="muted">Your latest milestones.</p>
         </div>
 
         {achievements.map((item) => (
@@ -235,7 +235,7 @@ const Profile = () => {
               <strong>{item.title}</strong>
               <p className="muted">{item.desc}</p>
             </div>
-            <span className="text-success">Odblokowano</span>
+            <span className="text-success">Unlocked</span>
           </article>
         ))}
       </section>
