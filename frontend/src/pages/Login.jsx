@@ -77,9 +77,6 @@ function Login() {
 
             <div className="login-password-label">
               <label htmlFor="login-password">Password</label>
-              <button type="button" className="login-text-button" onClick={() => setNotice('Password reset is not available in this demo yet.')}>
-                Forgot password?
-              </button>
             </div>
             <div className="login-password-field">
               <input

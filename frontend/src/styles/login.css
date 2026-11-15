@@ -197,8 +197,7 @@
   font-size: 11px;
 }
 
-.login-demo-link,
-.login-text-button {
+.login-demo-link {
   padding: 0;
   border: 0;
   background: transparent;
@@ -262,10 +261,6 @@
   margin-top: 2px;
 }
 
-.login-text-button {
-  font-size: 10px;
-}
-
 .login-password-field {
   position: relative;
 }
@@ -290,8 +285,7 @@
 }
 
 .login-password-toggle:hover,
-.login-demo-link:hover,
-.login-text-button:hover {
+.login-demo-link:hover {
   color: var(--text);
 }
 
