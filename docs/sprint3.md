@@ -1,40 +1,44 @@
-# Sprint 3 — co zmieniliśmy
+# Sprint 3 — wprowadzone zmiany
 
 **Język / Language:** [Polski](#polski) | [English](#english)
 
 <a id="polski"></a>
 
-Poniżej znajduje się lista commitów z brancha `sprint3`, od najstarszego do najnowszego (commity docs nie są zawarte). Opisy są prostym podsumowaniem tego, co zmienił każdy commit.
+Poniżej zestawiono commity z brancha `sprint3`, od najstarszego do najnowszego (bez commitów dokumentacyjnych). Każdy opis stanowi krótkie podsumowanie wprowadzonych zmian.
 
 ## Commity
 
 ### `aeb825c` — `feat: add dashboard and workout reports`
 
-Dashboard i Reports zaczęły pokazywać prawdziwe dane z bazy: podsumowanie treningów, ostatnie sesje, aktywność tygodniową i najlepsze wyniki. Dodaliśmy też endpoint API, który przygotowuje te dane dla aplikacji.
+Na stronach Dashboard i Reports zaczęto wyświetlać rzeczywiste dane z bazy: podsumowanie treningów, ostatnie sesje, aktywność tygodniową i najlepsze wyniki. Dodano również endpoint API udostępniający te dane aplikacji.
 
 ### `48531a6` — `style: redesign dashboard and reports`
 
-Poprawiliśmy wygląd Dashboardu i Reports, nadając spójną oprawę podsumowaniom, wykresowi aktywności, liście ostatnich treningów oraz tabeli historii.
+Poprawiono wygląd Dashboardu i Reports, nadając spójną oprawę podsumowaniom, wykresowi aktywności, liście ostatnich treningów oraz tabeli historii.
 
 ### `526d4b1` — `style: refresh dashboard, reports, settings, and login`
 
-Dodaliśmy nowe style dla Dashboardu, Reports, Settings i Login, żeby te strony miały bardziej spójny i dopracowany wygląd.
+Dodano nowe style dla Dashboardu, Reports, Settings i Login, aby nadać tym stronom bardziej spójny i dopracowany wygląd.
 
 ### `ec97b68` — `feat: add interactive workout settings`
 
-Settings dostało działające wybory: motyw, jednostkę wagi, czas odpoczynku między seriami, tygodniowy cel i preferencję przypomnień. Wybrane ustawienia zapisują się w przeglądarce.
+W Settings udostępniono wybór motywu, jednostki wagi, czasu odpoczynku między seriami, tygodniowego celu i preferencji przypomnień. Wybrane ustawienia są zapisywane w przeglądarce.
 
 ### `1a0029e` — `style: redesign login with demo access`
 
-Przebudowaliśmy ekran logowania i dodaliśmy wygodne przejście do aplikacji w trybie demo. Można też pokazać lub ukryć wpisane hasło. Prawdziwe logowanie i reset hasła nie są podłączone.
+Przebudowano ekran logowania i dodano przejście do aplikacji w trybie demo. Umożliwiono również pokazanie lub ukrycie wpisanego hasła. Logowanie i reset hasła nie zostały podłączone.
 
 ### `e0e156a` — `i18n: translate workout and profile pages`
 
-Przetłumaczyliśmy teksty na stronach Workout i Profile na angielski. Zmieniliśmy też przykładowego użytkownika na Alex Morgan.
+Przetłumaczono teksty na stronach Workout i Profile na angielski. Przykładowego użytkownika zmieniono na Alex Morgan.
 
 ### `9aabe0e` — `refactor: split styles into feature files`
 
-Podzieliliśmy duży plik CSS na mniejsze pliki tematyczne, m.in. dla Dashboardu i Reports, Settings, Login oraz wspólnych układów. Dzięki temu łatwiej znaleźć i zmieniać style konkretnej części aplikacji.
+Duży plik CSS podzielono na mniejsze pliki tematyczne, m.in. dla Dashboardu i Reports, Settings, Login oraz wspólnych układów. Ułatwia to wyszukiwanie i modyfikowanie stylów poszczególnych części aplikacji.
+
+### `d2d21d7` — `fix: remove password reset from login`
+
+Z ekranu logowania usunięto opcję „Forgot password?” oraz komunikat o niedostępnym resecie hasła. Reset hasła nie jest jeszcze dostępny; usunięto również nieużywane style tej opcji.
 
 ## Ważne ograniczenia
 
@@ -44,41 +48,45 @@ Podzieliliśmy duży plik CSS na mniejsze pliki tematyczne, m.in. dla Dashboardu
 
 <a id="english"></a>
 
-## Sprint 3 — What We Changed
+## Sprint 3 — Changes
 
 **Language / Język:** [Polski](#polski) | [English](#english)
 
-Below is a list of commits from the `sprint3` branch, from oldest to newest (documentation commits are excluded). The descriptions are plain-language summaries of what each commit changed.
+The commits from the `sprint3` branch are listed below, from oldest to newest (documentation commits are excluded). Each description briefly summarizes the changes introduced.
 
 ### Commits
 
 #### `aeb825c` — `feat: add dashboard and workout reports`
 
-The Dashboard and Reports pages started displaying real data from the database: workout summaries, recent sessions, weekly activity, and personal bests. We also added an API endpoint to prepare this data for the app.
+The Dashboard and Reports pages were updated to display real database data: workout summaries, recent sessions, weekly activity, and personal bests. An API endpoint was also added to provide this data to the app.
 
 #### `48531a6` — `style: redesign dashboard and reports`
 
-We improved the appearance of the Dashboard and Reports pages, giving the summaries, activity chart, recent-workout list, and history table a consistent visual style.
+The appearance of the Dashboard and Reports pages was improved, with consistent styling applied to summaries, the activity chart, recent-workout list, and history table.
 
 #### `526d4b1` — `style: refresh dashboard, reports, settings, and login`
 
-We added new styles for the Dashboard, Reports, Settings, and Login pages to give them a more consistent and polished appearance.
+New styles were added for the Dashboard, Reports, Settings, and Login pages to give them a more consistent and polished appearance.
 
 #### `ec97b68` — `feat: add interactive workout settings`
 
-Settings now has working controls for the theme, weight unit, rest time between sets, weekly goal, and reminder preference. The selected settings are saved in the browser.
+Controls were added to Settings for the theme, weight unit, rest time between sets, weekly goal, and reminder preference. Selected settings are saved in the browser.
 
 #### `1a0029e` — `style: redesign login with demo access`
 
-We redesigned the login screen and added a convenient way to enter the app in demo mode. Users can also show or hide the password they entered. Real sign-in and password reset are not connected.
+The login screen was redesigned, and a way to enter the app in demo mode was added. Password visibility can also be toggled. Real sign-in and password reset are not connected.
 
 #### `e0e156a` — `i18n: translate workout and profile pages`
 
-We translated the text on the Workout and Profile pages into English. We also changed the sample user to Alex Morgan.
+The text on the Workout and Profile pages was translated into English. The sample user was also changed to Alex Morgan.
 
 #### `9aabe0e` — `refactor: split styles into feature files`
 
-We split the large CSS file into smaller, feature-specific files, including files for the Dashboard and Reports, Settings, Login, and shared layouts. This makes it easier to find and update styles for a particular part of the app.
+The large CSS file was split into smaller, feature-specific files, including files for the Dashboard and Reports, Settings, Login, and shared layouts. This makes it easier to find and update styles for a particular part of the app.
+
+#### `d2d21d7` — `fix: remove password reset from login`
+
+The “Forgot password?” option and the notice about password reset being unavailable were removed from the login screen. Password reset is not available yet, and the unused styles for that option were also removed.
 
 ### Important Limitations
 
