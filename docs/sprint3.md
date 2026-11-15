@@ -10,7 +10,7 @@ Dashboard i Reports zaczęły pokazywać prawdziwe dane z bazy: podsumowanie tre
 
 ### `48531a6` — `style: redesign dashboard and reports`
 
-Odświeżyliśmy wygląd Dashboardu i Reports. Dodaliśmy czytelniejsze podsumowania, wykres aktywności, listę ostatnich treningów oraz tabelę historii.
+Poprawiliśmy wygląd Dashboardu i Reports, nadając spójną oprawę podsumowaniom, wykresowi aktywności, liście ostatnich treningów oraz tabeli historii.
 
 ### `526d4b1` — `style: refresh dashboard, reports, settings, and login`
 
