@@ -5,11 +5,37 @@ import { GymAppIcon } from '../components/Icons'
 function Login() {
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
-  const [notice, setNotice] = useState('')
+  const [notice] = useState('')
 
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    setNotice('Account sign-in is not connected yet. Use demo access to explore the app.')
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+
+    const email = formData.get("email");
+    const password = formData.get("password");
+
+    const response = await fetch("http://localhost:3000/api/auth", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email,
+          password
+        })
+    });
+
+    const data = await response.json();
+
+    if(response.ok) {
+      console.log("Zalogowano: ", data.email);
+    }
+    else {
+      console.log("Nie udało się zalogować");
+    }
+
+    //setNotice('Account sign-in is not connected yet. Use demo access to explore the app.')
   }
 
   return (
