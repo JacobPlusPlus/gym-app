@@ -4,85 +4,85 @@ const initialWorkouts = [
   {
     id: 1,
     name: "Push",
-    subtitle: "Klatka piersiowa, barki i triceps",
-    category: "Góra ciała",
-    level: "Średniozaawansowany",
+    subtitle: "Chest, shoulders, and triceps",
+    category: "Upper body",
+    level: "Intermediate",
     duration: 60,
     icon: "↗",
     items: [
-      { name: "Wyciskanie sztangi", sets: "4 × 8", muscle: "Klatka piersiowa" },
-      { name: "Wyciskanie hantli na skosie", sets: "3 × 10", muscle: "Klatka piersiowa" },
-      { name: "Wyciskanie żołnierskie", sets: "3 × 8", muscle: "Barki" },
-      { name: "Unoszenie hantli bokiem", sets: "3 × 12", muscle: "Barki" },
-      { name: "Prostowanie ramion na wyciągu", sets: "3 × 12", muscle: "Triceps" },
-      { name: "Pompki", sets: "3 × max", muscle: "Klatka piersiowa" },
+      { name: "Barbell Bench Press", sets: "4 × 8", muscle: "Chest" },
+      { name: "Incline Dumbbell Press", sets: "3 × 10", muscle: "Chest" },
+      { name: "Overhead Press", sets: "3 × 8", muscle: "Shoulders" },
+      { name: "Dumbbell Lateral Raise", sets: "3 × 12", muscle: "Shoulders" },
+      { name: "Triceps Pushdown", sets: "3 × 12", muscle: "Triceps" },
+      { name: "Push-Up", sets: "3 × max", muscle: "Chest" },
     ],
   },
   {
     id: 2,
     name: "Pull",
-    subtitle: "Plecy i bicepsy",
-    category: "Góra ciała",
-    level: "Średniozaawansowany",
+    subtitle: "Back and biceps",
+    category: "Upper body",
+    level: "Intermediate",
     duration: 75,
     icon: "⌁",
     items: [
-      { name: "Martwy ciąg", sets: "4 × 5", muscle: "Plecy" },
-      { name: "Podciąganie", sets: "4 × 8–10", muscle: "Plecy" },
-      { name: "Wiosłowanie hantlem", sets: "4 × 8–10", muscle: "Plecy" },
-      { name: "Ściąganie drążka wyciągu", sets: "3 × 12", muscle: "Plecy" },
-      { name: "Face pull", sets: "3 × 15", muscle: "Barki" },
-      { name: "Uginanie ramion ze sztangą", sets: "3 × 10", muscle: "Bicepsy" },
-      { name: "Uginanie młotkowe", sets: "3 × 12", muscle: "Bicepsy" },
+      { name: "Deadlift", sets: "4 × 5", muscle: "Back" },
+      { name: "Pull-Up", sets: "4 × 8–10", muscle: "Back" },
+      { name: "Dumbbell Row", sets: "4 × 8–10", muscle: "Back" },
+      { name: "Lat Pulldown", sets: "3 × 12", muscle: "Back" },
+      { name: "Face Pull", sets: "3 × 15", muscle: "Shoulders" },
+      { name: "Barbell Curl", sets: "3 × 10", muscle: "Biceps" },
+      { name: "Hammer Curl", sets: "3 × 12", muscle: "Biceps" },
     ],
   },
   {
     id: 3,
     name: "Legs",
-    subtitle: "Nogi i pośladki",
-    category: "Dół ciała",
-    level: "Średniozaawansowany",
+    subtitle: "Legs and glutes",
+    category: "Lower body",
+    level: "Intermediate",
     duration: 65,
     icon: "⌘",
     items: [
-      { name: "Przysiad ze sztangą", sets: "4 × 8", muscle: "Nogi" },
-      { name: "Wypychanie na suwnicy", sets: "3 × 12", muscle: "Nogi" },
-      { name: "Rumuński martwy ciąg", sets: "3 × 10", muscle: "Dwugłowe uda" },
-      { name: "Prostowanie nóg", sets: "3 × 12", muscle: "Czworogłowe uda" },
-      { name: "Uginanie nóg", sets: "3 × 12", muscle: "Dwugłowe uda" },
-      { name: "Wspięcia na palce", sets: "4 × 15", muscle: "Łydki" },
+      { name: "Barbell Back Squat", sets: "4 × 8", muscle: "Legs" },
+      { name: "Leg Press", sets: "3 × 12", muscle: "Legs" },
+      { name: "Romanian Deadlift", sets: "3 × 10", muscle: "Hamstrings" },
+      { name: "Leg Extension", sets: "3 × 12", muscle: "Quadriceps" },
+      { name: "Leg Curl", sets: "3 × 12", muscle: "Hamstrings" },
+      { name: "Calf Raise", sets: "4 × 15", muscle: "Calves" },
     ],
   },
   {
     id: 4,
     name: "Full Body",
-    subtitle: "Trening całego ciała",
-    category: "Całe ciało",
-    level: "Początkujący",
+    subtitle: "A full-body session",
+    category: "Full body",
+    level: "Beginner",
     duration: 45,
     icon: "▤",
     items: [
-      { name: "Przysiad goblet", sets: "3 × 12", muscle: "Nogi" },
-      { name: "Wyciskanie hantli", sets: "3 × 10", muscle: "Klatka piersiowa" },
-      { name: "Wiosłowanie na maszynie", sets: "3 × 12", muscle: "Plecy" },
-      { name: "Wyciskanie hantli nad głowę", sets: "3 × 10", muscle: "Barki" },
-      { name: "Plank", sets: "3 × 30 s", muscle: "Brzuch" },
+      { name: "Goblet Squat", sets: "3 × 12", muscle: "Legs" },
+      { name: "Dumbbell Bench Press", sets: "3 × 10", muscle: "Chest" },
+      { name: "Machine Row", sets: "3 × 12", muscle: "Back" },
+      { name: "Dumbbell Shoulder Press", sets: "3 × 10", muscle: "Shoulders" },
+      { name: "Plank", sets: "3 × 30 sec", muscle: "Core" },
     ],
   },
 ];
 
-const categories = ["Wszystkie", "Góra ciała", "Dół ciała", "Całe ciało"];
+const categories = ["All workouts", "Upper body", "Lower body", "Full body"];
 
 const overview = [
-  { icon: "▦", value: "4", label: "Treningi w tym tygodniu", note: "+1 w tym tyg." },
-  { icon: "↗", value: "29 240 kg", label: "Łączna objętość", note: "+8,4%" },
-  { icon: "◷", value: "4h 20m", label: "Czas treningów", note: "W tym tygodniu" },
-  { icon: "♨", value: "3 / 4", label: "Realizacja planu", note: "Cel: 4" },
+  { icon: "▦", value: "4", label: "Workouts this week", note: "+1 this week" },
+  { icon: "↗", value: "29,240 kg", label: "Total volume", note: "+8.4%" },
+  { icon: "◷", value: "4h 20m", label: "Training time", note: "This week" },
+  { icon: "♨", value: "3 / 4", label: "Weekly goal", note: "Goal: 4" },
 ];
 
 const Workout = () => {
   const [workouts] = useState(initialWorkouts);
-  const [category, setCategory] = useState("Wszystkie");
+  const [category, setCategory] = useState("All workouts");
   const [search, setSearch] = useState("");
   const [selectedWorkout, setSelectedWorkout] = useState(null);
   const [activeWorkout, setActiveWorkout] = useState(null);
@@ -93,7 +93,7 @@ const Workout = () => {
   const filteredWorkouts = useMemo(() => {
     return workouts.filter((workout) => {
       const matchesCategory =
-        category === "Wszystkie" || workout.category === category;
+        category === "All workouts" || workout.category === category;
       const matchesSearch = `${workout.name} ${workout.subtitle}`
         .toLowerCase()
         .includes(search.toLowerCase());
@@ -122,19 +122,19 @@ const Workout = () => {
 
   return (
     <div className="page">
-      {/* Nagłówek strony */}
+      {/* Page heading */}
       <header className="page-header">
         <div>
-          <h1 className="page-title">Treningi</h1>
-          <p className="muted">Planuj treningi, realizuj cele i buduj regularność.</p>
+          <h1 className="page-title">Workouts</h1>
+          <p className="muted">Plan your sessions, reach your goals, and build consistency.</p>
         </div>
 
         <button className="btn btn-primary" onClick={() => startWorkout(workouts[0])}>
-          ▷ Rozpocznij trening
+          ▷ Start a workout
         </button>
       </header>
 
-      {/* Statystyki */}
+      {/* Weekly overview */}
       <section className="grid-4">
         {overview.map((stat) => (
           <article className="card" key={stat.label}>
@@ -148,14 +148,14 @@ const Workout = () => {
         ))}
       </section>
 
-      {/* Następny trening */}
+      {/* Next workout */}
       <section className="card">
-        <span className="eyebrow">Twój następny trening</span>
+        <span className="eyebrow">Your next workout</span>
         <h2 className="stat-label">
           {nextWorkout.name} — {nextWorkout.subtitle.toLowerCase()}
         </h2>
         <p className="muted">
-          {nextWorkout.items.length} ćwiczeń · około {nextWorkout.duration} min
+          {nextWorkout.items.length} exercises · about {nextWorkout.duration} min
         </p>
 
         <div className="card-subtitle">
@@ -172,18 +172,18 @@ const Workout = () => {
           className="btn btn-primary btn-block"
           onClick={() => startWorkout(nextWorkout)}
         >
-          ▷ Rozpocznij plan
+          ▷ Start this plan
         </button>
       </section>
 
-      {/* Biblioteka planów */}
+      {/* Workout plans */}
       <section className="card">
         <div className="card-header row row-between">
           <div>
-            <h2>Biblioteka planów</h2>
-            <p className="muted">Wybierz trening odpowiedni do Twojego planu.</p>
+            <h2>Workout library</h2>
+            <p className="muted">Choose a session that fits your training plan.</p>
           </div>
-          <span className="muted">{filteredWorkouts.length} planów</span>
+          <span className="muted">{filteredWorkouts.length} plans</span>
         </div>
 
         <div className="stack">
@@ -191,8 +191,8 @@ const Workout = () => {
             <input
               type="search"
               className="input"
-              placeholder="Szukaj treningu..."
-              aria-label="Szukaj treningu"
+              placeholder="Search workouts..."
+              aria-label="Search workouts"
               value={search}
               onChange={(event) => setSearch(event.target.value)}
             />
@@ -224,7 +224,7 @@ const Workout = () => {
 
               <div className="row row-tight stat-label">
                 <span className="muted">◷ {workout.duration} min</span>
-                <span className="muted">▦ {workout.items.length} ćwiczeń</span>
+                <span className="muted">▦ {workout.items.length} exercises</span>
               </div>
 
               <div className="row row-between">
@@ -233,7 +233,7 @@ const Workout = () => {
                   className="btn-link"
                   onClick={() => setSelectedWorkout(workout)}
                 >
-                  Szczegóły ›
+                  Details ›
                 </button>
               </div>
 
@@ -241,7 +241,7 @@ const Workout = () => {
                 className="btn btn-secondary btn-block stat-label"
                 onClick={() => startWorkout(workout)}
               >
-                ▷ Rozpocznij trening
+                ▷ Start workout
               </button>
             </article>
           ))}
@@ -249,13 +249,13 @@ const Workout = () => {
 
         {filteredWorkouts.length === 0 && (
           <div className="empty-state">
-            <h3>Nie znaleziono treningów</h3>
-            <p>Zmień wyszukiwanie lub wybierz inną kategorię.</p>
+            <h3>No workouts found</h3>
+            <p>Adjust your search or choose a different category.</p>
           </div>
         )}
       </section>
 
-      {/* Modal: szczegóły planu */}
+      {/* Plan details modal */}
       {selectedWorkout && (
         <div className="modal-overlay" onClick={() => setSelectedWorkout(null)}>
           <section
@@ -268,20 +268,20 @@ const Workout = () => {
             <button
               className="modal-close"
               onClick={() => setSelectedWorkout(null)}
-              aria-label="Zamknij"
+              aria-label="Close"
             >
               ×
             </button>
 
-            <span className="eyebrow">Szczegóły planu</span>
+            <span className="eyebrow">Plan details</span>
             <h2 id="workout-dialog-title" className="stat-label">
-              {selectedWorkout.name} — plan treningowy
+              {selectedWorkout.name} — workout plan
             </h2>
             <p className="muted">{selectedWorkout.subtitle}</p>
 
             <div className="row row-tight stat-label">
               <span className="badge">{selectedWorkout.duration} min</span>
-              <span className="badge">{selectedWorkout.items.length} ćwiczeń</span>
+              <span className="badge">{selectedWorkout.items.length} exercises</span>
               <span className="badge">{selectedWorkout.level}</span>
             </div>
 
@@ -302,13 +302,13 @@ const Workout = () => {
               className="btn btn-primary btn-block stat-label"
               onClick={() => startWorkout(selectedWorkout)}
             >
-              ▷ Rozpocznij trening
+              ▷ Start workout
             </button>
           </section>
         </div>
       )}
 
-      {/* Modal: aktywny trening */}
+      {/* Active workout modal */}
       {activeWorkout && (
         <div className="modal-overlay" onClick={() => setActiveWorkout(null)}>
           <section
@@ -321,17 +321,17 @@ const Workout = () => {
             <button
               className="modal-close"
               onClick={() => setActiveWorkout(null)}
-              aria-label="Zamknij trening"
+              aria-label="Close workout"
             >
               ×
             </button>
 
-            <span className="eyebrow">Aktywny trening</span>
+            <span className="eyebrow">Active workout</span>
             <h2 id="workout-session-title" className="stat-label">
               {activeWorkout.name}
             </h2>
             <p className="muted">
-              Wykonane ćwiczenia: {completedExercises.length} z{" "}
+              Exercises completed: {completedExercises.length} of{" "}
               {activeWorkout.items.length}
             </p>
 
@@ -373,7 +373,7 @@ const Workout = () => {
               className="btn btn-primary btn-block stat-label"
               onClick={finishWorkout}
             >
-              Zakończ sesję
+              Finish session
             </button>
           </section>
         </div>

@@ -8,6 +8,10 @@ import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import Login from './pages/Login';
 import './App.css';
+import './styles/dashboard-reports.css';
+import './styles/settings.css';
+import './styles/login.css';
+import './styles/utilities.css';
 import {
   DashboardIcon,
   WorkoutIcon,
@@ -86,10 +90,10 @@ function Layout() {
 
         <div className="sidebar-footer">
           <NavLink to="/profile" className="user-profile-card">
-            <div className="user-avatar">EP</div>
+            <div className="user-avatar">AM</div>
 
             <div className="user-info">
-              <span className="user-name">Ernest Pacocha</span>
+              <span className="user-name">Alex Morgan</span>
               <span className="user-plan">Pro plan</span>
             </div>
 
@@ -111,7 +115,7 @@ function Layout() {
           </button>
         </header>
         <main className="main-content">
-          <Outlet />
+          <Outlet context={{ theme, setTheme }} />
         </main>
       </div>
     </div>
