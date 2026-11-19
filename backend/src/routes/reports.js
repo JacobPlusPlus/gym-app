@@ -4,6 +4,18 @@ import pool from '../db.js'
 const router = Router()
 const USER_ID = 1
 
+/**
+ * Returns the data for the Reports page for the demo user.
+ *
+ * The route combines data from four PostgreSQL queries:
+ * - summary: total workouts, duration, sets and repetitions
+ * - workouts: eight most recent sessions and their plans
+ * - weeklyActivity: workout counts for the current and previous seven weeks
+ * - records: three exercises with the highest positive weight recorded
+ *
+ * The frontend sends GET /api/reports and renders this response without
+ * calculating the summary from separate workout details.
+ */
 router.get('/', async (req, res) => {
   try {
     const [summaryResult, workoutsResult, weeklyResult, recordsResult] =
