@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import {
   DashboardIcon,
@@ -10,6 +10,35 @@ import {
   LogoutIcon,
   GymAppIcon,
 } from './Icons';
+
+const NAV_SECTIONS = [
+  {
+    heading: 'OVERVIEW',
+    items: [
+      { to: '/', label: 'Dashboard', icon: DashboardIcon, end: true },
+      { to: '/workout', label: 'Workout', icon: WorkoutIcon },
+      { to: '/exercises', label: 'Exercises', icon: ExercisesIcon },
+      { to: '/reports', label: 'Reports', icon: ReportsIcon },
+    ],
+  },
+  {
+    heading: 'ACCOUNT',
+    items: [
+      { to: '/profile', label: 'Profile', icon: ProfileIcon },
+      { to: '/settings', label: 'Settings', icon: SettingsIcon },
+    ],
+  },
+];
+
+// Mapa tytułów wyświetlanych w górnym pasku dla danej ścieżki
+const PAGE_TITLES = {
+  '/': 'Dashboard',
+  '/workout': 'Workout',
+  '/exercises': 'Exercises',
+  '/reports': 'Reports',
+  '/profile': 'Profile',
+  '/settings': 'Settings',
+};
 
 function AppLayout() {
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
@@ -28,6 +57,8 @@ function AppLayout() {
     }
   }, [pathname]);
 
+  const currentTitle = PAGE_TITLES[pathname] || 'GymApp';
+
   return (
     <div className="app-layout">
       <aside className="sidebar">
@@ -38,46 +69,23 @@ function AppLayout() {
             <span className="brand-app">App</span>
           </span>
         </NavLink>
-        <p className="nav-heading">OVERVIEW</p>
+
         <nav className="side-nav" aria-label="Main navigation">
-          <NavLink to="/" end className="nav-item">
-            <span className="nav-icon">
-              <DashboardIcon />
-            </span>
-            Dashboard
-          </NavLink>
-          <NavLink to="/workout" className="nav-item">
-            <span className="nav-icon">
-              <WorkoutIcon />
-            </span>
-            Workout
-          </NavLink>
-          <NavLink to="/exercises" className="nav-item">
-            <span className="nav-icon">
-              <ExercisesIcon />
-            </span>
-            Exercises
-          </NavLink>
-          <NavLink to="/reports" className="nav-item">
-            <span className="nav-icon">
-              <ReportsIcon />
-            </span>
-            Reports
-          </NavLink>
-          <p className="nav-heading">ACCOUNT</p>
-          <NavLink to="/profile" className="nav-item">
-            <span className="nav-icon">
-              <ProfileIcon />
-            </span>
-            Profile
-          </NavLink>
-          <NavLink to="/settings" className="nav-item">
-            <span className="nav-icon">
-              <SettingsIcon />
-            </span>
-            <span>Settings</span>
-          </NavLink>
+          {NAV_SECTIONS.map((section) => (
+            <Fragment key={section.heading}>
+              <p className="nav-heading">{section.heading}</p>
+              {section.items.map(({ to, label, icon: Icon, end }) => (
+                <NavLink key={to} to={to} end={end} className="nav-item">
+                  <span className="nav-icon">
+                    <Icon />
+                  </span>
+                  <span>{label}</span>
+                </NavLink>
+              ))}
+            </Fragment>
+          ))}
         </nav>
+
         <div className="sidebar-footer">
           <NavLink to="/profile" className="user-profile-card">
             <div className="user-avatar">AM</div>
@@ -94,9 +102,10 @@ function AppLayout() {
           </NavLink>
         </div>
       </aside>
+
       <div className="main-area">
         <header className="topbar">
-          <h2>GymApp</h2>
+          <h2>{currentTitle}</h2>
           <button
             className="theme-toggle"
             type="button"
