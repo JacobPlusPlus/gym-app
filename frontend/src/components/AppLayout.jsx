@@ -30,18 +30,9 @@ const NAV_SECTIONS = [
   },
 ];
 
-// Mapa tytułów wyświetlanych w górnym pasku dla danej ścieżki
-const PAGE_TITLES = {
-  '/': 'Dashboard',
-  '/workout': 'Workout',
-  '/exercises': 'Exercises',
-  '/reports': 'Reports',
-  '/profile': 'Profile',
-  '/settings': 'Settings',
-};
-
 function AppLayout() {
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
+  const [isCollapsed, setIsCollapsed] = useState(() => localStorage.getItem('sidebarCollapsed') === 'true');
   const { pathname } = useLocation();
   const mainContentRef = useRef(null);
 
@@ -51,35 +42,66 @@ function AppLayout() {
   }, [theme]);
 
   useEffect(() => {
+    localStorage.setItem('sidebarCollapsed', isCollapsed);
+  }, [isCollapsed]);
+
+  useEffect(() => {
     window.scrollTo(0, 0);
     if (mainContentRef.current) {
       mainContentRef.current.scrollTo(0, 0);
     }
   }, [pathname]);
 
-  const currentTitle = PAGE_TITLES[pathname] || 'GymApp';
-
   return (
     <div className="app-layout">
-      <aside className="sidebar">
-        <NavLink to="/" end className="sidebar-brand">
-          <GymAppIcon />
-          <span className="brand-text">
-            <span className="brand-gym">Gym</span>
-            <span className="brand-app">App</span>
-          </span>
-        </NavLink>
+      <aside className={`sidebar ${isCollapsed ? 'collapsed' : ''}`}>
+        <div className="sidebar-header">
+          <NavLink to="/" end className="sidebar-brand" title="GymApp">
+            <GymAppIcon />
+            {!isCollapsed && (
+              <span className="brand-text">
+                <span className="brand-gym">Gym</span>
+                <span className="brand-app">App</span>
+              </span>
+            )}
+          </NavLink>
+
+          <button
+            type="button"
+            className="collapse-btn"
+            onClick={() => setIsCollapsed((prev) => !prev)}
+            title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{
+                transform: isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)',
+                transition: 'transform 0.2s ease',
+              }}
+            >
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </button>
+        </div>
 
         <nav className="side-nav" aria-label="Main navigation">
           {NAV_SECTIONS.map((section) => (
             <Fragment key={section.heading}>
-              <p className="nav-heading">{section.heading}</p>
+              {!isCollapsed && <p className="nav-heading">{section.heading}</p>}
               {section.items.map(({ to, label, icon: Icon, end }) => (
-                <NavLink key={to} to={to} end={end} className="nav-item">
+                <NavLink key={to} to={to} end={end} className="nav-item" title={isCollapsed ? label : undefined}>
                   <span className="nav-icon">
                     <Icon />
                   </span>
-                  <span>{label}</span>
+                  {!isCollapsed && <span>{label}</span>}
                 </NavLink>
               ))}
             </Fragment>
@@ -87,16 +109,21 @@ function AppLayout() {
         </nav>
 
         <div className="sidebar-footer">
-          <NavLink to="/profile" className="user-profile-card">
+          <NavLink to="/profile" className="user-profile-card" title="Alex Morgan">
             <div className="user-avatar">AM</div>
-            <div className="user-info">
-              <span className="user-name">Alex Morgan</span>
-              <span className="user-plan">Pro plan</span>
-            </div>
-            <span className="user-chevron" aria-hidden="true">
-              ›
-            </span>
+            {!isCollapsed && (
+              <>
+                <div className="user-info">
+                  <span className="user-name">Alex M.</span>
+                  <span className="user-plan">Pro plan</span>
+                </div>
+                <span className="user-chevron" aria-hidden="true">
+                  ›
+                </span>
+              </>
+            )}
           </NavLink>
+
           <NavLink to="/login" className="logout-btn" title="Logout" aria-label="Logout">
             <LogoutIcon />
           </NavLink>
@@ -104,18 +131,6 @@ function AppLayout() {
       </aside>
 
       <div className="main-area">
-        <header className="topbar">
-          <h2>{currentTitle}</h2>
-          <button
-            className="theme-toggle"
-            type="button"
-            onClick={() => setTheme((currentTheme) => (currentTheme === 'dark' ? 'light' : 'dark'))}
-            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-          >
-            <span aria-hidden="true">{theme === 'dark' ? '☀' : '☾'}</span>
-            {theme === 'dark' ? 'Light mode' : 'Dark mode'}
-          </button>
-        </header>
         <main ref={mainContentRef} className="main-content">
           <Outlet context={{ theme, setTheme }} />
         </main>
