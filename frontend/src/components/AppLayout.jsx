@@ -9,6 +9,7 @@ import {
   SettingsIcon,
   LogoutIcon,
   GymAppIcon,
+  ChevronLeftIcon,
 } from './Icons';
 
 const NAV_SECTIONS = [
@@ -29,6 +30,13 @@ const NAV_SECTIONS = [
     ],
   },
 ];
+
+const USER_PROFILE = {
+  initials: 'AM',
+  name: 'Alex M.',
+  fullName: 'Alex Morgan',
+  plan: 'Pro plan',
+};
 
 function AppLayout() {
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
@@ -73,22 +81,12 @@ function AppLayout() {
             title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
             aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+            <ChevronLeftIcon
               style={{
                 transform: isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)',
                 transition: 'transform 0.2s ease',
               }}
-            >
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
+            />
           </button>
         </div>
 
@@ -109,13 +107,13 @@ function AppLayout() {
         </nav>
 
         <div className="sidebar-footer">
-          <NavLink to="/profile" className="user-profile-card" title="Alex Morgan">
-            <div className="user-avatar">AM</div>
+          <NavLink to="/profile" className="user-profile-card" title={USER_PROFILE.fullName}>
+            <div className="user-avatar">{USER_PROFILE.initials}</div>
             {!isCollapsed && (
               <>
                 <div className="user-info">
-                  <span className="user-name">Alex M.</span>
-                  <span className="user-plan">Pro plan</span>
+                  <span className="user-name">{USER_PROFILE.name}</span>
+                  <span className="user-plan">{USER_PROFILE.plan}</span>
                 </div>
                 <span className="user-chevron" aria-hidden="true">
                   ›

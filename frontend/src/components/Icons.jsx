@@ -160,3 +160,21 @@ export function GymAppIcon({ size = 25, className = 'gym-logo-icon', ...props })
     </svg>
   );
 }
+
+export function ChevronLeftIcon({ style }) {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={style}
+    >
+      <polyline points="15 18 9 12 15 6" />
+    </svg>
+  );
+}
