@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import {
   DashboardIcon,
   WorkoutIcon,
@@ -13,11 +13,20 @@ import {
 
 function AppLayout() {
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
+  const { pathname } = useLocation();
+  const mainContentRef = useRef(null);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     localStorage.setItem('theme', theme);
   }, [theme]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (mainContentRef.current) {
+      mainContentRef.current.scrollTo(0, 0);
+    }
+  }, [pathname]);
 
   return (
     <div className="app-layout">
@@ -98,7 +107,7 @@ function AppLayout() {
             {theme === 'dark' ? 'Light mode' : 'Dark mode'}
           </button>
         </header>
-        <main className="main-content">
+        <main ref={mainContentRef} className="main-content">
           <Outlet context={{ theme, setTheme }} />
         </main>
       </div>
