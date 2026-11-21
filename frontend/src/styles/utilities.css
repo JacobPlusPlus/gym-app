@@ -152,7 +152,7 @@
 
 .user-profile-card:hover,
 .logout-btn:hover {
-  background: var(--sidebar-hover-bg);
+  background: var(--hover-bg);
 }
 
 .user-profile-card:hover .user-chevron {

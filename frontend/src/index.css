@@ -1,100 +1,100 @@
 /* ============================================================
-   index.css – KOLORY I USTAWIENIA GLOBALNE
+   index.css – DESIGN TOKENS (KOLORY) I STYLE GLOBALNE
 
-   To jedyne miejsce, gdzie wpisujemy kolory (hex/rgb).
-   Nazwy opisują rolę, nie kolor. W pozostałych plikach CSS
-   używamy tylko var(--nazwa), np. background: var(--surface);
+   Zasada: Wszystkie kolory (hex / rgb) trzymamy wyłącznie tutaj.
+   W pozostałych plikach CSS używamy tylko zmiennych: var(--nazwa).
 
-   Motyw: atrybut data-theme="dark" | "light" na <html>
-   (ustawia go przycisk w App.jsx). Każdy nowy token trzeba
-   dopisać w OBU blokach (dark i light).
+   Przełączanie motywu: atrybut data-theme="dark" | "light" na <html>
+   (zapisywany w localStorage przez AppLayout.jsx).
+   Każdą nową zmienną dodaj w OBU motywach poniżej.
    ============================================================ */
 
-/* ---------- MOTYW CIEMNY (domyślny) ---------- */
+/* ---------- 1. MOTYW CIEMNY (DOMYŚLNY) ---------- */
 :root,
 :root[data-theme='dark'] {
-  color-scheme: dark; /* ciemne paski przewijania i pola formularzy */
+  color-scheme: dark;
 
-  /* tła i tekst */
-  --bg: #0e131c; /* tło całej strony */
-  --surface: #131b25; /* karty, topbar, tabele, modale */
-  --surface-2: #212c3f; /* nagłówki tabel, paski postępu, drugorzędne tła */
-  --input-bg: #0b1119; /* pola formularzy, search, nieaktywne chipy */
-  --text: #e6ebf2; /* główny tekst */
-  --text-muted: #8b9bb4; /* tekst pomocniczy (.muted) */
-  --border: #23334d; /* obramowania kart, tabel, inputów */
+  /* Powierzchnie (od najciemniejszego tła do elementów na kartach) */
+  --bg: #0e131c; /* tło strony i sidebara */
+  --surface: #131b25; /* karty, panele, tabele, modale */
+  --surface-2: #212c3f; /* nagłówki tabel, paski postępu, elementy pomocnicze */
+  --input-bg: #0b1119; /* pola formularzy (input, select, search) */
 
-  /* kolor wiodący */
-  --accent: #60a5fa; /* linki, przyciski, wyróżnienia */
-  --accent-contrast: #0e131c; /* tekst NA tle --accent (np. w przycisku) */
-  --accent-soft: #172030; /* tło badge, aktywnego chipa, ikon */
+  /* Tekst i obramowania */
+  --text: #e6ebf2; /* główny tekst, nagłówki, wartości liczbowe */
+  --text-muted: #8b9bb4; /* podpisy, opisy, linki w menu */
+  --text-subtle: #58687e; /* nagłówki sekcji (OVERVIEW), drobne etykiety */
+  --border: #23334d; /* obramowania kart, linii podziału i sidebara */
+
+  /* Kolor główny (akcent) */
+  --accent: #60a5fa; /* przyciski CTA, aktywne linki, wyróżnienia */
+  --accent-contrast: #0e131c; /* tekst na tle --accent */
+  --accent-soft: #172030; /* tło aktywnej zakładki, badge, ikon w kartach */
   --accent-soft-border: #2c4268; /* ramka elementów z --accent-soft */
 
-  /* statusy i efekty */
-  --success: #8dd9ae; /* wykonane ćwiczenie, "aktywne konto" */
-  --overlay: rgb(0 0 0 / 72%); /* tło za oknem modalnym */
-  --shadow: 0 8px 24px rgb(0 0 0 / 35%);
-
-  /* ----- NAWIGACJA (sidebar) ----- */
-  --sidebar-bg: #0f141c; /* tło menu */
-  --sidebar-border: #1a2332; /* linia przy krawędzi menu */
-  --sidebar-text: #8b9bb4; /* zwykła pozycja menu */
-  --sidebar-heading: #58687e; /* napis MENU */
-  --sidebar-hover-bg: rgba(255, 255, 255, 0.04);
-  --sidebar-hover-text: var(--text); /* tekst po najechaniu */
-  --sidebar-active-bg: #172030; /* aktywna zakładka: tło */
-  --sidebar-active-border: #23334d; /* aktywna zakładka: ramka */
-  --sidebar-active-text: var(--accent); /* aktywna zakładka: kolor i pasek */
+  /* Statusy i efekty */
+  --success: #8dd9ae; /* ukończone serie, pozytywny status */
+  --danger: #f87171; /* usuwanie, komunikaty błędów */
+  --hover-bg: rgb(148 163 184 / 7%); /* delikatne podświetlenie elementu po najechaniu */
+  --overlay: rgb(0 0 0 / 72%); /* przyciemnienie tła za modalem */
+  --shadow: 0 8px 24px rgb(0 0 0 / 35%); /* cień kart i dropdownów */
 }
 
-/* ---------- MOTYW JASNY ---------- */
+/* ---------- 2. MOTYW JASNY ---------- */
 :root[data-theme='light'] {
   color-scheme: light;
 
+  /* Powierzchnie */
   --bg: #f4f6f8;
   --surface: #ffffff;
   --surface-2: #eef1f6;
   --input-bg: #ffffff;
+
+  /* Tekst i obramowania */
   --text: #172033;
   --text-muted: #667085;
+  --text-subtle: #8794a8;
   --border: #dce3ee;
 
+  /* Kolor główny (akcent) */
   --accent: #2b6cdf;
   --accent-contrast: #ffffff;
   --accent-soft: #eaf2ff;
   --accent-soft-border: #c7dcff;
 
+  /* Statusy i efekty */
   --success: #1a7f4b;
+  --danger: #dc2626;
+  --hover-bg: rgb(0 0 0 / 4%);
   --overlay: rgb(15 23 42 / 45%);
   --shadow: 0 8px 24px rgb(36 51 38 / 12%);
-
-  /* ----- NAWIGACJA (sidebar) ----- */
-  --sidebar-bg: #ffffff;
-  --sidebar-border: #e1e5ea;
-  --sidebar-text: #5b6b82;
-  --sidebar-heading: #8794a8;
-  --sidebar-hover-bg: rgba(0, 0, 0, 0.04);
-  --sidebar-hover-text: var(--text);
-  --sidebar-active-bg: #eaf2ff;
-  --sidebar-active-border: #c7dcff;
-  --sidebar-active-text: var(--accent);
 }
 
-/* ---------- USTAWIENIA GLOBALNE ---------- */
-
-* {
+/* ---------- 3. RESET I USTAWIENIA GLOBALNE ---------- */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
 :root {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
   font-size: 16px;
-  line-height: 1.4;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums; /* równe szerokości cyfr w statystykach i licznikach */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
 }
 
@@ -103,14 +103,21 @@ body {
   min-height: 100vh;
   background: var(--bg);
   color: var(--text);
+  overflow-wrap: break-word;
 }
 
-/* formularze dziedziczą czcionkę strony */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Formularze dziedziczą czcionkę i kolor aplikacji */
 button,
 input,
 select,
 textarea {
   font: inherit;
+  color: inherit;
 }
 
 button {
@@ -122,7 +129,8 @@ button:disabled {
   opacity: 0.6;
 }
 
-img {
+img,
+svg {
   display: block;
   max-width: 100%;
 }
@@ -131,7 +139,13 @@ a {
   color: var(--accent);
 }
 
-/* widoczny focus dla nawigacji klawiaturą (dostępność) */
+/* Kolor zaznaczenia tekstu spójny z motywem */
+::selection {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+/* Widoczny obrys przy nawigacji klawiaturą (Tab) */
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
