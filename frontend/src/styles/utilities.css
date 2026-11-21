@@ -97,8 +97,8 @@
 .sidebar-brand {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 12px 24px 12px;
+  gap: 8px;
+  padding: 6px 8px;
   user-select: none;
   cursor: pointer;
   text-decoration: none;
@@ -125,75 +125,71 @@
   font-weight: 800;
   color: var(--accent);
 }
-
 /* ---------- 17. Profil w sidebarze ---------- */
 
-/* SIDEBAR FOOTER */
-
 .sidebar-footer {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
   margin-top: auto;
+  display: flex;
+  align-items: stretch;
+  height: 54px;
+  border-radius: 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  overflow: hidden;
 }
-
-/* PROFILE CARD */
 
 .user-profile-card {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   flex: 1;
   min-width: 0;
-  height: 54px;
   padding: 0 12px;
-  box-sizing: border-box;
-
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  border-radius: 12px;
   color: var(--text);
   text-decoration: none;
-  transition: 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
-.user-profile-card:hover {
-  background: var(--accent-soft);
-  border-color: var(--accent-soft-border);
+.user-profile-card:hover,
+.logout-btn:hover {
+  background: var(--hover-bg);
 }
 
-/* AVATAR */
+.user-profile-card:hover .user-chevron {
+  transform: translateX(2px);
+  color: var(--text);
+}
 
 .user-avatar {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 34px;
+  height: 34px;
   flex-shrink: 0;
-
   border-radius: 50%;
   background: var(--accent);
   color: var(--accent-contrast);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
 }
-
-/* USER INFORMATION */
 
 .user-info {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 2px;
   flex: 1;
   min-width: 0;
 }
 
-.user-name {
+.user-name,
+.user-plan {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.user-name {
   color: var(--text);
   font-size: 13px;
   font-weight: 600;
@@ -204,40 +200,35 @@
   font-size: 11px;
 }
 
-/* PROFILE ARROW */
-
 .user-chevron {
   flex-shrink: 0;
   color: var(--text-muted);
-  font-size: 20px;
+  font-size: 18px;
   line-height: 1;
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
 }
-
-/* LOGOUT */
 
 .logout-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 54px;
-  height: 54px;
+  width: 48px;
   flex-shrink: 0;
-
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  border-left: 1px solid var(--border);
   color: var(--text-muted);
   text-decoration: none;
-  transition: 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .logout-btn svg {
-  width: 21px;
-  height: 21px;
+  width: 19px;
+  height: 19px;
 }
 
 .logout-btn:hover {
-  background: var(--accent-soft);
-  border-color: var(--accent-soft-border);
   color: var(--accent);
 }
