@@ -73,7 +73,7 @@ Aplikacja obsługuje dwa motywy: jasny i ciemny. Wybrany motyw jest ustawiany za
 
 Frontend komunikuje się z backendem za pomocą żądań HTTP wysyłanych do endpointów rozpoczynających się od `/api`.
 
-W środowisku deweloperskim Vite przekierowuje żądania z prefiksem `/api` do backendu działającego pod adresem `http://localhost:3000`. Konfiguracja znajduje się w pliku `vite.config.js`.
+W środowisku deweloperskim Vite przekierowuje żądania z prefiksem `/api` do backendu działającego pod adresem `https://localhost:3000`. Konfiguracja znajduje się w pliku `vite.config.js`.
 
 Aktualnie API jest wykorzystywane do:
 
@@ -205,7 +205,7 @@ The application supports two themes: light and dark. The selected theme is contr
 
 The frontend communicates with the backend through HTTP requests sent to endpoints starting with `/api`.
 
-During development, Vite redirects requests with the `/api` prefix to the backend running at `http://localhost:3000`. This configuration is defined in `vite.config.js`.
+During development, Vite redirects requests with the `/api` prefix to the backend running at `https://localhost:3000`. This configuration is defined in `vite.config.js`.
 
 The API is currently used to:
 

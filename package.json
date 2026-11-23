@@ -2,9 +2,11 @@
   "name": "gym-app",
   "private": true,
   "scripts": {
-    "dev": "docker compose up -d && concurrently -k -n backend,frontend \"npm --prefix backend run dev\" \"npm --prefix frontend run dev\""
+    "certs": "node scripts/gen-certs.mjs",
+    "dev": "npm run certs && docker compose up -d && concurrently -k -n backend,frontend \"npm --prefix backend run dev\" \"npm --prefix frontend run dev\""
   },
   "devDependencies": {
-    "concurrently": "^10.0.6"
+    "concurrently": "^10.0.6",
+    "selfsigned": "^5.5.0"
   }
 }
