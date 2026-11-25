@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import ExerciseDetails from '../components/ExerciseDetails'
 
 const exerciseImages = import.meta.glob('../assets/exercises/*.jpg', {
   eager: true,
@@ -14,6 +15,9 @@ const Exercises = () => {
   const [error, setError] = useState(null)
   const [search, setSearch] = useState('')
   const [muscleGroup, setMuscleGroup] = useState(ALL_GROUPS)
+
+  // Nowy stan przechowujący wybrane ćwiczenie
+  const [selectedExercise, setSelectedExercise] = useState(null)
 
   useEffect(() => {
     fetch('/api/exercises')
@@ -35,6 +39,7 @@ const Exercises = () => {
     const matchesSearch = `${exercise.name} ${exercise.muscleGroup} ${exercise.equipment}`
       .toLowerCase()
       .includes(search.trim().toLowerCase())
+
     const matchesMuscleGroup =
       muscleGroup === ALL_GROUPS || exercise.muscleGroup === muscleGroup
 
@@ -97,7 +102,11 @@ const Exercises = () => {
       {filteredExercises.length > 0 ? (
         <div className="exercise-grid">
           {filteredExercises.map((exercise) => (
-            <article className="card" key={exercise.id}>
+            <article
+              className="card"
+              key={exercise.id}
+              onClick={() => setSelectedExercise(exercise)}
+            >
               <div className="exercise-card-top">
                 <span className="exercise-mark">
                   <img
@@ -105,10 +114,12 @@ const Exercises = () => {
                     alt={`${exercise.name} exercise`}
                   />
                 </span>
+
                 <span className="badge">{exercise.difficulty}</span>
               </div>
 
               <h2>{exercise.name}</h2>
+
               <p className="exercise-meta">
                 <span>{exercise.muscleGroup}</span>
                 <span>{exercise.equipment}</span>
@@ -121,6 +132,12 @@ const Exercises = () => {
           No exercises match your search. Try another name or muscle group.
         </div>
       )}
+
+      {/* Okno szczegółów ćwiczenia */}
+      <ExerciseDetails
+        exercise={selectedExercise}
+        onClose={() => setSelectedExercise(null)}
+      />
     </div>
   )
 }
