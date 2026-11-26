@@ -56,7 +56,9 @@ W głównym katalogu projektu wykonaj:
 npm run dev
 ```
 
-Polecenie uruchamia PostgreSQL w Dockerze oraz backend i frontend.
+Polecenie uruchamia PostgreSQL w Dockerze oraz backend i frontend. Aplikacja jest dostępna pod adresem https://localhost:5173.
+
+**HTTPS:** przy pierwszym uruchomieniu `npm run dev` tworzy samopodpisany certyfikat w katalogu `certs/` (to samo robi `npm run certs`). Frontend i backend działają przez HTTPS. Przeglądarka ostrzeże, że certyfikat nie jest zaufany. To normalne dla certyfikatu samopodpisanego: wybierz „Zaawansowane” → „Przejdź do localhost”. Katalog `certs/` nie trafia do repozytorium, każdy generuje własny certyfikat. Nowy certyfikat: `npm run certs -- --force`.
 
 Skrypt nie czeka na pełną gotowość bazy danych, dlatego przy pierwszym uruchomieniu usługi mogą potrzebować chwili, zanim zaczną poprawnie współpracować.
 
@@ -160,7 +162,9 @@ From the project root, run:
 npm run dev
 ```
 
-The command starts PostgreSQL in Docker, as well as the backend and frontend.
+The command starts PostgreSQL in Docker, as well as the backend and frontend. The app is available at https://localhost:5173.
+
+**HTTPS:** on the first run, `npm run dev` creates a self-signed certificate in `certs/` (`npm run certs` does the same). The frontend and backend both use HTTPS. The browser will warn that the certificate is not trusted. That is expected for a self-signed certificate: choose "Advanced" → "Proceed to localhost". The `certs/` folder is not committed, everyone generates their own. To make a new certificate: `npm run certs -- --force`.
 
 The script does not wait for the database to become fully ready, so the services may need a moment to start communicating correctly, especially on the first run.
 

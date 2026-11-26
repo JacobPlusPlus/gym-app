@@ -41,7 +41,7 @@ Obecnie serwer:
 
 - inicjalizuje aplikację Express,
 - obsługuje żądania w formacie JSON,
-- konfiguruje dostęp z adresu frontendowego `http://localhost:5173` za pomocą CORS,
+- konfiguruje dostęp z adresu frontendowego `https://localhost:5173` za pomocą CORS,
 - rejestruje moduły routingu API,
 - obsługuje błędy serwera za pomocą wspólnego middleware,
 - uruchamia serwer na porcie określonym w zmiennej `PORT`.
@@ -176,7 +176,7 @@ Currently, the server:
 
 - initializes the Express application,
 - handles JSON requests,
-- configures CORS access from the frontend address `http://localhost:5173`,
+- configures CORS access from the frontend address `https://localhost:5173`,
 - registers API routing modules,
 - handles server errors through shared middleware,
 - starts the server on the port specified by the `PORT` environment variable.

@@ -8,9 +8,11 @@
 
 ## 1. Opis
 
-API GymApp umożliwia frontendowi pobieranie danych z backendu. Komunikacja odbywa się przez HTTP, a dane są przesyłane w formacie JSON.
+API GymApp umożliwia frontendowi pobieranie danych z backendu. Komunikacja odbywa się przez HTTPS (samopodpisany certyfikat z `certs/`), a dane są przesyłane w formacie JSON.
 
-**Adres bazowy:** `http://localhost:3000`
+**Adres bazowy:** `https://localhost:3000`
+
+Przy wywołaniach z `curl` wskaż certyfikat: `curl --cacert certs/localhost.pem https://localhost:3000/api/exercises`.
 
 Endpointy są dostępne pod prefiksem `/api`.
 
@@ -178,7 +180,7 @@ Frontend korzysta z endpointów API za pomocą żądań `fetch()`.
 
 W konfiguracji Vite ustawiono proxy:
 
-- Żądania rozpoczynające się od `/api` są przekazywane do `http://localhost:3000`.
+- Żądania rozpoczynające się od `/api` są przekazywane do `https://localhost:3000`.
 - Dzięki temu frontend może korzystać ze ścieżek względnych, np. `/api/exercises`.
   Przykład:
 
@@ -205,9 +207,11 @@ const exercises = await response.json();
 
 ## 1. Overview
 
-The GymApp API allows the frontend to retrieve data from the backend. Communication uses HTTP, and data is transferred in JSON format.
+The GymApp API allows the frontend to retrieve data from the backend. Communication uses HTTPS (self-signed certificate from `certs/`), and data is transferred in JSON format.
 
-**Base URL:** `http://localhost:3000`
+**Base URL:** `https://localhost:3000`
+
+When calling it with `curl`, point it at the certificate: `curl --cacert certs/localhost.pem https://localhost:3000/api/exercises`.
 
 All endpoints use the `/api` prefix.
 
@@ -375,7 +379,7 @@ The frontend accesses API endpoints using `fetch()` requests.
 
 Vite is configured with a proxy:
 
-- Requests starting with `/api` are forwarded to `http://localhost:3000`.
+- Requests starting with `/api` are forwarded to `https://localhost:3000`.
 - The frontend can use relative paths, for example `/api/exercises`.
   Example:
 
