@@ -29,3 +29,6 @@ dist-ssr
 
 # self-signed dev certificate (npm run certs)
 certs/
+package-lock.json 
+yarn.lock
+
