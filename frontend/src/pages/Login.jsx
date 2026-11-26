@@ -1,41 +1,49 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { GymAppIcon } from '../components/Icons'
+import { useAuth } from '../context/useAuth'
 
 function Login() {
   const navigate = useNavigate()
+  const { user, login, register } = useAuth()
+  const [isRegistering, setIsRegistering] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
-  const [notice] = useState('')
+  const [error, setError] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  if (user) return <Navigate to="/" replace />
 
-    const formData = new FormData(e.target);
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    setError('')
+    const formData = new FormData(event.currentTarget)
+    const username = formData.get('username')
+    const email = formData.get('email')
+    const password = formData.get('password')
 
-    const email = formData.get("email");
-    const password = formData.get("password");
-
-    const response = await fetch("http://localhost:3000/api/auth", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          email,
-          password
-        })
-    });
-
-    const data = await response.json();
-
-    if(response.ok) {
-      console.log("Zalogowano: ", data.email);
-    }
-    else {
-      console.log("Nie udało się zalogować");
+    if (isRegistering && password !== formData.get('confirmPassword')) {
+      setError('Passwords do not match')
+      return
     }
 
-    //setNotice('Account sign-in is not connected yet. Use demo access to explore the app.')
+    setIsSubmitting(true)
+    try {
+      if (isRegistering) {
+        await register(username, email, password)
+      } else {
+        await login(email, password)
+      }
+      navigate('/', { replace: true })
+    } catch (requestError) {
+      setError(requestError.message)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const toggleMode = () => {
+    setIsRegistering((current) => !current)
+    setError('')
   }
 
   return (
@@ -74,9 +82,9 @@ function Login() {
 
       <section className="login-form-side">
         <div className="login-form-top">
-          <span>New to GymApp?</span>
-          <button type="button" className="login-demo-link" onClick={() => navigate('/')}>
-            Explore the app <span aria-hidden="true">→</span>
+          <span>{isRegistering ? 'Already have an account?' : 'New to GymApp?'}</span>
+          <button type="button" className="login-mode-toggle" onClick={toggleMode}>
+            {isRegistering ? 'Sign in' : 'Create an account'} <span aria-hidden="true">→</span>
           </button>
         </div>
 
@@ -85,11 +93,32 @@ function Login() {
             <GymAppIcon />
             <span><strong>Gym</strong>App</span>
           </div>
-          <span className="eyebrow">WELCOME BACK</span>
-          <h2>Sign in to your<br />training space.</h2>
-          <p className="login-intro">Pick up where you left off and keep your momentum going.</p>
+          <span className="eyebrow">{isRegistering ? 'GET STARTED' : 'WELCOME BACK'}</span>
+          <h2>{isRegistering ? <>Create your<br />training account.</> : <>Sign in to your<br />training space.</>}</h2>
+          <p className="login-intro">
+            {isRegistering
+              ? 'Create an account to save your profile and training progress.'
+              : 'Pick up where you left off and keep your momentum going.'}
+          </p>
 
           <form className="login-form" onSubmit={handleSubmit}>
+            {isRegistering && (
+              <>
+                <label htmlFor="login-username">Username</label>
+                <input
+                  id="login-username"
+                  className="input"
+                  type="text"
+                  name="username"
+                  placeholder="Your name"
+                  autoComplete="nickname"
+                  minLength="3"
+                  maxLength="50"
+                  required
+                />
+              </>
+            )}
+
             <label htmlFor="login-email">Email address</label>
             <input
               id="login-email"
@@ -110,8 +139,10 @@ function Login() {
                 className="input"
                 type={showPassword ? 'text' : 'password'}
                 name="password"
-                placeholder="Enter your password"
-                autoComplete="current-password"
+                placeholder={isRegistering ? 'At least 8 characters' : 'Enter your password'}
+                autoComplete={isRegistering ? 'new-password' : 'current-password'}
+                minLength={isRegistering ? 8 : undefined}
+                maxLength="128"
                 required
               />
               <button
@@ -124,22 +155,30 @@ function Login() {
               </button>
             </div>
 
-            {notice && <p className="login-notice" role="status">{notice}</p>}
+            {isRegistering && (
+              <>
+                <label htmlFor="login-confirm-password">Confirm password</label>
+                <input
+                  id="login-confirm-password"
+                  className="input"
+                  type={showPassword ? 'text' : 'password'}
+                  name="confirmPassword"
+                  placeholder="Enter your password again"
+                  autoComplete="new-password"
+                  minLength="8"
+                  maxLength="128"
+                  required
+                />
+              </>
+            )}
 
-            <button type="submit" className="btn btn-primary login-submit">
-              Sign in <span aria-hidden="true">→</span>
+            {error && <p className="login-notice" role="alert">{error}</p>}
+
+            <button type="submit" className="btn btn-primary login-submit" disabled={isSubmitting}>
+              {isSubmitting ? 'Please wait...' : isRegistering ? 'Create account' : 'Sign in'}
+              <span aria-hidden="true">→</span>
             </button>
           </form>
-
-          <div className="login-divider"><span>OR</span></div>
-
-          <div className="login-demo-note">
-            <span className="login-demo-icon" aria-hidden="true">✦</span>
-            <p><strong>Just looking around?</strong><br />Sign-in isn’t connected yet. Explore the app in demo mode.</p>
-          </div>
-          <button type="button" className="btn btn-secondary login-demo-button" onClick={() => navigate('/')}>
-            Continue with demo access
-          </button>
         </div>
 
         <p className="login-legal">By continuing, you agree to focus on progress, not perfection.</p>

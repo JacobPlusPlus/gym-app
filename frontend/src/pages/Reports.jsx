@@ -1,21 +1,19 @@
 import { useEffect, useState } from 'react'
+import { useAuth } from '../context/useAuth'
 
 const formatDate = (date, options = { month: 'short', day: 'numeric', year: 'numeric' }) =>
   new Intl.DateTimeFormat('en', options).format(new Date(`${date}T00:00:00`))
 
 const Reports = () => {
+  const { apiFetch } = useAuth()
   const [report, setReport] = useState(null)
   const [error, setError] = useState(false)
 
   useEffect(() => {
-    fetch('/api/reports')
-      .then((response) => {
-        if (!response.ok) throw new Error('Request failed')
-        return response.json()
-      })
+    apiFetch('/api/reports')
       .then(setReport)
       .catch(() => setError(true))
-  }, [])
+  }, [apiFetch])
 
   const maxWorkouts = Math.max(
     ...(report?.weeklyActivity.map((week) => week.workouts) ?? [0]),

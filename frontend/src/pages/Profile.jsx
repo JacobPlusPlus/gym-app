@@ -1,246 +1,200 @@
-import { useState } from "react";
+import { useEffect, useState } from 'react'
+import { useAuth } from '../context/useAuth'
 
 const Profile = () => {
-  const [editing, setEditing] = useState(false);
+  const { user, apiFetch, updateUser } = useAuth()
+  const [editing, setEditing] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [error, setError] = useState('')
+  const [report, setReport] = useState(null)
+  const [form, setForm] = useState({
+    username: user.username,
+    email: user.email,
+    weightKg: user.weightKg ?? '',
+    heightCm: user.heightCm ?? '',
+  })
 
-  const [user, setUser] = useState({
-    firstName: "Alex",
-    lastName: "Morgan",
-    email: "alex.morgan@example.com",
-    weight: "78",
-    height: "180",
-    goal: "Build muscle",
-    level: "Intermediate",
-  });
+  useEffect(() => {
+    apiFetch('/api/reports')
+      .then(setReport)
+      .catch((requestError) => setError(requestError.message))
+  }, [apiFetch])
+
+  const initials = user.username.trim().split(/\s+/).slice(0, 2)
+    .map((part) => part[0]).join('').toUpperCase()
+  const memberSince = new Intl.DateTimeFormat('en', { month: 'long', year: 'numeric' })
+    .format(new Date(user.createdAt))
 
   const handleChange = (event) => {
-    setUser({ ...user, [event.target.name]: event.target.value });
-  };
+    setForm((current) => ({ ...current, [event.target.name]: event.target.value }))
+  }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setEditing(false);
-  };
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    setSaving(true)
+    setError('')
+    try {
+      const { user: updatedUser } = await apiFetch('/api/auth/me', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...form,
+          weightKg: form.weightKg === '' ? null : Number(form.weightKg),
+          heightCm: form.heightCm === '' ? null : Number(form.heightCm),
+        }),
+      })
+      updateUser(updatedUser)
+      setEditing(false)
+    } catch (requestError) {
+      setError(requestError.message)
+    } finally {
+      setSaving(false)
+    }
+  }
 
   const stats = [
-    { icon: "▦", label: "Total workouts", value: "128", detail: "+12 this month" },
-    { icon: "↗", label: "Total volume", value: "84,320 kg", detail: "Across all workouts" },
-    { icon: "◷", label: "Training time", value: "96 h", detail: "Time invested" },
-    { icon: "♨", label: "Current streak", value: "6 weeks", detail: "Best: 9 weeks" },
-  ];
-
-  const achievements = [
-    { icon: "🏆", title: "First 100 workouts", desc: "Completed on September 12, 2026" },
-    { icon: "🔥", title: "Consistency is key", desc: "6 weeks of consistent training" },
-    { icon: "💪", title: "Getting stronger", desc: "Improved your bench press" },
-  ];
+    { icon: '◷', label: 'Workouts completed', value: report?.summary.workouts ?? '—' },
+    {
+      icon: '↗',
+      label: 'Total volume',
+      value: report ? `${Number(report.summary.volume).toLocaleString('en')} kg` : '—',
+    },
+    {
+      icon: '◴',
+      label: 'Training time',
+      value: report
+        ? `${Math.floor(report.summary.minutes / 60)} h ${report.summary.minutes % 60} m`
+        : '—',
+    },
+    { icon: '▦', label: 'Sets completed', value: report?.summary.sets ?? '—' },
+  ]
 
   return (
     <div className="page">
-      {/* Page heading */}
       <header className="page-header">
         <div>
           <h1 className="page-title">Your profile</h1>
-          <p className="muted">Manage your details and keep track of your progress.</p>
+          <p className="muted">Manage your account details and see your training progress.</p>
         </div>
-
-        <button className="btn btn-primary" onClick={() => setEditing(!editing)}>
-          {editing ? "Cancel" : "Edit profile"}
+        <button
+          className="btn btn-primary"
+          onClick={() => {
+            if (!editing) {
+              setForm({
+                username: user.username,
+                email: user.email,
+                weightKg: user.weightKg ?? '',
+                heightCm: user.heightCm ?? '',
+              })
+            }
+            setEditing((current) => !current)
+            setError('')
+          }}
+        >
+          {editing ? 'Cancel' : 'Edit profile'}
         </button>
       </header>
 
-      {/* User card */}
       <section className="card row row-between">
         <div className="row">
-          <div className="profile-avatar">
-            {user.firstName[0]}
-            {user.lastName[0]}
-          </div>
-
+          <div className="profile-avatar">{initials}</div>
           <div>
-            <h2>
-              {user.firstName} {user.lastName}
-            </h2>
+            <h2>{user.username}</h2>
             <p className="muted">{user.email}</p>
-            <div className="row row-tight">
-              <span className="badge">Plan Pro</span>
-              <span className="badge">{user.level}</span>
-            </div>
+            <span className="badge">GymApp member</span>
           </div>
         </div>
-
         <div className="stack stack-end">
           <span className="eyebrow">Member since</span>
-          <strong>January 2026</strong>
+          <strong>{memberSince}</strong>
           <span className="text-success">● Active account</span>
         </div>
       </section>
 
-      {/* Statistics */}
       <section className="grid-4">
         {stats.map((stat) => (
           <article className="card" key={stat.label}>
             <span className="icon-box">{stat.icon}</span>
             <p className="muted stat-label">{stat.label}</p>
             <h3>{stat.value}</h3>
-            <span className="muted">{stat.detail}</span>
           </article>
         ))}
       </section>
 
-      {/* Personal details and goals */}
-      <div className="grid-split">
-        <section className="card">
-          <div className="card-header">
-            <h2>Personal details</h2>
-            <p className="muted">Your basic information.</p>
-          </div>
+      {error && <p className="login-notice" role="alert">{error}</p>}
 
-          {editing ? (
-            <form className="form-grid" onSubmit={handleSubmit}>
-              <label>
-                First name
-                <input className="input" name="firstName" value={user.firstName} onChange={handleChange} required />
-              </label>
-
-              <label>
-                Last name
-                <input className="input" name="lastName" value={user.lastName} onChange={handleChange} required />
-              </label>
-
-              <label>
-                Email address
-                <input className="input" type="email" name="email" value={user.email} onChange={handleChange} required />
-              </label>
-
-              <label>
-                Weight (kg)
-                <input className="input" type="number" name="weight" value={user.weight} onChange={handleChange} min="1" required />
-              </label>
-
-              <label>
-                Height (cm)
-                <input className="input" type="number" name="height" value={user.height} onChange={handleChange} min="1" required />
-              </label>
-
-              <label>
-                Experience level
-                <select className="input" name="level" value={user.level} onChange={handleChange}>
-                  <option>Beginner</option>
-                  <option>Intermediate</option>
-                  <option>Advanced</option>
-                </select>
-              </label>
-
-              <label className="form-full">
-                Training goal
-                <select className="input" name="goal" value={user.goal} onChange={handleChange}>
-                  <option>Build muscle</option>
-                  <option>Improve strength</option>
-                  <option>Improve fitness</option>
-                  <option>Stay in shape</option>
-                </select>
-              </label>
-
-              <button className="btn btn-primary form-full" type="submit">
-                Save changes
-              </button>
-            </form>
-          ) : (
-            <div className="profile-details-grid">
-              <div>
-                <span>Full name</span>
-                <strong>{user.firstName} {user.lastName}</strong>
-              </div>
-              <div>
-                <span>Email address</span>
-                <strong>{user.email}</strong>
-              </div>
-              <div>
-                <span>Weight</span>
-                <strong>{user.weight} kg</strong>
-              </div>
-              <div>
-                <span>Height</span>
-                <strong>{user.height} cm</strong>
-              </div>
-              <div>
-                <span>Experience level</span>
-                <strong>{user.level}</strong>
-              </div>
-              <div>
-                <span>Training goal</span>
-                <strong>{user.goal}</strong>
-              </div>
-            </div>
-          )}
-        </section>
-
-        <section className="card">
-          <div className="card-header row row-between">
-            <div>
-              <h2>Your goal</h2>
-              <p className="muted">Your current training focus.</p>
-            </div>
-            <span className="icon-box">◎</span>
-          </div>
-
-          <div className="callout">
-            <span className="eyebrow">Main goal</span>
-            <h3>{user.goal}</h3>
-            <p className="muted">
-              Train consistently and gradually increase your weights.
-            </p>
-          </div>
-
-          <div className="stack">
-            <div className="row row-between">
-              <span className="muted">Weekly plan progress</span>
-              <strong>75%</strong>
-            </div>
-            <div className="progress">
-              <div style={{ width: "75%" }} />
-            </div>
-            <span className="muted">3 of 4 planned workouts</span>
-          </div>
-
-          <h3 className="card-subtitle">Workout preferences</h3>
-
-          <div className="list-row row-between">
-            <span className="muted">Workout type</span>
-            <strong>Strength training</strong>
-          </div>
-          <div className="list-row row-between">
-            <span className="muted">Weekly target</span>
-            <strong>4 workouts</strong>
-          </div>
-          <div className="list-row row-between">
-            <span className="muted">Experience level</span>
-            <strong>{user.level}</strong>
-          </div>
-        </section>
-      </div>
-
-      {/* Achievements */}
       <section className="card">
         <div className="card-header">
-          <h2>Recent achievements</h2>
-          <p className="muted">Your latest milestones.</p>
+          <h2>Account details</h2>
+          <p className="muted">Your profile is shared across your GymApp screens.</p>
         </div>
-
-        {achievements.map((item) => (
-          <article className="list-row" key={item.title}>
-            <span className="icon-box">{item.icon}</span>
-            <div className="grow">
-              <strong>{item.title}</strong>
-              <p className="muted">{item.desc}</p>
-            </div>
-            <span className="text-success">Unlocked</span>
-          </article>
-        ))}
+        {editing ? (
+          <form className="form-grid" onSubmit={handleSubmit}>
+            <label>
+              Username
+              <input
+                className="input"
+                name="username"
+                value={form.username}
+                onChange={handleChange}
+                minLength="3"
+                maxLength="50"
+                required
+              />
+            </label>
+            <label>
+              Email address
+              <input
+                className="input"
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                maxLength="100"
+                required
+              />
+            </label>
+            <label>
+              Weight (kg)
+              <input
+                className="input"
+                type="number"
+                name="weightKg"
+                value={form.weightKg}
+                onChange={handleChange}
+                min="1"
+                max="999.99"
+                step="0.01"
+              />
+            </label>
+            <label>
+              Height (cm)
+              <input
+                className="input"
+                type="number"
+                name="heightCm"
+                value={form.heightCm}
+                onChange={handleChange}
+                min="30"
+                max="300"
+                step="1"
+              />
+            </label>
+            <button className="btn btn-primary form-full" type="submit" disabled={saving}>
+              {saving ? 'Saving...' : 'Save changes'}
+            </button>
+          </form>
+        ) : (
+          <div className="profile-details-grid">
+            <div><span>Username</span><strong>{user.username}</strong></div>
+            <div><span>Email address</span><strong>{user.email}</strong></div>
+            <div><span>Weight</span><strong>{user.weightKg ? `${user.weightKg} kg` : 'Not set'}</strong></div>
+            <div><span>Height</span><strong>{user.heightCm ? `${user.heightCm} cm` : 'Not set'}</strong></div>
+          </div>
+        )}
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile

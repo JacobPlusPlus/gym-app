@@ -1,24 +1,36 @@
 # Database design
 
-Right now the app uses mock data (json files). This is the plan for the real database
-when we add a backend. We are using PostgreSQL, see `db/` folder and `docker-compose.yml`.
+GymApp uses PostgreSQL for account and workout data. The schema and initial exercise catalog
+are defined in `db/` and run when a new Docker database volume is initialized.
 
-Everything is kept simple, 6 tables.
+The schema has 7 tables.
 
 ## Tables
 
 ### users
-People using the app. For now there is no login so there is just one test user.
+People using the app. Accounts are created through the registration API.
 
 | column | type | notes |
 |---|---|---|
 | id | serial | PK |
 | username | varchar(50) | unique |
 | email | varchar(100) | unique |
-| password_hash | text | we will hash with bcrypt later |
+| password_hash | text | salted `scrypt` hash; never the plain-text password |
 | weight_kg | numeric(5,2) | for the profile tab |
 | height_cm | integer | |
 | created_at | timestamp | default now() |
+
+### auth_sessions
+Active login sessions. The API stores only a SHA-256 hash of each random Bearer token.
+Sessions expire after 7 days and are revoked when the user logs out.
+
+| column | type | notes |
+|---|---|---|
+| id | bigserial | PK |
+| user_id | integer | FK -> users, cascade delete |
+| token_hash | char(64) | unique SHA-256 hash |
+| expires_at | timestamptz | session expiry |
+| created_at | timestamptz | default now() |
 
 ### exercises
 Catalog of exercises (Exercises tab). It is shared, every user sees the same list.
@@ -88,6 +100,7 @@ Every single set done in a workout. The Raport tab is built from this table
 ## Relations
 
 - user has many plans and many workouts
+- user has many authentication sessions
 - plan has many plan_exercises
 - exercise can be in many plan_exercises and many workout_sets
 - workout has many workout_sets
@@ -99,6 +112,7 @@ Every single set done in a workout. The Raport tab is built from this table
 erDiagram
     users ||--o{ plans : "has"
     users ||--o{ workouts : "does"
+    users ||--o{ auth_sessions : "signs in with"
     plans ||--o{ plan_exercises : "contains"
     exercises ||--o{ plan_exercises : "used in"
     plans |o--o{ workouts : "based on"
@@ -112,6 +126,13 @@ erDiagram
         text password_hash
         numeric weight_kg
         int height_cm
+        timestamp created_at
+    }
+    auth_sessions {
+        int id PK
+        int user_id FK
+        char token_hash
+        timestamp expires_at
         timestamp created_at
     }
     exercises {
@@ -160,3 +181,7 @@ erDiagram
 - **Excersises** - reads `exercises`, filter by `muscle_group` / `equipment`
 - **Raport** - sums `workout_sets` (reps * weight_kg) per workout / per week
 - **Profile** - reads and updates `users`
+
+New database volumes seed only the shared exercise catalog; no demo user or sample workout history is created.
+The backend creates `auth_sessions` on startup if it is missing, so an existing PostgreSQL volume can use
+authentication without resetting or deleting its data.

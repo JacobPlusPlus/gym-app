@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useAuth } from "../context/useAuth";
 
 const initialWorkouts = [
   {
@@ -73,20 +74,39 @@ const initialWorkouts = [
 
 const categories = ["All workouts", "Upper body", "Lower body", "Full body"];
 
-const overview = [
-  { icon: "▦", value: "4", label: "Workouts this week", note: "+1 this week" },
-  { icon: "↗", value: "29,240 kg", label: "Total volume", note: "+8.4%" },
-  { icon: "◷", value: "4h 20m", label: "Training time", note: "This week" },
-  { icon: "♨", value: "3 / 4", label: "Weekly goal", note: "Goal: 4" },
-];
-
 const Workout = () => {
+  const { apiFetch } = useAuth();
+  const [report, setReport] = useState(null);
+  const [reportError, setReportError] = useState(false);
   const [workouts] = useState(initialWorkouts);
   const [category, setCategory] = useState("All workouts");
   const [search, setSearch] = useState("");
   const [selectedWorkout, setSelectedWorkout] = useState(null);
   const [activeWorkout, setActiveWorkout] = useState(null);
   const [completedExercises, setCompletedExercises] = useState([]);
+
+  useEffect(() => {
+    apiFetch("/api/reports")
+      .then(setReport)
+      .catch(() => setReportError(true));
+  }, [apiFetch]);
+
+  const overview = [
+    { icon: "▦", value: report?.summary.workouts ?? "—", label: "Workouts completed" },
+    {
+      icon: "↗",
+      value: report ? `${Number(report.summary.volume).toLocaleString("en")} kg` : "—",
+      label: "Total volume",
+    },
+    {
+      icon: "◷",
+      value: report
+        ? `${Math.floor(report.summary.minutes / 60)}h ${report.summary.minutes % 60}m`
+        : "—",
+      label: "Training time",
+    },
+    { icon: "▦", value: report?.summary.sets ?? "—", label: "Sets completed" },
+  ];
 
   const nextWorkout = workouts[1];
 
@@ -135,12 +155,16 @@ const Workout = () => {
       </header>
 
       {/* Weekly overview */}
+      {reportError && (
+        <div className="dashboard-notice" role="alert">
+          Could not load your workout totals. Check that the backend and database are running.
+        </div>
+      )}
       <section className="grid-4">
         {overview.map((stat) => (
           <article className="card" key={stat.label}>
             <div className="row row-between">
               <span className="icon-box">{stat.icon}</span>
-              <span className="text-success">{stat.note}</span>
             </div>
             <h2 className="stat-label">{stat.value}</h2>
             <p className="muted">{stat.label}</p>

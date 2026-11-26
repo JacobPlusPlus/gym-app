@@ -12,6 +12,16 @@ CREATE TABLE users (
     created_at    TIMESTAMP DEFAULT NOW()
 );
 
+CREATE TABLE auth_sessions (
+    id         BIGSERIAL PRIMARY KEY,
+    user_id    INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    token_hash CHAR(64) UNIQUE NOT NULL,
+    expires_at TIMESTAMPTZ NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX auth_sessions_expires_at_idx ON auth_sessions (expires_at);
+
 -- shared catalog of exercises, same for every user
 -- the data comes from frontend/src/data/exercises.json
 CREATE TABLE exercises (

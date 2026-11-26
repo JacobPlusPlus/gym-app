@@ -26,3 +26,9 @@ dist-ssr
 .env
 .env.*
 !.env.example
+
+# self-signed dev certificate (npm run certs)
+certs/
+package-lock.json 
+yarn.lock
+

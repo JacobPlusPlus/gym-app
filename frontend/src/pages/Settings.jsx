@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useOutletContext } from 'react-router-dom'
+import { useAuth } from '../context/useAuth'
 
 const STORAGE_KEY = 'gymAppPreferences'
 
@@ -10,9 +11,12 @@ const defaultPreferences = {
   workoutReminders: true,
 }
 
-const readPreferences = () => {
+const readPreferences = (userId) => {
   try {
-    return { ...defaultPreferences, ...JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') }
+    return {
+      ...defaultPreferences,
+      ...JSON.parse(localStorage.getItem(`${STORAGE_KEY}:${userId}`) || '{}'),
+    }
   } catch {
     return defaultPreferences
   }
@@ -20,15 +24,19 @@ const readPreferences = () => {
 
 const Settings = () => {
   const { theme, setTheme } = useOutletContext()
-  const [preferences, setPreferences] = useState(readPreferences)
+  const { user } = useAuth()
+  const [preferences, setPreferences] = useState(() => readPreferences(user.id))
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(preferences))
-  }, [preferences])
+    localStorage.setItem(`${STORAGE_KEY}:${user.id}`, JSON.stringify(preferences))
+  }, [preferences, user.id])
 
   const updatePreference = (key, value) => {
     setPreferences((current) => ({ ...current, [key]: value }))
   }
+
+  const initials = user.username.trim().split(/\s+/).slice(0, 2)
+    .map((part) => part[0]).join('').toUpperCase()
 
   return (
     <div className="page settings-page">
@@ -170,10 +178,11 @@ const Settings = () => {
       </section>
 
       <section className="settings-account">
-        <div className="settings-account-mark">AM</div>
+        <div className="settings-account-mark">{initials}</div>
         <div className="settings-account-copy">
           <span className="eyebrow">YOUR ACCOUNT</span>
-          <strong>Alex Morgan</strong>
+          <strong>{user.username}</strong>
+          <p>{user.email}</p>
           <p>Language: English · GymApp version 1.0.0</p>
         </div>
         <Link to="/profile" className="btn btn-secondary">View profile <span aria-hidden="true">→</span></Link>

@@ -197,7 +197,7 @@
   font-size: 11px;
 }
 
-.login-demo-link {
+.login-mode-toggle {
   padding: 0;
   border: 0;
   background: transparent;
@@ -285,7 +285,7 @@
 }
 
 .login-password-toggle:hover,
-.login-demo-link:hover {
+.login-mode-toggle:hover {
   color: var(--text);
 }
 
@@ -310,64 +310,6 @@
 
 .login-submit span {
   font-size: 17px;
-}
-
-.login-divider {
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  margin: 20px 0 15px;
-  color: var(--text-muted);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-
-.login-divider::before,
-.login-divider::after {
-  height: 1px;
-  flex: 1;
-  background: var(--border);
-  content: '';
-}
-
-.login-demo-note {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 12px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: var(--surface);
-}
-
-.login-demo-icon {
-  display: grid;
-  place-items: center;
-  width: 25px;
-  height: 25px;
-  flex: 0 0 25px;
-  border-radius: 8px;
-  background: var(--accent-soft);
-  color: var(--accent);
-  font-size: 12px;
-}
-
-.login-demo-note p {
-  color: var(--text-muted);
-  font-size: 10px;
-  line-height: 1.55;
-}
-
-.login-demo-note strong {
-  color: var(--text);
-}
-
-.login-demo-button {
-  width: 100%;
-  min-height: 43px;
-  margin-top: 10px;
-  font-size: 11px;
 }
 
 .login-legal {

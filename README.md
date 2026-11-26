@@ -10,14 +10,14 @@ Aplikacja webowa do śledzenia treningów. Docelowo umożliwi przeglądanie ćwi
 
 ### Zespół
 
-| Osoba | Rola |
-|---|---|
-| Jakub Kukla | Scrum Master |
-| Alex Turcu | Baza danych |
-| Szymon Gniadek | Backend |
-| Bartosz Flis | Design |
-| Kamil Woda | Frontend |
-| Igor Góral | Frontend |
+| Osoba          | Rola         |
+| -------------- | ------------ |
+| Jakub Kukla    | Scrum Master |
+| Alex Turcu     | Baza danych  |
+| Szymon Gniadek | Backend      |
+| Bartosz Flis   | Design       |
+| Kamil Woda     | Frontend     |
+| Igor Góral     | Frontend     |
 
 ### Technologie
 
@@ -29,7 +29,9 @@ Aplikacja webowa do śledzenia treningów. Docelowo umożliwi przeglądanie ćwi
 
 Wymagania: Node.js, npm i Docker Desktop z działającym Docker Compose.
 
-Przy pierwszym uruchomieniu, w głównym katalogu projektu, zainstaluj zależności:
+**1. Instalacja zależności**
+
+Przy pierwszym uruchomieniu, w głównym katalogu projektu, wykonaj:
 
 ```bash
 npm install
@@ -37,67 +39,44 @@ npm --prefix backend install
 npm --prefix frontend install
 ```
 
-Utwórz plik `backend/.env` na podstawie `backend/.env.example`. Ustaw w nim `DATABASE_URL` oraz `PORT`.
+**2. Konfiguracja środowiska**
 
-Przykładowa konfiguracja lokalnej bazy:
+Utwórz plik `backend/.env` na podstawie `backend/.env.example`. Dla lokalnej bazy z Dockera wystarczy:
 
 ```env
-DATABASE_URL=postgres://gym:gym@localhost:5432/gym_app
 PORT=3000
+DATABASE_URL=postgres://gym:gym@localhost:5432/gym_app
 ```
 
-Uruchom bazę danych, backend i frontend jedną komendą:
+**3. Uruchomienie aplikacji**
+
+W głównym katalogu projektu wykonaj:
 
 ```bash
 npm run dev
 ```
 
-Polecenie uruchamia PostgreSQL w Dockerze oraz backend i frontend. Skrypt nie czeka na pełną gotowość bazy danych, więc przy pierwszym uruchomieniu usługi mogą potrzebować chwili, zanim zaczną poprawnie współpracować.
+Polecenie uruchamia PostgreSQL w Dockerze oraz backend i frontend. Aplikacja jest dostępna pod adresem https://localhost:5173.
+
+**HTTPS:** przy pierwszym uruchomieniu `npm run dev` tworzy samopodpisany certyfikat w katalogu `certs/` (to samo robi `npm run certs`). Frontend i backend działają przez HTTPS. Przeglądarka ostrzeże, że certyfikat nie jest zaufany. To normalne dla certyfikatu samopodpisanego: wybierz „Zaawansowane” → „Przejdź do localhost”. Katalog `certs/` nie trafia do repozytorium, każdy generuje własny certyfikat. Nowy certyfikat: `npm run certs -- --force`.
+
+Skrypt nie czeka na pełną gotowość bazy danych, dlatego przy pierwszym uruchomieniu usługi mogą potrzebować chwili, zanim zaczną poprawnie współpracować.
 
 Aby zatrzymać backend i frontend, naciśnij `Ctrl+C`. Baza danych pozostanie uruchomiona.
 
-### Baza danych
-
-Podczas pierwszego tworzenia bazy wykonywane są skrypty:
-
-- `db/01_schema.sql` — tworzy strukturę tabel.
-- `db/02_seed.sql` — dodaje przykładowe dane.
-
-Skrypty inicjalizacyjne wykonują się automatycznie tylko przy pierwszym utworzeniu bazy z pustym wolumenem.
-
-Po zmianie skryptów SQL, jeśli chcesz utworzyć bazę od nowa, możesz wykonać:
-
-```bash
-docker compose down -v
-docker compose up -d
-```
-
-**Uwaga:** `docker compose down -v` usuwa wolumeny, a tym samym dane zapisane w lokalnej bazie. Używaj tej komendy tylko wtedy, gdy chcesz zresetować bazę.
-
-Wyłączenie bazy bez usuwania danych:
-
-```bash
-docker compose down
-```
-
-Połączenie z bazą z terminala:
-
-```bash
-docker compose exec db psql -U gym -d gym_app
-```
-
-Dane dostępowe podane w tym pliku są przeznaczone wyłącznie do lokalnego środowiska deweloperskiego.
+Skrypty SQL, reset bazy i połączenie przez `psql` opisano w [dokumentacji bazy danych](docs/database.md). Szczegółowe informacje techniczne znajdują się w dokumentacji poszczególnych części aplikacji.
 
 ### Struktura projektu
 
 ```text
-frontend/           aplikacja React (Vite)
-backend/            serwer API (Node.js, Express)
-db/                 schemat SQL i dane przykładowe
-docs/               dokumentacja projektu i sprintów
-docker-compose.yml  konfiguracja PostgreSQL
-package.json        skrypty projektu
-README.md           dokumentacja główna
+gym-app/
+├── frontend/           aplikacja frontendowa (React, Vite)
+├── backend/            serwer aplikacji (Node.js, Express)
+├── db/                 skrypty SQL
+├── docs/               dokumentacja projektu
+├── docker-compose.yml  konfiguracja Docker
+├── package.json        główne skrypty projektu
+└── README.md           dokumentacja główna
 ```
 
 ### Zasady pracy
@@ -113,11 +92,21 @@ README.md           dokumentacja główna
 
 ### Linki
 
-- **Trello:** https://trello.com/b/8s6KedpA/gym-app
-- **Figma:** https://www.figma.com/make/b2s33645iwv3cAqqjDGphV/Gym-Tracker-UI-Design
-- **Baza danych:** [docs/database.md](docs/database.md)
-- **Sprint 1:** [docs/sprint1.md](docs/sprint1.md)
-- **Sprint 2:** [docs/sprint2.md](docs/sprint2.md)
+- **Trello:** [Gym App](https://trello.com/b/8s6KedpA/gym-app)
+- **Figma:** [Gym Tracker UI Design](https://www.figma.com/make/b2s33645iwv3cAqqjDGphV/Gym-Tracker-UI-Design)
+
+**Dokumentacja techniczna:**
+
+- [Frontend](docs/frontend.md)
+- [Backend](docs/backend.md)
+- [API](docs/api.md)
+- [Baza danych](docs/database.md)
+
+**Dokumentacja sprintów:**
+
+- [Sprint 1](docs/sprint/sprint1.md)
+- [Sprint 2](docs/sprint/sprint2.md)
+- [Sprint 3](docs/sprint/sprint3.md)
 
 ---
 
@@ -127,14 +116,14 @@ A web application for workout tracking. Its intended features include browsing e
 
 ### Team
 
-| Person | Role |
-|---|---|
-| Jakub Kukla | Scrum Master |
-| Alex Turcu | Database |
-| Szymon Gniadek | Backend |
-| Bartosz Flis | Design |
-| Kamil Woda | Frontend |
-| Igor Góral | Frontend |
+| Person         | Role         |
+| -------------- | ------------ |
+| Jakub Kukla    | Scrum Master |
+| Alex Turcu     | Database     |
+| Szymon Gniadek | Backend      |
+| Bartosz Flis   | Design       |
+| Kamil Woda     | Frontend     |
+| Igor Góral     | Frontend     |
 
 ### Technologies
 
@@ -146,7 +135,9 @@ A web application for workout tracking. Its intended features include browsing e
 
 Requirements: Node.js, npm and Docker Desktop with Docker Compose running.
 
-On the first run, install the dependencies from the project root:
+**1. Install dependencies**
+
+On the first run, execute the following commands from the project root:
 
 ```bash
 npm install
@@ -154,67 +145,44 @@ npm --prefix backend install
 npm --prefix frontend install
 ```
 
-Create `backend/.env` based on `backend/.env.example`. Set `DATABASE_URL` and `PORT`.
+**2. Environment configuration**
 
-Example configuration for the local database:
+Create `backend/.env` based on `backend/.env.example`. For the local Docker database this is enough:
 
 ```env
-DATABASE_URL=postgres://gym:gym@localhost:5432/gym_app
 PORT=3000
+DATABASE_URL=postgres://gym:gym@localhost:5432/gym_app
 ```
 
-Start the database, backend and frontend with one command:
+**3. Start the application**
+
+From the project root, run:
 
 ```bash
 npm run dev
 ```
 
-The command starts PostgreSQL in Docker, as well as the backend and frontend. The script does not wait for the database to become fully ready, so the services may need a moment to start communicating correctly, especially on the first run.
+The command starts PostgreSQL in Docker, as well as the backend and frontend. The app is available at https://localhost:5173.
+
+**HTTPS:** on the first run, `npm run dev` creates a self-signed certificate in `certs/` (`npm run certs` does the same). The frontend and backend both use HTTPS. The browser will warn that the certificate is not trusted. That is expected for a self-signed certificate: choose "Advanced" → "Proceed to localhost". The `certs/` folder is not committed, everyone generates their own. To make a new certificate: `npm run certs -- --force`.
+
+The script does not wait for the database to become fully ready, so the services may need a moment to start communicating correctly, especially on the first run.
 
 Press `Ctrl+C` to stop the backend and frontend. The database remains running.
 
-### Database
-
-When the database is created for the first time, the following SQL scripts are executed:
-
-- `db/01_schema.sql` — creates the database tables.
-- `db/02_seed.sql` — inserts sample data.
-
-The initialization scripts run automatically only when the database is first created with an empty volume.
-
-If you change the SQL scripts and want to recreate the database, you can run:
-
-```bash
-docker compose down -v
-docker compose up -d
-```
-
-**Warning:** `docker compose down -v` removes volumes and therefore deletes the data stored in the local database. Use this command only when you intend to reset the database.
-
-To stop the database without deleting its data:
-
-```bash
-docker compose down
-```
-
-Connect to the database from the terminal:
-
-```bash
-docker compose exec db psql -U gym -d gym_app
-```
-
-The credentials in this file are intended for the local development environment only.
+SQL scripts, resetting the database and connecting with `psql` are described in the [database documentation](docs/database.md). Detailed technical information is available in the documentation for each part of the application.
 
 ### Project structure
 
 ```text
-frontend/           React application (Vite)
-backend/            API server (Node.js, Express)
-db/                 SQL schema and sample data
-docs/               project and sprint documentation
-docker-compose.yml  PostgreSQL configuration
-package.json        project scripts
-README.md           main documentation
+gym-app/
+├── frontend/           frontend application (React, Vite)
+├── backend/            application server (Node.js, Express)
+├── db/                 SQL scripts
+├── docs/               project documentation
+├── docker-compose.yml  Docker configuration
+├── package.json        main project scripts
+└── README.md           main documentation
 ```
 
 ### Working rules
@@ -230,8 +198,18 @@ README.md           main documentation
 
 ### Links
 
-- **Trello:** https://trello.com/b/8s6KedpA/gym-app
-- **Figma:** https://www.figma.com/make/b2s33645iwv3cAqqjDGphV/Gym-Tracker-UI-Design
-- **Database:** [docs/database.md](docs/database.md)
-- **Sprint 1:** [docs/sprint1.md](docs/sprint1.md)
-- **Sprint 2:** [docs/sprint2.md](docs/sprint2.md)
+- **Trello:** [Gym App](https://trello.com/b/8s6KedpA/gym-app)
+- **Figma:** [Gym Tracker UI Design](https://www.figma.com/make/b2s33645iwv3cAqqjDGphV/Gym-Tracker-UI-Design)
+
+**Technical documentation:**
+
+- [Frontend](docs/frontend.md)
+- [Backend](docs/backend.md)
+- [API](docs/api.md)
+- [Database](docs/database.md)
+
+**Sprint documentation:**
+
+- [Sprint 1](docs/sprint/sprint1.md)
+- [Sprint 2](docs/sprint/sprint2.md)
+- [Sprint 3](docs/sprint/sprint3.md)
