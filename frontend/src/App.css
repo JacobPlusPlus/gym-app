@@ -684,7 +684,155 @@ th {
   font-size: 13px;
 }
 
-/* ---------- 15. Responsywność ---------- */
+/* ---------- 15. Szczegóły ćwiczeń ---------- */
+.exercise-details {
+  width: min(100%, 750px);
+}
+
+.exercise-details-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.exercise-details-header img {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.exercise-details-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.exercise-details-section {
+  margin-bottom: 20px;
+}
+
+.exercise-details-section h3 {
+  margin-bottom: 8px;
+}
+
+.exercise-details-section li {
+  margin-bottom: 6px;
+}
+
+@media (max-width: 600px) {
+  .exercise-details-header {
+    flex-direction: column;
+  }
+
+  .exercise-details-info {
+    grid-template-columns: 1fr;
+  }
+}
+
+.exercise-details-modal {
+  width: min(100%, 780px);
+}
+
+.exercise-details-modal .exercise-details-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.exercise-details-image {
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.exercise-details-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.exercise-details-info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 20px 0;
+}
+.exercise-details-info small {
+  margin-right: 5px;
+}
+
+.exercise-details-info article {
+  padding: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.exercise-details-section {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.exercise-details-section h3 {
+  margin-bottom: 10px;
+}
+
+.exercise-muscle-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.exercise-muscle-list span {
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 13px;
+}
+
+.exercise-instructions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.exercise-instruction {
+  display: flex;
+  gap: 12px;
+}
+
+.exercise-instruction > span {
+  color: var(--accent);
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.exercise-details-footer-button {
+  width: 100%;
+  margin-top: 18px;
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--accent-soft-border);
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .exercise-details-info {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- 16. Responsywność ---------- */
 
 @media (max-width: 1100px) {
   .grid-4 {
