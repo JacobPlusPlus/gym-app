@@ -28,6 +28,7 @@ frontend/
 ├── src/
 │   ├── assets/       # Grafiki, ikony i pozostałe zasoby
 │   ├── components/   # Współdzielone komponenty interfejsu
+│   ├── context/      # Stan zalogowanego użytkownika i sesji
 │   ├── pages/        # Widoki poszczególnych stron aplikacji
 │   ├── styles/       # Style CSS poszczególnych sekcji i stron
 │   ├── App.jsx       # Główny komponent aplikacji i konfiguracja routingu
@@ -51,7 +52,7 @@ Nawigacja między stronami jest obsługiwana przez bibliotekę React Router.
 | `/reports`   | Reports   | Raporty i statystyki                |
 | `/profile`   | Profile   | Profil użytkownika                  |
 | `/settings`  | Settings  | Ustawienia aplikacji                |
-| `/login`     | Login     | Ekran logowania                     |
+| `/login`     | Login     | Logowanie i rejestracja              |
 
 Większość stron korzysta ze wspólnego komponentu `Layout`, który zawiera boczne menu nawigacyjne, górny pasek oraz główny obszar wyświetlania treści.
 
@@ -82,22 +83,25 @@ Aktualnie API jest wykorzystywane do:
 
 Szczegółowy opis endpointów, parametrów i odpowiedzi znajduje się w dokumentacji [API](api.md).
 
-### Dane i ustawienia lokalne
+### Uwierzytelnianie, dane i ustawienia lokalne
 
 Nie wszystkie sekcje aplikacji korzystają obecnie z danych pobieranych z backendu.
 
 - **Exercises** – pobiera listę ćwiczeń z API, a wyszukiwanie i filtrowanie odbywa się po stronie frontendu.
-- **Dashboard i Reports** – pobierają dane raportowe z API.
+- **Dashboard, Workout i Reports** – pobierają statystyki z API dla zalogowanego konta.
 - **Workout** – obecnie korzysta z przykładowych danych.
-- **Profile** – obecnie korzysta z przykładowych danych.
-- **Settings** – zapisuje preferencje lokalnie w przeglądarce.
+- **Profile** – wyświetla i aktualizuje dane zalogowanego użytkownika.
+- **Settings** – zapisuje preferencje osobno dla każdego konta.
+
+Strony aplikacji są chronione przez kontekst uwierzytelniania. Po rejestracji lub logowaniu frontend
+zapisuje token sesji, pobiera profil z `/api/auth/me` i wysyła token w nagłówku Bearer. Wylogowanie
+unieważnia sesję w backendzie. Nie ma trybu demo ani opcji przypomnienia hasła.
 
 Do przechowywania ustawień wykorzystywany jest mechanizm `localStorage`:
 
 - `theme` – wybrany motyw aplikacji.
-- `gymAppPreferences` – preferencje zapisane w sekcji Settings.
-
-Ekran Login jest dostępny w aplikacji, ale nie jest jeszcze połączony z pełnym mechanizmem uwierzytelniania użytkowników.
+- `gymAppPreferences:<userId>` – preferencje zapisane w sekcji Settings dla danego konta.
+- `gymAppToken` – token bieżącej sesji.
 
 ### Dostępne skrypty
 
@@ -160,6 +164,7 @@ frontend/
 ├── src/
 │   ├── assets/       # Images, icons and other application assets
 │   ├── components/   # Shared user interface components
+│   ├── context/      # Authenticated user and session state
 │   ├── pages/        # Individual application pages
 │   ├── styles/       # CSS styles for individual sections and pages
 │   ├── App.jsx       # Main application component and routing configuration
@@ -183,7 +188,7 @@ Navigation between pages is handled by React Router.
 | `/reports`   | Reports   | Reports and statistics          |
 | `/profile`   | Profile   | User profile                    |
 | `/settings`  | Settings  | Application settings            |
-| `/login`     | Login     | Login screen                    |
+| `/login`     | Login     | Sign-in and registration         |
 
 Most pages use a shared `Layout` component, which contains the sidebar navigation, top bar and main content area.
 
@@ -214,22 +219,25 @@ The API is currently used to:
 
 A detailed description of endpoints, parameters and responses is available in the [API Documentation](api.md).
 
-### Data and Local Settings
+### Authentication, Data and Local Settings
 
 Not all application sections currently use data retrieved from the backend.
 
 - **Exercises** – retrieves the exercise list from the API; searching and filtering are performed on the frontend.
-- **Dashboard and Reports** – retrieve report data from the API.
+- **Dashboard, Workout and Reports** – retrieve statistics for the authenticated account.
 - **Workout** – currently uses sample data.
-- **Profile** – currently uses sample data.
-- **Settings** – stores preferences locally in the browser.
+- **Profile** – displays and updates the authenticated user's details.
+- **Settings** – stores preferences separately for each account.
+
+Application pages are protected by the authentication context. After registration or sign-in, the frontend
+stores the session token, loads the profile from `/api/auth/me` and sends the token as a Bearer credential.
+Signing out revokes the backend session. There is no demo mode or password recovery option.
 
 The browser's `localStorage` mechanism is used to store settings:
 
 - `theme` – the selected application theme.
-- `gymAppPreferences` – preferences stored in the Settings section.
-
-The Login screen is available in the application, but it is not yet connected to a complete user authentication mechanism.
+- `gymAppPreferences:<userId>` – preferences stored in Settings for that account.
+- `gymAppToken` – the current session token.
 
 ### Available Scripts
 

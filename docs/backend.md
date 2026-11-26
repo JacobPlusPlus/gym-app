@@ -18,6 +18,8 @@ Został zbudowany w Node.js z wykorzystaniem frameworka Express. Backend działa
 - **Framework:** Express 5
 - **Baza danych:** PostgreSQL 17
 - **Komunikacja z bazą danych:** node-postgres (`pg`)
+- **Haszowanie haseł:** `scrypt` z modułu `node:crypto`
+- **Sesje:** losowe tokeny Bearer; PostgreSQL przechowuje tylko ich skróty SHA-256
 - **Zmienne środowiskowe:** dotenv
 - **Obsługa żądań z frontendu:** CORS
 
@@ -26,9 +28,11 @@ Został zbudowany w Node.js z wykorzystaniem frameworka Express. Backend działa
 ```text
 backend/
 ├── src/
+│   ├── auth/         # Haszowanie haseł i middleware sesji
 │   ├── routes/       # Moduły obsługujące endpointy API
 │   ├── db.js         # Konfiguracja połączenia z bazą danych
 │   └── server.js     # Konfiguracja i uruchomienie serwera Express
+├── test/             # Testy kryptografii uwierzytelniania
 ├── .env.example      # Przykładowa konfiguracja zmiennych środowiskowych
 └── package.json      # Zależności i skrypty backendu
 ```
@@ -42,6 +46,7 @@ Obecnie serwer:
 - inicjalizuje aplikację Express,
 - obsługuje żądania w formacie JSON,
 - konfiguruje dostęp z adresu frontendowego `https://localhost:5173` za pomocą CORS,
+- tworzy tabelę sesji, jeśli nie istnieje,
 - rejestruje moduły routingu API,
 - obsługuje błędy serwera za pomocą wspólnego middleware,
 - uruchamia serwer na porcie określonym w zmiennej `PORT`.
@@ -53,9 +58,22 @@ Endpointy są podzielone na osobne moduły znajdujące się w katalogu `src/rout
 Aktualnie dostępne moduły:
 
 - **exercises.js** – pobieranie listy ćwiczeń z bazy danych.
-- **reports.js** – pobieranie podsumowania treningów, ostatnich sesji, aktywności tygodniowej i rekordów ćwiczeń.
+- **auth.js** – rejestracja, logowanie, odczyt i aktualizacja profilu oraz wylogowanie.
+- **reports.js** – pobieranie raportów dla użytkownika z aktywną sesją.
 
 Każdy moduł korzysta z Express Router i udostępnia swoje endpointy pod odpowiednim prefiksem `/api`.
+Raporty i endpointy profilu wymagają nagłówka `Authorization: Bearer <token>`. Katalog ćwiczeń pozostaje publiczny.
+
+### Uwierzytelnianie i sesje
+
+Hasła są przechowywane jako hashe `scrypt` z unikalną solą; backend nigdy nie zapisuje ich w postaci jawnej.
+Po rejestracji lub logowaniu API zwraca losowy token sesji ważny przez 7 dni. W bazie przechowywany jest
+wyłącznie jego skrót SHA-256. Middleware sprawdza sesję przy każdym żądaniu chronionym, a wylogowanie
+unieważnia ją w bazie. Tabela `auth_sessions` jest tworzona przy uruchomieniu backendu, także dla
+istniejących wolumenów PostgreSQL.
+
+Frontend wysyła token jako Bearer i pobiera aktualne dane konta z `/api/auth/me`. Identyfikator użytkownika
+w raportach pochodzi z poprawnej sesji, nigdy z parametru klienta.
 
 Szczegółowy opis metod HTTP, parametrów, odpowiedzi i kodów statusu znajduje się w dokumentacji [API](api.md).
 
@@ -104,14 +122,14 @@ Serwer posiada również wspólne middleware obsługujące nieprzechwycone błę
 Backend udostępnia obecnie:
 
 - pobieranie ćwiczeń z tabeli `exercises`,
+- rejestrację, logowanie i wylogowanie użytkowników,
+- odczyt i aktualizację profilu zalogowanego użytkownika,
 - pobieranie danych statystycznych na podstawie zapisanych treningów,
 - zestawienie ostatnich treningów,
 - zestawienie aktywności tygodniowej,
 - zestawienie najlepszych wyników ćwiczeń.
 
-W module raportów identyfikator użytkownika jest obecnie ustawiony na stałą wartość `1` (`USER_ID = 1`). Nie jest jeszcze pobierany z systemu uwierzytelniania.
-
-Backend nie posiada obecnie pełnego mechanizmu rejestracji, logowania ani zarządzania sesją użytkownika.
+Backend filtruje raporty według identyfikatora pobranego z uwierzytelnionej sesji. Katalog ćwiczeń jest wspólny dla kont.
 
 ### Dostępne skrypty
 
@@ -121,6 +139,7 @@ Skrypty backendu są zdefiniowane w pliku `backend/package.json`.
 | ------------- | ------------------------------------------------------------------------------ |
 | `npm run dev` | Uruchamia backend w trybie deweloperskim z automatycznym restartem po zmianach |
 | `npm start`   | Uruchamia backend                                                              |
+| `npm test`    | Uruchamia testy kryptografii uwierzytelniania                                     |
 
 Komendy należy wykonywać z katalogu `backend/`.
 
@@ -153,6 +172,8 @@ It is built with Node.js and the Express framework. The backend operates as a se
 - **Framework:** Express 5
 - **Database:** PostgreSQL 17
 - **Database communication:** node-postgres (`pg`)
+- **Password hashing:** `scrypt` from `node:crypto`
+- **Sessions:** random Bearer tokens; PostgreSQL stores only SHA-256 token hashes
 - **Environment variables:** dotenv
 - **Frontend request handling:** CORS
 
@@ -161,9 +182,11 @@ It is built with Node.js and the Express framework. The backend operates as a se
 ```text
 backend/
 ├── src/
+│   ├── auth/         # Password hashing and session middleware
 │   ├── routes/       # Modules handling API endpoints
 │   ├── db.js         # Database connection configuration
 │   └── server.js     # Express server configuration and startup
+├── test/             # Authentication cryptography tests
 ├── .env.example      # Example environment configuration
 └── package.json      # Backend dependencies and scripts
 ```
@@ -177,6 +200,7 @@ Currently, the server:
 - initializes the Express application,
 - handles JSON requests,
 - configures CORS access from the frontend address `https://localhost:5173`,
+- creates the session table if it does not exist,
 - registers API routing modules,
 - handles server errors through shared middleware,
 - starts the server on the port specified by the `PORT` environment variable.
@@ -188,9 +212,21 @@ Endpoints are divided into separate modules located in the `src/routes/` directo
 Currently available modules:
 
 - **exercises.js** – retrieves the list of exercises from the database.
-- **reports.js** – retrieves workout summaries, recent sessions, weekly activity and exercise records.
+- **auth.js** – registers, signs in, retrieves and updates a profile, and signs out.
+- **reports.js** – retrieves reports for the user with an active session.
 
 Each module uses Express Router and exposes its endpoints under the appropriate `/api` prefix.
+Reports and profile endpoints require an `Authorization: Bearer <token>` header. The exercise catalog remains public.
+
+### Authentication and Sessions
+
+Passwords are stored as uniquely salted `scrypt` hashes; the backend never stores them in plain text.
+Registration and login return a random session token valid for 7 days. Only its SHA-256 hash is stored
+in the database. Middleware checks the session on every protected request, and logout revokes it in the
+database. The `auth_sessions` table is created during backend startup, including for existing PostgreSQL volumes.
+
+The frontend sends the token as a Bearer credential and retrieves current account details from `/api/auth/me`.
+The report user ID comes from the authenticated session, never from a client-supplied parameter.
 
 A detailed description of HTTP methods, parameters, responses and status codes is available in the [API Documentation](api.md).
 
@@ -239,14 +275,14 @@ The server also includes shared middleware for handling uncaught Express errors.
 The backend currently provides:
 
 - retrieving exercises from the `exercises` table,
+- registering, signing in and signing out users,
+- retrieving and updating the authenticated user's profile,
 - retrieving statistical data based on recorded workouts,
 - listing recent workouts,
 - summarizing weekly activity,
 - listing the best exercise results.
 
-In the reports module, the user ID is currently set to a fixed value of `1` (`USER_ID = 1`). It is not yet retrieved from an authentication system.
-
-The backend does not currently provide a complete user registration, login or session management mechanism.
+The backend filters reports by the ID from the authenticated session. The exercise catalog is shared by all accounts.
 
 ### Available Scripts
 
@@ -256,6 +292,7 @@ Backend scripts are defined in `backend/package.json`.
 | ------------- | ---------------------------------------------------------------------------- |
 | `npm run dev` | Starts the backend in development mode with automatic restarts after changes |
 | `npm start`   | Starts the backend                                                           |
+| `npm test`    | Runs authentication cryptography tests                                       |
 
 Commands should be executed from the `backend/` directory.
 

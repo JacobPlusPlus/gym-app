@@ -1,8 +1,9 @@
 import { Router } from 'express'
 import pool from '../db.js'
+import requireAuth from '../auth/requireAuth.js'
 
 const router = Router()
-const USER_ID = 1
+router.use(requireAuth)
 
 router.get('/', async (req, res) => {
   try {
@@ -24,7 +25,7 @@ router.get('/', async (req, res) => {
              GROUP BY workout_id
            ) sets ON sets.workout_id = w.id
            WHERE w.user_id = $1`,
-          [USER_ID],
+          [req.user.id],
         ),
         pool.query(
           `SELECT w.id,
@@ -39,7 +40,7 @@ router.get('/', async (req, res) => {
            GROUP BY w.id, p.name
            ORDER BY w.workout_date DESC, w.id DESC
            LIMIT 8`,
-          [USER_ID],
+          [req.user.id],
         ),
         pool.query(
           `WITH weeks AS (
@@ -57,7 +58,7 @@ router.get('/', async (req, res) => {
             AND w.user_id = $1
            GROUP BY weeks.week_start
            ORDER BY weeks.week_start`,
-          [USER_ID],
+          [req.user.id],
         ),
         pool.query(
           `SELECT e.name,
@@ -69,7 +70,7 @@ router.get('/', async (req, res) => {
            GROUP BY e.id, e.name
            ORDER BY MAX(ws.weight_kg) DESC, e.name
            LIMIT 3`,
-          [USER_ID],
+          [req.user.id],
         ),
       ])
 

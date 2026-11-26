@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../context/useAuth'
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric' }).format(
@@ -7,18 +8,15 @@ const formatDate = (date) =>
   )
 
 const Home = () => {
+  const { user, apiFetch } = useAuth()
   const [report, setReport] = useState(null)
   const [error, setError] = useState(false)
 
   useEffect(() => {
-    fetch('/api/reports')
-      .then((response) => {
-        if (!response.ok) throw new Error('Request failed')
-        return response.json()
-      })
+    apiFetch('/api/reports')
       .then(setReport)
       .catch(() => setError(true))
-  }, [])
+  }, [apiFetch])
 
   const maxWorkouts = Math.max(
     ...(report?.weeklyActivity.map((week) => week.workouts) ?? [0]),
@@ -30,7 +28,7 @@ const Home = () => {
       <section className="dashboard-hero">
         <div className="dashboard-hero-copy">
           <span className="hero-kicker"><span className="hero-kicker-dot" /> YOUR TRAINING SPACE</span>
-          <h1>Make every session<br />count.</h1>
+          <h1>Welcome back,<br />{user.username}.</h1>
           <p>Your progress starts with showing up. Keep building strength, one workout at a time.</p>
           <Link className="btn hero-button" to="/workout">
             <span aria-hidden="true">▶</span> Start a workout

@@ -18,10 +18,51 @@ Endpointy są dostępne pod prefiksem `/api`.
 
 ## 2. Dostępne endpointy
 
-| Metoda | Endpoint         | Opis                                  |
-| ------ | ---------------- | ------------------------------------- |
-| GET    | `/api/exercises` | Pobiera listę ćwiczeń                 |
-| GET    | `/api/reports`   | Pobiera dane do raportów treningowych |
+| Metoda | Endpoint            | Opis                                      |
+| ------ | ------------------- | ----------------------------------------- |
+| POST   | `/api/auth/register` | Tworzy konto i rozpoczyna sesję           |
+| POST   | `/api/auth/login`    | Loguje i rozpoczyna sesję                 |
+| GET    | `/api/auth/me`       | Pobiera profil zalogowanego użytkownika   |
+| PATCH  | `/api/auth/me`       | Aktualizuje profil zalogowanego użytkownika |
+| POST   | `/api/auth/logout`   | Kończy bieżącą sesję                      |
+| GET    | `/api/exercises`     | Pobiera listę ćwiczeń                     |
+| GET    | `/api/reports`       | Pobiera raporty zalogowanego użytkownika  |
+
+### Uwierzytelnianie
+
+Po rejestracji lub logowaniu API zwraca token sesji, ważny przez 7 dni. Przekazuj go w nagłówku
+`Authorization: Bearer <token>` przy endpointach profilu i raportów.
+
+#### POST `/api/auth/register`
+
+Żądanie JSON:
+
+```json
+{ "username": "Jakub", "email": "jakub@example.com", "password": "minimum-8-znakow" }
+```
+
+`username` ma 3–50 znaków, `email` musi być prawidłowy, a `password` ma 8–128 znaków.
+Odpowiedź `201 Created` zawiera `{ "user": { ... }, "token": "..." }`.
+Duplikat nazwy lub adresu e-mail zwraca `409 Conflict`; nieprawidłowe dane zwracają `400 Bad Request`.
+
+#### POST `/api/auth/login`
+
+Żądanie JSON: `{ "email": "jakub@example.com", "password": "..." }`.
+Odpowiedź `200 OK` ma taki sam format jak rejestracja. Błędne dane logowania zwracają `401 Unauthorized`.
+
+#### GET `/api/auth/me` i PATCH `/api/auth/me`
+
+Oba endpointy wymagają tokenu Bearer. GET zwraca `{ "user": { ... } }`.
+PATCH przyjmuje dowolne z pól `username`, `email`, `weightKg` i `heightCm`; pola wagi i wzrostu
+mogą mieć wartość `null`. Odpowiedź zawiera zaktualizowany obiekt `user`.
+
+Obiekt `user` zawiera pola `id`, `username`, `email`, `weightKg`, `heightCm` i `createdAt`.
+
+#### POST `/api/auth/logout`
+
+Wymaga tokenu Bearer i unieważnia bieżącą sesję. Zwraca `204 No Content`.
+
+Chronione endpointy zwracają `401 Unauthorized`, gdy tokenu brakuje, wygasł lub został unieważniony.
 
 ## 3. Ćwiczenia
 
@@ -69,9 +110,9 @@ Każdy element zawiera:
 
 ### GET `/api/reports`
 
-Pobiera dane wykorzystywane do wyświetlania statystyk i historii treningów.
+Pobiera dane wykorzystywane do wyświetlania statystyk i historii treningów użytkownika z aktywnej sesji.
 
-**Parametry:** brak.
+**Wymagany nagłówek:** `Authorization: Bearer <token>`.
 
 **Przykładowa odpowiedź – 200 OK:**
 
@@ -196,10 +237,9 @@ const exercises = await response.json();
 
 ## 7. Aktualne ograniczenia API
 
-- API udostępnia obecnie wyłącznie żądania GET.
-- Nie zaimplementowano jeszcze uwierzytelniania użytkowników.
-- Endpoint raportów korzysta ze stałego identyfikatora użytkownika `USER_ID = 1`.
-- API nie udostępnia obecnie endpointów do tworzenia, edycji ani usuwania danych.
+- API udostępnia rejestrację, logowanie, wylogowanie i edycję podstawowych danych profilu.
+- Endpoint raportów odczytuje identyfikator z sesji i nie przyjmuje identyfikatora użytkownika od klienta.
+- Tworzenie i edycja treningów nie są jeszcze dostępne przez API.
 
 ---
 
@@ -217,10 +257,51 @@ All endpoints use the `/api` prefix.
 
 ## 2. Available Endpoints
 
-| Method | Endpoint         | Description                   |
-| ------ | ---------------- | ----------------------------- |
-| GET    | `/api/exercises` | Retrieves the exercise list   |
-| GET    | `/api/reports`   | Retrieves workout report data |
+| Method | Endpoint            | Description                                  |
+| ------ | ------------------- | -------------------------------------------- |
+| POST   | `/api/auth/register` | Creates an account and starts a session     |
+| POST   | `/api/auth/login`    | Signs in and starts a session               |
+| GET    | `/api/auth/me`       | Retrieves the authenticated user's profile  |
+| PATCH  | `/api/auth/me`       | Updates the authenticated user's profile    |
+| POST   | `/api/auth/logout`   | Ends the current session                    |
+| GET    | `/api/exercises`     | Retrieves the exercise list                 |
+| GET    | `/api/reports`       | Retrieves reports for the authenticated user |
+
+### Authentication
+
+Registration and login return a session token valid for 7 days. Send it in the
+`Authorization: Bearer <token>` header for profile and report endpoints.
+
+#### POST `/api/auth/register`
+
+JSON request:
+
+```json
+{ "username": "Jakub", "email": "jakub@example.com", "password": "at-least-8-characters" }
+```
+
+`username` must be 3–50 characters, `email` must be valid, and `password` must be 8–128 characters.
+The `201 Created` response contains `{ "user": { ... }, "token": "..." }`.
+Duplicate usernames or emails return `409 Conflict`; invalid input returns `400 Bad Request`.
+
+#### POST `/api/auth/login`
+
+JSON request: `{ "email": "jakub@example.com", "password": "..." }`.
+The `200 OK` response has the same structure as registration. Invalid credentials return `401 Unauthorized`.
+
+#### GET `/api/auth/me` and PATCH `/api/auth/me`
+
+Both endpoints require a Bearer token. GET returns `{ "user": { ... } }`.
+PATCH accepts any of `username`, `email`, `weightKg` and `heightCm`; weight and height may be `null`.
+The response contains the updated `user` object.
+
+The `user` object contains `id`, `username`, `email`, `weightKg`, `heightCm` and `createdAt`.
+
+#### POST `/api/auth/logout`
+
+Requires a Bearer token and revokes the current session. Returns `204 No Content`.
+
+Protected endpoints return `401 Unauthorized` when the token is missing, expired or revoked.
 
 ## 3. Exercises
 
@@ -268,9 +349,9 @@ Each item contains:
 
 ### GET `/api/reports`
 
-Retrieves data used to display workout statistics and workout history.
+Retrieves workout statistics and history for the user with the active session.
 
-**Parameters:** none.
+**Required header:** `Authorization: Bearer <token>`.
 
 **Example response – 200 OK:**
 
@@ -395,7 +476,6 @@ const exercises = await response.json();
 
 ## 7. Current API Limitations
 
-- The API currently supports GET requests only.
-- User authentication has not been implemented.
-- The reports endpoint uses a fixed user identifier: `USER_ID = 1`.
-- There are currently no endpoints for creating, updating or deleting data.
+- The API supports registration, sign-in, sign-out and editing basic profile details.
+- The reports endpoint reads the user ID from the session and does not accept a client-supplied user ID.
+- Creating and editing workouts is not yet available through the API.

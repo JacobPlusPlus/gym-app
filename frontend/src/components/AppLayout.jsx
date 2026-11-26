@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import { useAuth } from '../context/useAuth';
 import {
   DashboardIcon,
   WorkoutIcon,
@@ -31,18 +32,29 @@ const NAV_SECTIONS = [
   },
 ];
 
-const USER_PROFILE = {
-  initials: 'AM',
-  name: 'Alex M.',
-  fullName: 'Alex Morgan',
-  plan: 'Pro plan',
-};
-
 function AppLayout() {
+  const { user, logout } = useAuth();
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
   const [isCollapsed, setIsCollapsed] = useState(() => localStorage.getItem('sidebarCollapsed') === 'true');
+  const [logoutError, setLogoutError] = useState('');
   const { pathname } = useLocation();
   const mainContentRef = useRef(null);
+  const initials = user.username
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join('')
+    .toUpperCase();
+
+  const handleLogout = async () => {
+    setLogoutError('');
+    try {
+      await logout();
+    } catch (error) {
+      setLogoutError(error.message);
+    }
+  };
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -107,13 +119,13 @@ function AppLayout() {
         </nav>
 
         <div className="sidebar-footer">
-          <NavLink to="/profile" className="user-profile-card" title={USER_PROFILE.fullName}>
-            <div className="user-avatar">{USER_PROFILE.initials}</div>
+          <NavLink to="/profile" className="user-profile-card" title={user.username}>
+            <div className="user-avatar">{initials}</div>
             {!isCollapsed && (
               <>
                 <div className="user-info">
-                  <span className="user-name">{USER_PROFILE.name}</span>
-                  <span className="user-plan">{USER_PROFILE.plan}</span>
+                  <span className="user-name">{user.username}</span>
+                  <span className="user-plan">{user.email}</span>
                 </div>
                 <span className="user-chevron" aria-hidden="true">
                   ›
@@ -122,9 +134,10 @@ function AppLayout() {
             )}
           </NavLink>
 
-          <NavLink to="/login" className="logout-btn" title="Logout" aria-label="Logout">
+          <button type="button" className="logout-btn" title="Logout" aria-label="Logout" onClick={handleLogout}>
             <LogoutIcon />
-          </NavLink>
+          </button>
+          {logoutError && <p className="login-notice" role="alert">{logoutError}</p>}
         </div>
       </aside>
 
